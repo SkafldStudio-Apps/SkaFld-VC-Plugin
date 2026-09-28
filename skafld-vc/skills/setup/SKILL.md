@@ -1,15 +1,27 @@
 ---
-name: firm-setup
-description: Set up SkaFld VC for this person with /skafld-vc:setup - the brand the exports use (Word, PDF, decks, Excel) and, optionally, the firm profile the agents read when no platform is connected (name, thesis and mandate, cheque range, decision format, board seats, what the firm brings founders). Run again to change any part. Use for /skafld-vc:setup, when someone asks to change the look, logo, colours or fonts of the files, to set or change their thesis, cheque size or firm details, or when an agent or export says nothing is set up yet.
+name: setup
+description: Set up SkaFld VC - the brand the exports use (Word, PDF, decks, Excel) and, optionally, the firm profile the agents read when no platform is connected (name, thesis and mandate, cheque range, decision format, board seats, what the firm brings founders). Run again to change any part. Use when someone asks to change the look, logo, colours or fonts of the files, to set or change their thesis, cheque size or firm details, or when an agent or export says nothing is set up yet.
+argument-hint: "[website, or what to change]"
 ---
 
 # Setup
 
 One command sets up SkaFld VC for a person: the brand their files use and, if they want, a firm profile the agents read instead of asking each time. Run it in the conversation, not as a subagent. Pass `project_dir`, the absolute path of the folder you are working in, to every setup tool.
 
+Request: $ARGUMENTS
+
+If the request names a website, use it for the brand (and to suggest the firm's details). If it names a change (a colour, the logo, the thesis, the cheque range), go straight to that part and change only it after confirming. With no request, start with `setup_status` as below.
+
+## 0. Can setup run here?
+
+Setup's tools (`setup_status` and the rest) run on the person's computer, in Claude Code (including Claude Desktop's Code tab) and in Cowork on the desktop, and need Node.js 18 or later installed. They do not run in Claude's Chat or on claude.ai in the browser.
+
+- **You have `setup_status`:** go on to section 1.
+- **You do not, or it fails to start:** say so in one line, without technical detail: "The brand and file exports need Claude Code or Cowork on your computer with Node.js installed (nodejs.org); here I can still save your firm's details for the agents." Then do only section 3, collecting the profile in the conversation, and end by giving the person the profile as the Markdown block below, to paste into their Claude Project's instructions (or add as a project file) so every conversation in that project reads it. Save nothing else and do not attempt the brand.
+
 ## 1. Where things stand
 
-Call `setup_status`.
+Call `setup_status`. It says where setup saves (`saves_to`); if `persistent` is false, tell the person once that their setup is kept in this project only.
 
 - **`first_run` is true** (nothing saved): say in one line what setup does (the look of their files, then optionally their firm's details so the agents stop asking), and go to section 2.
 - **Something is saved**: show a short summary (brand name and colours; the firm name, thesis in one line, cheque range and decision format if a profile exists, or "no firm profile"). Then list what they can change, from `can_change`, as numbered options (use the question tool if you have one, with multiple selection), and do only the parts they pick: the brand parts with section 2's steps, the firm parts with section 3's. Nothing else changes.
@@ -42,7 +54,20 @@ If they go ahead, collect it in at most three short messages, suggesting values 
 2. **The thesis and mandate**: `thesis` in their words; `mandate` with `sectors`, `stages`, `geographies` and two or three `super_priority` must-haves; `check_range_usd` (whole dollars, min and max) and, if they know it, `fund_size_usd` (for the fund-returner line). A fuller thesis with a why-now, pillars and a review date can go in `thesis_detail`, in the `skafld-vc:thesis-fit` skill's thesis.json shape; offer it only if they want Sourcing to use it.
 3. **What the firm brings founders**: `network_fit` as a short label and a description (for example "Operator bench: partners who ran B2B sales teams, who take the first customer calls").
 
-Show the values once, ask them to confirm or correct, then call `save_profile` with only the confirmed fields. For a change, pass only the fields being changed; `clear` removes fields and `reset: true` deletes the profile.
+Show the values once, ask them to confirm or correct, then call `save_profile` with only the confirmed fields. It returns `portable`: the same profile as a short Markdown block. Offer it once: "If you also use SkaFld VC in Claude's Chat or on claude.ai, paste this into your Claude Project's instructions so the agents there know your firm too." Where setup has no tools (section 0), write that block yourself in this shape:
+
+````
+## SkaFld VC firm profile
+
+- **Firm:** <name>
+- **Who we are:** <description>
+- **Thesis:** <thesis>
+- **Sectors / Stages / Geographies / Must-haves:** <each on its own line, if given>
+- **Cheque:** $<min> to $<max>
+- **Decisions:** <an investment committee decides on a memo | a partner decides on the Screening | one investor decides>
+- **Board seats:** <yes | no>
+- **<what you bring founders, label>:** <description>
+``` For a change, pass only the fields being changed; `clear` removes fields and `reset: true` deletes the profile.
 
 ## Rules
 
@@ -54,3 +79,4 @@ Show the values once, ask them to confirm or correct, then call `save_profile` w
 - The profile is the person's own and stays on their machine (the plugin's data folder); it is never sent anywhere. With a platform connected, the platform's house profile from `whoami` wins, and this profile is not read.
 - A project's own `thesis.json` or `thesis.md` overrides the profile's thesis for that project, so someone running several theses keeps one per folder.
 - Never invent profile values: a field the person does not give stays out, and the agents treat it as not set.
+````

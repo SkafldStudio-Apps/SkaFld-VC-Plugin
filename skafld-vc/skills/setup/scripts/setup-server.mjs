@@ -36,6 +36,7 @@ import {
   exportAssets,
   loadExporter,
   readBrandChoice,
+  setupHome,
 } from "../../deliverable-html/scripts/export.mjs"
 import {
   inOutDir,
@@ -404,8 +405,8 @@ async function status(args, env) {
     },
     chosen: choice ? choice.choice : null,
     saves_to: home.brandDir
-      ? "the plugin's data folder (every project)"
-      : "<project>/brand/ (this host has no plugin data folder)",
+      ? `${home.where} (every project and session)`
+      : "<project>/brand/ (no home folder on this machine)",
   }
 }
 
@@ -561,10 +562,11 @@ const PROFILE_FIELDS = [
 ]
 const DECISION_FORMATS = ["committee_memo", "partner_screen", "solo"]
 
-/** Where the profile lives: the plugin's data folder, else the project. */
+/** Where the profile lives: the setup home, else (no home at all) the project. */
 export function profileFile(env, project) {
-  return env.CLAUDE_PLUGIN_DATA
-    ? join(resolve(env.CLAUDE_PLUGIN_DATA), "profile.json")
+  const home = setupHome(env)
+  return home
+    ? join(home.dir, "profile.json")
     : join(project, "skafld-vc", "profile.json")
 }
 
@@ -660,10 +662,11 @@ function saveProfile(args, env) {
   writeFileSync(file, `${JSON.stringify(next, null, 2)}\n`)
   return {
     ok: true,
-    saved_to: env.CLAUDE_PLUGIN_DATA
-      ? "the plugin's data folder (every project)"
+    saved_to: setupHome(env)
+      ? `${setupHome(env).where} (every project and session)`
       : relative(project, file),
     profile: next,
+    portable: portableProfile(next),
   }
 }
 
@@ -676,6 +679,56 @@ function getProfile(args, env) {
         profile: null,
         note: "No firm profile is saved. Carry on without it: ask for what you need or work from the documents. The person can save one with /skafld-vc:setup.",
       }
+}
+
+/**
+ * The profile as a short Markdown block, for a Claude Project's instructions
+ * or files: where the local tools do not run (Chat, claude.ai), the agents
+ * read the firm's details from there.
+ */
+export function portableProfile(p) {
+  if (!p) return null
+  const lines = ["## SkaFld VC firm profile", ""]
+  const add = (label, value) => {
+    if (value !== undefined && value !== null && value !== "")
+      lines.push(`- **${label}:** ${value}`)
+  }
+  add(
+    "Firm",
+    p.short_name && p.short_name !== p.name
+      ? `${p.name} (${p.short_name})`
+      : p.name
+  )
+  add("Who we are", p.description)
+  add("Thesis", p.thesis)
+  if (p.mandate) {
+    add("Sectors", p.mandate.sectors?.join(", "))
+    add("Stages", p.mandate.stages?.join(", "))
+    add("Geographies", p.mandate.geographies?.join(", "))
+    add("Must-haves", p.mandate.super_priority?.join("; "))
+  }
+  if (p.check_range_usd)
+    add(
+      "Cheque",
+      `$${p.check_range_usd.min.toLocaleString("en-US")} to $${p.check_range_usd.max.toLocaleString("en-US")}`
+    )
+  if (p.fund_size_usd)
+    add(
+      "Fund or annual allocation",
+      `$${p.fund_size_usd.toLocaleString("en-US")}`
+    )
+  add(
+    "Decisions",
+    {
+      committee_memo: "an investment committee decides on a memo",
+      partner_screen: "a partner decides on the Screening",
+      solo: "one investor decides",
+    }[p.decision_format]
+  )
+  if (typeof p.board_seats === "boolean")
+    add("Board seats", p.board_seats ? "yes" : "no")
+  if (p.network_fit) add(p.network_fit.label, p.network_fit.description)
+  return lines.join("\n")
 }
 
 /** The parts of setup a person can change, in the order setup offers them. */
@@ -715,10 +768,16 @@ async function setupStatus(args, env) {
         "board_seats",
       ].filter((k) => profile[k] === undefined)
     : null
+  const home = setupHome(env)
   return {
     first_run: !profile && brand.chosen === null,
+    saves_to: home
+      ? `${home.where} (every project and session)`
+      : "this project's folder only (no home folder on this machine)",
+    persistent: Boolean(home),
     brand,
     profile,
+    portable: portableProfile(profile),
     profile_missing: missing,
     can_change: CHANGEABLE,
   }

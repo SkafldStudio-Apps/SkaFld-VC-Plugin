@@ -1,6 +1,7 @@
 ---
 name: document-export
 description: Export a deliverable, a package or any answer as a branded Word document, PDF, PowerPoint deck, PDF deck, (for a Diligence plan) an Excel request list or tracker, or (for founder feedback) the founder copy. Use when someone asks for a file (Word, docx, PDF, slides, deck, PowerPoint, pptx, Excel, xlsx) or a version to send or present. Runs locally in Claude Code and Claude Desktop with nothing to install.
+user-invocable: false
 ---
 
 # Document export

@@ -11,7 +11,7 @@
       "type": "stdio",
       "command": "node",
       "args": [
-        "${CLAUDE_PLUGIN_ROOT}/skills/firm-setup/scripts/setup-server.mjs"
+        "${CLAUDE_PLUGIN_ROOT}/skills/setup/scripts/setup-server.mjs"
       ]
     },
     "exa": {

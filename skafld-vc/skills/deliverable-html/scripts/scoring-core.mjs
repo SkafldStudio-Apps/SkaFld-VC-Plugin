@@ -139,6 +139,24 @@ export function triggeredKnockouts(results, definition) {
 }
 
 /**
+ * The recommendation a scorecard with triggered knock-outs publishes: the
+ * Rubric's `knockout_recommendation` (pass by default), or the composite's
+ * own band when that is already harsher. A knock-out never raises a
+ * recommendation (a strong_pass stays strong_pass). Harsher means lower in
+ * the band order, with the floor lowest.
+ */
+export function knockoutRecommendationFor(recommendation, definition) {
+  const knockout = definition.knockout_recommendation ?? "pass"
+  const order = [
+    ...definition.recommendation.bands.map((b) => b.recommendation),
+    definition.recommendation.floor,
+  ]
+  return order.indexOf(recommendation) > order.indexOf(knockout)
+    ? recommendation
+    : knockout
+}
+
+/**
  * The coverage gate and the document gate. Either one failing withholds the
  * composite: too little of the Rubric evidenced, or no document read at all.
  */
@@ -162,7 +180,7 @@ export function applyGates(input, definition) {
  * The whole scorecard from per-criterion entries: assessed and not, the
  * weighted worksheet, composite, band, coverage, gates and knock-outs. A
  * triggered knock-out forces the Rubric's `knockout_recommendation` (pass by
- * default) whatever the composite, and names the knock-out.
+ * default) unless the composite is already harsher, and names the knock-out.
  */
 export function scoreWithRubric(definition, input) {
   const { weighted, notAssessed, assessedWeight } = assessCriteria(
@@ -176,7 +194,6 @@ export function scoreWithRubric(definition, input) {
     definition
   )
   const knockouts = triggeredKnockouts(input.knockouts, definition)
-  const knockoutRecommendation = definition.knockout_recommendation ?? "pass"
   const worksheet = definition.criteria.map((c) => {
     const entry = weighted[c.key]
     return entry
@@ -199,7 +216,7 @@ export function scoreWithRubric(definition, input) {
     knockouts,
     recommendation:
       knockouts.length > 0 && gates.publishable
-        ? knockoutRecommendation
+        ? knockoutRecommendationFor(gates.publishedRecommendation, definition)
         : gates.publishedRecommendation,
   }
 }

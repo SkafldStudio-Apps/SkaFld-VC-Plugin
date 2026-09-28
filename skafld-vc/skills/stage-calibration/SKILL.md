@@ -1,6 +1,7 @@
 ---
 name: stage-calibration
 description: Fix the evidence bar for a startup's stage (idea, pre-seed, seed, Series A) from the rubric's stage table, read at run time, so scoring, triage and diligence judge the company against its peers rather than a later-stage bar. Use before any scorecard, screen or memo, and whenever a deal is criticised for lacking something.
+user-invocable: false
 ---
 
 # Stage calibration

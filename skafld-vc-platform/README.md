@@ -12,13 +12,15 @@
 
 You are asked for **your SkaFld VC platform address**, such as `https://vc.yourfirm.com`. Your firm's platform admin can tell you what it is. Then sign in once: run `/mcp`, choose `plugin:skafld-vc-platform:skafld-vc` and Authenticate. A browser window opens on your platform; sign in with your own login there.
 
-In Cowork: Settings, Plugins, add the marketplace, install SkaFld VC Platform, enter the address, then connect it in Settings, Connectors and sign in.
+**In Cowork and Claude's Chat** (the Claude desktop app or claude.ai), which do not ask for the address at install: install SkaFld VC, then add your platform once as a custom connector. Settings, Connectors, Add custom connector, name it exactly **SkaFld VC**, and enter `<your platform address>/api/mcp` (for example `https://vc.yourfirm.com/api/mcp`). Sign in when asked. The agents find it under that name, and Claude Code picks it up too when you are signed in to Claude there, so this one connection works everywhere.
 
 To change the address later: `/plugin configure skafld-vc-platform`.
 
 ## What you get
 
 With the platform connected, the agents read your firm's house profile (who you are, your thesis, your cheque range, what "fit" means to you), score against your firm's current rubric with the platform doing the arithmetic, check a company against your pipeline, and save Screening reports, Diligence plans and IC memos on the deal, where your team downloads them. Everything is scoped to your login: you never see more than you would in the platform itself.
+
+What each agent does differently with a platform, and what the platform terms in the agent and skill files mean, is in SkaFld VC's `PLATFORM.md`.
 
 ## Other ways in
 

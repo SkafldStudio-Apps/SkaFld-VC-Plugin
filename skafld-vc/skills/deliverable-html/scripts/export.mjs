@@ -4,6 +4,7 @@
 // exporter is the bundled lib/deliverables/export (skills/document-export),
 // loaded on first use so the server starts fast. No network.
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs"
+import { homedir } from "node:os"
 import { dirname, join, relative, resolve } from "node:path"
 import { fileURLToPath } from "node:url"
 
@@ -15,22 +16,51 @@ const EXPORT_DIR = resolve(here, "..", "..", "document-export")
 export const EXPORT_FORMATS = ["docx", "pdf", "pptx", "deck_pdf", "xlsx"]
 
 /**
- * Where a person's saved brand and brand choice live: the plugin's data
- * folder (kept across updates) when the host provides one, else the project.
+ * The one folder where a person's setup (brand, brand choice and firm
+ * profile) lives, the same in every session and project: the plugin's data
+ * folder where the host provides one (Claude Code; kept across updates),
+ * else SKAFLD_VC_HOME, else ~/.skafld-vc (Cowork, where the data folder is
+ * not documented). Never the project folder, which can change per session.
+ * Null only when there is no home directory at all.
+ */
+export function setupHome(env = process.env) {
+  if (env.CLAUDE_PLUGIN_DATA) {
+    return {
+      dir: resolve(env.CLAUDE_PLUGIN_DATA),
+      where: "the plugin's data folder",
+    }
+  }
+  if (env.SKAFLD_VC_HOME) {
+    return { dir: resolve(env.SKAFLD_VC_HOME), where: env.SKAFLD_VC_HOME }
+  }
+  let home = ""
+  try {
+    home = homedir()
+  } catch {
+    home = ""
+  }
+  return home ? { dir: join(home, ".skafld-vc"), where: "~/.skafld-vc" } : null
+}
+
+/**
+ * Where a person's saved brand and brand choice live: the setup home, else
+ * (no home directory at all) the project.
  */
 export function brandHome(env = process.env, project) {
-  if (env.CLAUDE_PLUGIN_DATA) {
-    const dir = resolve(env.CLAUDE_PLUGIN_DATA)
+  const home = setupHome(env)
+  if (home) {
     return {
-      brandDir: join(dir, "brand"),
-      choiceFile: join(dir, "brand-choice.json"),
+      brandDir: join(home.dir, "brand"),
+      choiceFile: join(home.dir, "brand-choice.json"),
       scope: "user",
+      where: home.where,
     }
   }
   return {
     brandDir: null,
     choiceFile: project ? join(project, "brand", "choice.json") : null,
     scope: "project",
+    where: "this project's brand/ folder",
   }
 }
 
