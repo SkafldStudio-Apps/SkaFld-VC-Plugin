@@ -1,6 +1,6 @@
 ---
 name: market-sizing
-description: Size a startup's market bottom-up (customers × revenue per customer), reconcile it with the deck's top-down figure, and test it against the bar the investment itself sets (required exit, revenue and market from cheque, ownership and target multiple) with a sourced leader-share assumption, a why-now field and entry tests for existing and new markets. Use for scorecard market criteria, memos and deck audits.
+description: Sizes a startup's market bottom-up, reconciles it with the deck's figure, and tests it against the market the investment itself needs to return its target. Use for a scorecard's market criterion, a memo's market section, a deck audit, or when someone asks how big a market is.
 ---
 
 # Market sizing

@@ -1,6 +1,6 @@
 ---
 name: inbound-triage
-description: First-pass triage of an inbound application or deck into PASS, SCREEN or REFER against the house's own thesis and cheque range, with deal killers checked first, the source channel and the quality-of-opportunity facts recorded (referral, co-investors, counsel and accountant, first customers and concentration), a coded pass reason, the capital-necessity question, a bias line and the questions a screening call must answer. Time-boxed to one page. Use on every new application and whenever the pipeline needs a quick consistent read across many deals.
+description: Gives a first-pass PASS, SCREEN or REFER verdict on an inbound application or deck against the firm's thesis and cheque range, with a coded pass reason and the questions for a screening call. Use when a new application or deck arrives, or for a quick consistent read across many deals.
 ---
 
 # Inbound triage

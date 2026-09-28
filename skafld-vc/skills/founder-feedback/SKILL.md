@@ -1,6 +1,6 @@
 ---
 name: founder-feedback
-description: Prepare feedback for a founder after a screening as a founder_feedback deliverable - an internal call brief and a founder-facing note of strengths, suggestions and questions across seven areas (story, business model, competition, metrics, team, product, valuation), with a disclosure check so it never communicates a pass, a score, a vote or a member name - rendered for the team and exported as a founder copy that leaves the brief out; a draft for a named person to send. Use when someone asks for "founder feedback", "a feedback note", "prep for the feedback call" or "what should we tell the founder".
+description: Prepares feedback for a founder after a screening, as an internal call brief and a founder-facing note that never reveals a pass, a score, a vote or a member's name. Use when someone asks for founder feedback, a feedback note, prep for the feedback call, or what to tell the founder.
 ---
 
 # Founder feedback

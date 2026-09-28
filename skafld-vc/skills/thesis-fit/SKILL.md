@@ -1,6 +1,6 @@
 ---
 name: thesis-fit
-description: Read the firm's investment thesis and run candidate companies through it (strategic-fit and super-priority gates, pillar mapping, criteria, optional anchored scoring) to keep one card per company with a status of view, monitor, pursue, engaged founder or investment memo, plus current portfolio concentration, the sourcing funnel through term sheets and next actions for the longlist. Use when asked to source against the thesis, build a longlist or market map, check whether a company fits the thesis, report sourcing activity, or draft a thesis.
+description: Tests candidate companies against the firm's investment thesis and keeps one card per company with a sourcing status, the funnel and next actions for a longlist. Use when asked to source against the thesis, build a longlist or market map, check whether a company fits the thesis, report sourcing activity, or draft a thesis.
 ---
 
 # Thesis fit

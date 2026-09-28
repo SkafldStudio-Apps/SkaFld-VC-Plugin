@@ -1,6 +1,6 @@
 ---
 name: unit-economics
-description: Reconstruct a startup's unit economics from what it discloses (burn, runway, gross margin, fully loaded CAC payback, cohort value, NRR and GRR, growth accounting, burn multiple), label each figure stated, derived or benchmark, and compare it with a dated benchmark for its business model and ARR band. Use for diligence, memo financial sections and testing a deck's numbers.
+description: Reconstructs a startup's unit economics (burn, runway, gross margin, CAC payback, retention, burn multiple) from what it discloses and compares them with dated benchmarks for its model and stage. Use for diligence, a memo's financial section, or when testing a deck's numbers.
 ---
 
 # Unit economics

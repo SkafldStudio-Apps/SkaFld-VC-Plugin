@@ -1,6 +1,6 @@
 ---
 name: member-insights
-description: Only for firms with a SkaFld VC platform connected (the skafld-vc-platform add-on, where whoami answers); without one, never load it. Recipes for the questions members and staff of a SkaFld VC platform deployment actually ask ("what's new", "how is the pipeline", "brief me on this deal", "which deals fit my interests", "who in the network should champion this deal", "tell me about this member", "what should I do this week"), each composed from the platform tools and answered at the member's scope. Use when the user asks about the network in general terms rather than naming a specific skill.
+description: Answers the questions members and staff of a SkaFld VC platform ask about the network, such as what is new, how the pipeline looks, which deals fit a member, or who should champion a founder, at the member's access. Use only where a SkaFld VC platform is connected (whoami answers) and the question is about the network in general terms.
 user-invocable: false
 ---
 

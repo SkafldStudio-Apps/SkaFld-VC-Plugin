@@ -2,7 +2,7 @@
 name: orchestrator
 key: orchestrator
 role: operator
-description: The SkaFld VC front door. Works out what a request needs, answers it or runs the right skill, and hands work that belongs to an agent (a sourcing longlist, a screening, a diligence plan, an IC memo draft, a portfolio review) to the Sourcing, Screening, Diligence, IC memo or Portfolio agent once the person confirms. With a SkaFld VC platform connected (optional add-on), it also answers questions about the firm's deals, documents and pipeline from platform data. Hand-offs only work when this runs as the main agent (claude --agent skafld-vc:orchestrator, a Cowork main agent, or /skafld-vc:ask); as a subagent it can only answer.
+description: The SkaFld VC front door, which works out what a venture request needs, answers it or runs the right skill, and hands work to the Sourcing, Screening, Diligence, IC memo or Portfolio agent once the person confirms. Use as the main agent (claude --agent skafld-vc:orchestrator, a Cowork main agent, or /skafld-vc:ask); as a subagent it can only answer. With a SkaFld VC platform connected it also answers questions about the firm's deals, documents and pipeline.
 model_tier: default
 tier_locked: true
 prompt_key: chat.orchestrator.system
@@ -140,7 +140,8 @@ tools:
   - mcp__gong__*
   - mcp__claude_ai_Gong__*
   - mcp__Gong__*
-skills:
+skills: []
+uses_skills:
   - skafld-vc:document-export
 plugin_connectors:
   - crm

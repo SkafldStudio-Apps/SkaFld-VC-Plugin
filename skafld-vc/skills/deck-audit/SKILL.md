@@ -1,6 +1,6 @@
 ---
 name: deck-audit
-description: Audit a pitch deck slide by slide against a standard content list (a practitioner pitch guide's twelve items plus the Sequoia template sections), test every claim for evidence and precision, reconcile the numbers across slides, name red flags (unrealistic expectations, proformas that do not reconcile, vague use of funds, off-market valuation, first-mover claims without a mechanism) and rank questions for the founder call. Use when a deck arrives, before a scorecard, and for diligence prep.
+description: Audits a pitch deck slide by slide for missing content, unsupported claims, numbers that do not reconcile and red flags, and ranks questions for the founder call. Use when a deck arrives, before a scorecard, or to prepare diligence.
 ---
 
 # Deck audit

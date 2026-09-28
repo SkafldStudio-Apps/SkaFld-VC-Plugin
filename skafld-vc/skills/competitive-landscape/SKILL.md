@@ -1,6 +1,6 @@
 ---
 name: competitive-landscape
-description: Map a startup's competitive landscape (direct competitors, substitutes, incumbents, adjacent entrants) with funding, stage and positioning, then test every claimed advantage with the 7 Powers benefit-and-barrier test, a stage timing window, the winner-take-all conditions for network effects and the pioneer base rate for first-mover claims. Use for scorecard differentiation and market criteria, memos and deck audits.
+description: Maps a startup's competitors, substitutes and incumbents and tests its claimed advantages. Use for the differentiation and market criteria of a scorecard, a memo's competition section, a deck audit, or when someone asks who the competitors are or whether a moat is real.
 ---
 
 # Competitive landscape

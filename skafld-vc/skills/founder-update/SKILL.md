@@ -1,6 +1,6 @@
 ---
 name: founder-update
-description: Parse a portfolio company's investor update or board pack into a fixed structure (period, highlights, lowlights, stated KPIs, concerns, consent items, plan, asks, cadence), check it for arithmetic, redefined or missing metrics and candour, and fill the narrative and governance parts of a portfolio review. Use when a founder update, monthly or quarterly investor letter or board deck arrives, or someone asks "what did the update say", "is there anything we need to vote on" or "are they reporting on time".
+description: Reads a portfolio company's investor update or board pack into a fixed structure and checks it for arithmetic, changed or missing metrics, and candour. Use when a founder update, investor letter or board deck arrives, or someone asks what an update said, whether anything needs a vote, or whether a company reports on time.
 ---
 
 # Founder update

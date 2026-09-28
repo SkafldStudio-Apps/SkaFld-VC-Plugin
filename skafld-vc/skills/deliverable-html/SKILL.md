@@ -1,6 +1,6 @@
 ---
 name: deliverable-html
-description: Write an agent's finished output as a self-contained HTML deliverable (Sourcing longlist, Screening report, Founder feedback, Diligence plan, IC memo, Portfolio review) or combine several for one company into a Package. Use at the end of a sourcing, screening, founder feedback, diligence, IC memo or portfolio review run, or when someone asks for the HTML report or package. Renders locally with no network into ./skafld-vc/.
+description: Writes a finished Sourcing longlist, Screening report, Founder feedback, Diligence plan, IC memo or Portfolio review as a self-contained HTML file, or combines several for one company into a Package. Use at the end of any of those runs, or when someone asks for the HTML report or package.
 user-invocable: false
 ---
 

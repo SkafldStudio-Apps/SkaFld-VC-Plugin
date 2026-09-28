@@ -1,6 +1,6 @@
 ---
 name: founder-research
-description: Research a founding team from the application, deck, public sources and any people-data connector into a factual profile: professional timeline, the outcome-validated team cues (prior founding outcome, sector years, leadership, preparedness), role coverage for the stage, gaps and reference-call targets; and synthesise reference or customer call notes and transcripts the person supplies into findings by workstream and class. Records non-cues without scoring them. Use for triage, the scorecard team criterion, diligence prep and reference-call write-ups.
+description: Researches a founding team into a factual profile with the team signals that predict outcomes, gaps for the stage and reference-call targets, and writes up reference or customer call notes. Use for triage, a scorecard's team criterion, diligence prep and reference-call write-ups.
 ---
 
 # Founder research

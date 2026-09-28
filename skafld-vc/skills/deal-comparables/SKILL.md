@@ -1,6 +1,6 @@
 ---
 name: deal-comparables
-description: Benchmark a deal's price against comparable deals from this deployment's own pipeline first (same sector and stage, same funding-cycle regime and quarter), tagged by market regime, rated against the subject on seven attributes, then external round data with sources. Reports p25/median/p75 and the subject's percentile. Use for deal-terms scoring, memos and committee questions about whether a price is in range.
+description: Benchmarks a round's price against comparable deals, from the firm's own pipeline first and then sourced external data, with the percentile the ask sits at. Use for deal-terms scoring, a memo's valuation section, or when someone asks whether a price is in range.
 ---
 
 # Deal comparables

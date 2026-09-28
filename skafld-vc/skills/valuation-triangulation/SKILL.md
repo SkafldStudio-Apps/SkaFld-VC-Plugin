@@ -1,6 +1,6 @@
 ---
 name: valuation-triangulation
-description: Judge whether an early-stage round's price is reasonable by decoding the ask, checking the terms, placing it in the comparables range, testing it against a ceiling from exit expectations and a break-even stress test, then giving a four-line price verdict and a counter, never a blended value. Use when a Screening scores deal terms, an IC memo writes its valuation verdict, or someone asks "is this price fair", "what should we pay", "is the cap too high" or "triangulate the valuation".
+description: Judges whether an early-stage round's price is reasonable from comparables, a ceiling from exit expectations and a break-even test, and gives a price verdict and a counter, never a blended value. Use when a screening scores deal terms, a memo writes its valuation verdict, or someone asks whether a price is fair, what to pay or whether a cap is too high.
 ---
 
 # Valuation triangulation

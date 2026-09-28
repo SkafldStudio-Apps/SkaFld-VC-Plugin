@@ -1,6 +1,6 @@
 ---
 name: deal-scorecard
-description: Score an early-stage deal against a rubric read at run time (the connected platform's get_rubric, else a rubric.json in the working folder, else the plugin's default rubric), with knock-outs checked first, each criterion scored independently on percentile anchors, deal terms scored from the term-sheet and valuation skills, not_assessed for missing evidence, the composite computed by a tool or shown as a worksheet, the top-band condition applied, and the band distribution checked across a batch. Use when asked to score, grade, rate or re-assess a deal, or when a screening or memo needs a scorecard.
+description: Scores an early-stage company against a rubric (a connected platform's, a rubric.json in the folder, or the plugin's default), with knock-outs and not_assessed for missing evidence. Use when asked to score, grade, rate or re-assess a deal, or when a screening or memo needs a scorecard.
 ---
 
 # Deal scorecard

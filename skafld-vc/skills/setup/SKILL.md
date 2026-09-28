@@ -1,6 +1,6 @@
 ---
 name: setup
-description: Set up SkaFld VC - the brand the exports use (Word, PDF, decks, Excel) and, optionally, the firm profile the agents read when no platform is connected (name, thesis and mandate, cheque range, decision format, board seats, what the firm brings founders). Run again to change any part. Use when someone asks to change the look, logo, colours or fonts of the files, to set or change their thesis, cheque size or firm details, or when an agent or export says nothing is set up yet.
+description: Sets up SkaFld VC for a person, with the brand used on exported files and, optionally, the firm profile the agents read (name, thesis, mandate, cheque range, decision format). Use when someone asks to set up SkaFld VC, change the look, logo, colours or fonts of the files, set or change their thesis, cheque size or firm details, or when an agent says nothing is set up yet.
 argument-hint: "[website, or what to change]"
 ---
 

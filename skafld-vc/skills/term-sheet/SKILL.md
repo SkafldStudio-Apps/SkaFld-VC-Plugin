@@ -1,6 +1,6 @@
 ---
 name: term-sheet
-description: Extract and check the terms of a seed or Series A round (post-money or pre-money SAFE, convertible note, or NVCA-style priced preferred) against the market standard, flag anything off-market with its prevalence, show what each class receives at four exit values, and test the raise against the runway it buys. Use when a Screening scores the deal-terms criterion, a Diligence plan works the deal_terms workstream, or someone asks to "review the term sheet", "check the SAFE", "are these terms standard" or "what does the liquidation preference do".
+description: Checks the terms of a seed or Series A round (SAFE, convertible note or priced preferred) against market standard, flags off-market terms, and shows what each class receives at several exit values. Use when a screening scores deal terms, diligence works the deal-terms workstream, or someone asks to review a term sheet, check a SAFE or explain a liquidation preference.
 ---
 
 # Term sheet

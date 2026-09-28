@@ -1,6 +1,6 @@
 ---
 name: platform-access
-description: Only for firms with a SkaFld VC platform connected (the skafld-vc-platform add-on, where whoami answers); without one, never load it. How to read a SkaFld VC platform deployment through its MCP connector (skafld-vc) on behalf of the connected member, scoped to exactly what that member may see, and how to name the network from whoami's house profile. Load whenever a question is about the network's deals, members, applications, events, notes, tasks or notifications, before any other venture skill that needs platform data.
+description: Explains how to read a connected SkaFld VC platform (deals, members, applications, events, notes, tasks, notifications) at exactly the signed-in member's access, and how to name the network from its house profile. Use only where a SkaFld VC platform is connected (whoami answers), before any platform read.
 user-invocable: false
 ---
 

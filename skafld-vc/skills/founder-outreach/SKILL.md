@@ -1,6 +1,6 @@
 ---
 name: founder-outreach
-description: Draft founder-facing messages for a named person at the house to send (screening invitation, diligence request, sourcing first touch, referral ask, feedback-call prep, pitch logistics, follow-up, keep-in-touch for monitored longlist companies, monitoring check-in, and a decline draft only for the admin's decline flow) to a stated response standard, with the platform's rules on what may never be communicated. Drafts only; a human sends. Use whenever a founder-facing message is needed.
+description: Drafts founder-facing messages for a named person to send, such as screening invitations, diligence requests, first touches, follow-ups and check-ins, within the rules on what may never be communicated. Use whenever a message to a founder is needed; a person always sends it.
 ---
 
 # Founder outreach

@@ -1,6 +1,6 @@
 ---
 name: portfolio-construction
-description: Give the portfolio-level view of a network's or an investor's positions (position count against the power-law diversification evidence, concentration by sector, stage, geography and vintage, outcome distribution against published base rates, reserves and follow-on exposure, multiples with time beside any IRR) and each company's position line. Use for a portfolio review, a member or committee report, or when someone asks "how diversified are we", "what does our portfolio look like", "how much should we reserve" or "how are our investments doing".
+description: Gives the portfolio-level view of a network's or investor's positions, with diversification against power-law evidence, concentration, outcomes against base rates, reserves, and each position's line. Use for a portfolio review or report, or when someone asks how diversified a portfolio is, how much to reserve, or how the investments are doing.
 ---
 
 # Portfolio construction

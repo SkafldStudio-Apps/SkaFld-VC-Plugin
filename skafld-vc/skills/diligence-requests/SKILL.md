@@ -1,6 +1,6 @@
 ---
 name: diligence-requests
-description: Write the diligence request list a company receives, and export it as a ready-to-send Excel file in the firm's brand. Use when a Diligence plan is built, or when someone asks for a request list, a document request, a DD checklist or "what should we ask the founders for", in Excel or otherwise.
+description: Writes the document and information request list a company receives during diligence and exports it as a ready-to-send Excel file. Use when a Diligence plan is built, or when someone asks for a request list, a DD checklist or what to ask the founders for.
 ---
 
 # Diligence requests

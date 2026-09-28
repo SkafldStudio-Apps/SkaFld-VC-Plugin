@@ -1,6 +1,6 @@
 ---
 name: memo-format
-description: The format for investment memos, screening notes and committee write-ups - section order, thesis fit and network fit read from the house profile, a committee pre-read for independent scoring, a price verdict instead of a blended valuation, the lead investor, risks classified with bookends including the portfolio-conflict result, a monitoring hand-off as a plan baseline, the follow-on variant with reserves and signalling, citation style and the mandatory balanced case. Load whenever drafting or revising a memo, screening note or committee brief so every document reads as one voice.
+description: Sets the format of investment memos, screening notes and committee write-ups, including section order, thesis and network fit, the price verdict, classified risks, the monitoring baseline, citations and the balanced case. Use whenever drafting or revising a memo, screening note or committee brief.
 user-invocable: false
 ---
 

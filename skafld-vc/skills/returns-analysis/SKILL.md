@@ -1,6 +1,6 @@
 ---
 name: returns-analysis
-description: Frame the return case for an early-stage investment as proceeds at exit under a few outcome scenarios, paid through the liquidation preference stack after an explicit dilution path, with base-rate priors, a stage-specific target multiple, years to exit, a judgment-weighted multiple with its sensitivities, a fund-returner line and what has to be true. Never a point IRR. Use for memos and investment committee discussion.
+description: Frames an early-stage investment's return case as exit proceeds under a few scenarios, after dilution and the preference stack, against base rates and a stage-specific target multiple. Use for a memo's returns section, committee discussion, or when someone asks what the investment could return.
 ---
 
 # Returns analysis

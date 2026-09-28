@@ -1,6 +1,6 @@
 ---
 name: technical-diligence
-description: Run the product and technology workstream of a diligence plan, scaled to the company's stage: IP and code ownership first, a call guide for the technical founder, an operability floor, run cost and customer touch-points, and a verdict (Technically Sound, Workable, Here Be Dragons) stated as execution risk over the next 12 to 24 months. Use for the product_technology workstream, or when someone asks for "technical diligence", "a tech DD", "can this team build it" or "review the CTO".
+description: Runs the product and technology workstream of diligence, scaled to the company's stage, ending in a verdict on execution risk over the next 12 to 24 months. Use for the product and technology workstream, or when someone asks for technical diligence, a tech DD, whether the team can build it, or a review of the CTO.
 ---
 
 # Technical diligence

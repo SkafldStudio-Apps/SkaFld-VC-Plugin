@@ -1,6 +1,6 @@
 ---
 name: anti-portfolio
-description: Keep the anti-portfolio as a ledger of passed deals, each with a coded pass reason, the stage it reached and the thesis it was judged under, and outcome checks at 12, 24 and 36 months compared with the deals funded in the same period; it never re-scores a passed deal. Use when asked for the anti-portfolio, a review of passed deals, "what happened to the companies we passed on", which pass reasons turned out wrong, or the quarterly pass review.
+description: Keeps a ledger of passed deals with coded pass reasons and later outcome checks, compared with the deals that were funded. Use when asked for the anti-portfolio, a review of passed deals, what happened to companies that were passed on, or which pass reasons turned out wrong.
 ---
 
 # Anti-portfolio

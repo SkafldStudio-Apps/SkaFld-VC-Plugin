@@ -1,6 +1,6 @@
 ---
 name: kpi-variance
-description: Compare a portfolio company's KPIs for a period against its own history, its budget, the IC memo plan and a dated benchmark band, run the early-warning flags, and set out cash, burn and runway with a sensitivity. Use after a founder update is parsed, for a portfolio review, or when someone asks "how is this company tracking against plan", "are they on budget" or "how much runway do they have".
+description: Compares a portfolio company's KPIs with its history, budget, the IC memo plan and benchmarks, runs early-warning flags, and sets out cash, burn and runway. Use after a founder update is read, for a portfolio review, or when someone asks how a company is tracking against plan or how much runway it has.
 ---
 
 # KPI variance

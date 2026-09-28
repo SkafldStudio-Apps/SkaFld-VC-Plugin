@@ -1,6 +1,6 @@
 ---
 name: cap-table
-description: Model a startup's capitalisation through a proposed round: SAFE and convertible note conversion, option pool sizing and who it dilutes, the round price, each holder's fully diluted ownership and the investor's own position, with the arithmetic checked. Use when evaluating terms, sizing a check, or explaining dilution in a screen or memo.
+description: Models a startup's cap table through a proposed round, including SAFE and note conversion, option pool dilution and fully diluted ownership. Use when evaluating round terms, sizing a cheque, or explaining dilution in a screening or memo.
 ---
 
 # Cap table
