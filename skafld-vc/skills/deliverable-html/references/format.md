@@ -53,7 +53,7 @@ The platform's TypeScript types are the source of truth; this is the same format
 }
 ```
 
-- `house` is optional: the network's short name from `whoami` (`house.short_name`). It labels a `deal` company as "<house> company"; without it the label is "Company on the platform". Omit it when there is no platform.
+- `house` is optional: the network's short name from `skafld-vc:whoami` (`house.short_name`). It labels a `deal` company as "<house> company"; without it the label is "Company on the platform". Omit it when there is no platform.
 - `kind` is `deal` for a deal or application on the platform and `outside` for anything else, including every documents-only run. `dealId` only for a `deal` company; omit it for an Outside company.
 - `sources[].id` is what `sourceIds` and `[^id]` in Markdown point at; an unknown id fails validation. `date` (for example "2025", "2026-07" or "2026-09-12") and `sample` (for example "n=431" or "885 VCs") are optional strings; fill them for every benchmark and study, and the Sources list prints "title, date, n=…".
 - Every body section below is optional, and every body takes `document` (Markdown): your full draft. Present sections render in the order listed, and `document` renders last as "Full draft" (or as the main content when there is little else). A body with no sections and no `document` is invalid.
@@ -64,7 +64,7 @@ Order: verdict, stage bar, scorecard, price, founders, deck audit, research, que
 
 - `verdict`: `{ decision, band?, reason, decidedBy?, hardFilters?, referTo?, sourceQuality?, redFlags?, thesisFit? }`. `decision` is a short label ("Advance to screening call", "Pass on a hard filter", "Refer"); `reason`, `sourceQuality` (the quality of the source and referral) and `thesisFit` (how the deal sits against the house thesis) are Markdown; `redFlags` is a list of strings; `hardFilters` is `{ mandate, roundSize, networkConnection, stage?, geography? }` with true (met), false (not met) or null (not checked).
 - `stageBar`: Markdown, the stage-calibration line.
-- `scorecard`: the `score_company` result, renamed to this format's camelCase fields as in the mapping below. Copy the numbers; never compute or round them.
+- `scorecard`: the `skafld-vc:score_company` result, renamed to this format's camelCase fields as in the mapping below. Copy the numbers; never compute or round them.
   - `rubricVersion`, `scale?` (`{ min, max }`), `coverage` (0 to 1).
   - `composite`: `{ score, band }`. `score` is a number, band one of strong_consider, consider, neutral, pass, strong_pass, insufficient_evidence.
   - `published`: `{ score | null, withheld, withheldBecause? }` (`["coverage"]`, `["evidence"]`).
@@ -72,14 +72,14 @@ Order: verdict, stage bar, scorecard, price, founders, deck audit, research, que
   - `missingConnectors?`, `highlights?`, `risks?`.
 - `price`: the price verdict from `valuation-triangulation`, judged separately from the score and never blended into one value: `{ ask?, comparables, ceiling, breakEven, terms?, askVsCeiling?: below | above | not_assessed, termsStandard?, counter?, sourceIds? }`. `ask` (the ask decoded as arithmetic), `comparables` (where the ask sits in the range, and the fair range), `ceiling`, `breakEven`, `terms` (the terms flags) and `counter` (for the deal lead; never sent to the founder) are Markdown. A line that cannot run says "not assessed" and what would let it. `askVsCeiling` is the ceiling line's result; `termsStandard` is true (standard), false (off-market) or null (not checked).
 
-### From `score_company` to `body.scorecard`
+### From `skafld-vc:score_company` to `body.scorecard`
 
-`score_company` answers in snake_case; the deliverable is camelCase and some fields change shape. Map every field like this (anything not listed is not carried):
+`skafld-vc:score_company` answers in snake_case; the deliverable is camelCase and some fields change shape. Map every field like this (anything not listed is not carried):
 
-| `score_company` returns                                    | Deliverable field                                           | Notes                                                                                                                                                                     |
+| `skafld-vc:score_company` returns                                    | Deliverable field                                           | Notes                                                                                                                                                                     |
 | ---------------------------------------------------------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `rubric_version`                                           | `scorecard.rubricVersion`, and the envelope `rubricVersion` | Both must equal the scored run's version, or `save_deliverable` refuses.                                                                                                  |
-| `composite.score`                                          | `scorecard.composite.score`                                 | Always a number. `save_deliverable` refuses a missing composite or one more than 0.005 from the scored run's.                                                             |
+| `rubric_version`                                           | `scorecard.rubricVersion`, and the envelope `rubricVersion` | Both must equal the scored run's version, or `skafld-vc:save_deliverable` refuses.                                                                                                  |
+| `composite.score`                                          | `scorecard.composite.score`                                 | Always a number. `skafld-vc:save_deliverable` refuses a missing composite or one more than 0.005 from the scored run's.                                                             |
 | `composite.recommendation`                                 | `scorecard.composite.band`                                  | The band before the gates.                                                                                                                                                |
 | `published.score`                                          | `scorecard.published.score`                                 | `null` when withheld; never 0.                                                                                                                                            |
 | `published.withheld`                                       | `scorecard.published.withheld`                              | A boolean.                                                                                                                                                                |
@@ -93,7 +93,7 @@ Order: verdict, stage bar, scorecard, price, founders, deck audit, research, que
 | `missing_connectors`                                       | `scorecard.missingConnectors`                               | Also `body.missingConnectors` when research used them.                                                                                                                    |
 | `evidence_count`, `run_id`, `persisted`, `next`, `subject` | (not carried)                                               |                                                                                                                                                                           |
 
-From `get_rubric`, per criterion, `name` and `weight` go on each `scorecard.criteria[]` entry, and the Rubric's `scale` (`{ min, max }`) goes in `scorecard.scale`.
+From `skafld-vc:get_rubric`, per criterion, `name` and `weight` go on each `scorecard.criteria[]` entry, and the Rubric's `scale` (`{ min, max }`) goes in `scorecard.scale`.
 
 - `founders`: `[{ name, role?, history (Markdown), verification?: verified | single_source | claimed, gap?, notChecked?, sourceIds? }]`, and `foundersNote?` (Markdown).
 - `deckAudit`: `{ slides?, missingSlides?, claims: [{ slide?, claim (verbatim), status: supported | contradicted | unsupported | not_checked, basis?: sourced | asserted | marketing, note?, sourceIds? }], inconsistencies? }`.
@@ -147,7 +147,7 @@ Order: thesis and mandate, market map, companies, anti-portfolio, sourcing activ
 
 ## Founder feedback (`type: "founder_feedback"`)
 
-Written from `founder-feedback` for a person to use; never saved on a platform. One company, `kind` as for a Screening. The rendered HTML is the team view: the internal call brief and the note together, each labelled. The founder copy is `export_document` with `audience: "founder"` (Word or PDF): it holds only the founder-facing fields (`note`, each area's `strengths`, `suggestions` and `questions`, the areas not discussed, and `nextStep`), and leaves out the brief, the ratings, the evidence, the disclosure check, the summary, the sources, the open items, the house label and the person it was prepared for. It is refused until `disclosureCheck.passed` is true. There is no deck.
+Written from `founder-feedback` for a person to use; never saved on a platform. One company, `kind` as for a Screening. The rendered HTML is the team view: the internal call brief and the note together, each labelled. The founder copy is `deliverables:export_document` with `audience: "founder"` (Word or PDF): it holds only the founder-facing fields (`note`, each area's `strengths`, `suggestions` and `questions`, the areas not discussed, and `nextStep`), and leaves out the brief, the ratings, the evidence, the disclosure check, the summary, the sources, the open items, the house label and the person it was prepared for. It is refused until `disclosureCheck.passed` is true. There is no deck.
 
 Order: internal call brief, note for the founder, disclosure check.
 
@@ -177,4 +177,4 @@ Order: next-stage bar and plan, period, highlights and lowlights, key takeaways,
 
 ## Package (skafld-vc.package/v1)
 
-Built by `render_package` (or `buildPackage` on the platform) from deliverables about one company: `{ format, house?, company, generatedAt, preparedBy, rubricVersion?, deliverables[] }`, ordered Sourcing longlist, Screening, Founder feedback, Diligence, IC memo, Portfolio review. The cover shows the company, the date, the thesis when a Sourcing longlist is included, who ran each deliverable, the Rubric version and how many distinct sources were used. The combined open-items list holds every deliverable's `openItems`, each not-assessed criterion and not-checked research topic of a Screening, the missing connectors, each Diligence deal-killer finding and gap (deal killers first), each open IC memo risk, each Sourcing next action, a founder feedback disclosure check that has not passed, and each unresolved Portfolio concern and consent item.
+Built by `deliverables:render_package` (or `buildPackage` on the platform) from deliverables about one company: `{ format, house?, company, generatedAt, preparedBy, rubricVersion?, deliverables[] }`, ordered Sourcing longlist, Screening, Founder feedback, Diligence, IC memo, Portfolio review. The cover shows the company, the date, the thesis when a Sourcing longlist is included, who ran each deliverable, the Rubric version and how many distinct sources were used. The combined open-items list holds every deliverable's `openItems`, each not-assessed criterion and not-checked research topic of a Screening, the missing connectors, each Diligence deal-killer finding and gap (deal killers first), each open IC memo risk, each Sourcing next action, a founder feedback disclosure check that has not passed, and each unresolved Portfolio concern and consent item.

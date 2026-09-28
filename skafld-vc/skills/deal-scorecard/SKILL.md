@@ -13,7 +13,7 @@ This skill is procedure only. The criteria, weights, anchors, knock-outs, bands,
 
 Use the first of these that works:
 
-1. **Connected platform**: call `get_rubric`. It returns the version number and the full definition. Cite it as "Rubric version <n> (platform)".
+1. **Connected platform**: call `skafld-vc:get_rubric`. It returns the version number and the full definition. Cite it as "Rubric version <n> (platform)".
 2. **A `rubric.json` in the working folder**: read it. It must have the same shape (criteria with keys and weights that add up to 1, `scale`, `composite`, `recommendation`, `gates`, `not_assessed`, `stage_calibration`). If it does not parse or the weights do not add up to 1, say so in one line and fall back to the default. Cite it as "rubric.json (working folder)".
 3. **The plugin's default rubric** at `${CLAUDE_PLUGIN_ROOT}/rubrics/default.json`. Cite it as "SkaFld VC default rubric (rubrics/default.json)".
 
@@ -35,13 +35,13 @@ A triggered knock-out forces the recommendation to `pass` with the knock-out nam
 
 For each criterion in the rubric, in the rubric's order:
 
-1. Collect the evidence for that criterion alone: deck, application, data room, the platform's `get_deal_details` where connected. Quote every figure with its source (document and page, or tool and field).
+1. Collect the evidence for that criterion alone: deck, application, data room, the platform's `skafld-vc:get_deal_details` where connected. Quote every figure with its source (document and page, or tool and field).
 2. Score it before reading your notes on the other criteria. Independent scoring of predefined assessments, with judgment deferred until the profile is complete, is the practice with the strongest evidence for reducing noise (Kahneman, Lovallo and Sibony, MIT SMR 2019).
-3. Use the rubric's anchors: the criterion's `anchors` map where it has one, else the score descriptions in its `evaluates` text, read against the scale's percentile anchors (5 = top decile of deals seen at that stage, 4 = top quartile, 3 = median, 2 = bottom quartile, 1 = bottom decile). Anchors are comparative, never adjectives. Where the platform (`query_deals`, `compare_deals`) or the person supplies earlier deals, name up to two of them per anchor level as a slate to score against (Kahneman, Lovallo and Sibony 2019); otherwise say no slate was available. Examples come from the tools or the person, never from this skill.
+3. Use the rubric's anchors: the criterion's `anchors` map where it has one, else the score descriptions in its `evaluates` text, read against the scale's percentile anchors (5 = top decile of deals seen at that stage, 4 = top quartile, 3 = median, 2 = bottom quartile, 1 = bottom decile). Anchors are comparative, never adjectives. Where the platform (`skafld-vc:query_deals`, `skafld-vc:compare_deals`) or the person supplies earlier deals, name up to two of them per anchor level as a slate to score against (Kahneman, Lovallo and Sibony 2019); otherwise say no slate was available. Examples come from the tools or the person, never from this skill.
 4. Where the rubric asks for an evidence class, record it (paid, behavioural, product, discovery, none).
 5. If the materials contain no evidence bearing on the criterion, set `status: not_assessed`, give no score, and name the document or fact that would resolve it. Never turn missing information into a low score; investors already tend to read "not shown" as "below threshold" (Bernstein, Korteweg and Laws, J. Finance 2017), and the rubric's gates exist so absence cannot drag a composite down.
 6. **The deal-terms criterion** (`deal_terms` in the default rubric, or the rubric's criterion on price and terms): run `skafld-vc:term-sheet` and then `skafld-vc:valuation-triangulation` first, and score from their output: the terms table and off-market flags, the raise test (runway to a named milestone), and the four-line price verdict (comparables placement, ceiling, break-even, terms). With no term sheet, no SAFE and no stated ask in the materials, the criterion is `not_assessed`, naming the document that would resolve it. Never score a price from the headline valuation alone.
-7. A criterion about network fit, where the rubric has one, is scored against the house profile from `whoami` (its `network_fit` label and description, and its `thesis`). Without a platform, score it against the network's thesis if the user gave one; otherwise it is `not_assessed`.
+7. A criterion about network fit, where the rubric has one, is scored against the house profile from `skafld-vc:whoami` (its `network_fit` label and description, and its `thesis`). Without a platform, score it against the network's thesis if the user gave one; otherwise it is `not_assessed`.
 
 ### 5. Look for deal killers
 
@@ -49,9 +49,9 @@ While scoring, note any deal killer. The classic list: historical performance va
 
 ### 6. The composite
 
-**With the platform**: call `score_company` with one entry per criterion (scored with its evidence and sources, or `not_assessed` with what would be needed), and, where the rubric has a `knockouts` list, your step 3 results as `knockouts` (`key`, `triggered`, `evidence`); the tool then forces the knock-out recommendation itself and returns the triggered ones as `knockouts_triggered`. Report the composite, band, coverage and withheld state exactly as the tool returns them. Never compute, adjust or round them yourself.
+**With the platform**: call `skafld-vc:score_company` with one entry per criterion (scored with its evidence and sources, or `not_assessed` with what would be needed), and, where the rubric has a `knockouts` list, your step 3 results as `knockouts` (`key`, `triggered`, `evidence`); the tool then forces the knock-out recommendation itself and returns the triggered ones as `knockouts_triggered`. Report the composite, band, coverage and withheld state exactly as the tool returns them. Never compute, adjust or round them yourself.
 
-**Without the platform**: if the plugin's local `score_with_rubric` tool is available, call it with `criteria` (an object keyed by criterion: `{"score": n, "reasoning": "..."}` or `{"status": "not_assessed", "reasoning": "what would be needed"}`), `knockouts` (your step 3 results as `[{"key", "triggered", "evidence"}]`), `document_count` (how many documents the scores rest on) and, only for a rubric file other than `rubric.json`, `rubric_path`. It finds the rubric in the same order as step 1 and returns which one it used, the worksheet, composite, band, coverage, gates and knock-out result; report them the same way. If no scoring tool is available, show the worksheet below in full and label the composite "arithmetic not tool-verified".
+**Without the platform**: if the plugin's local `deliverables:score_with_rubric` tool is available, call it with `criteria` (an object keyed by criterion: `{"score": n, "reasoning": "..."}` or `{"status": "not_assessed", "reasoning": "what would be needed"}`), `knockouts` (your step 3 results as `[{"key", "triggered", "evidence"}]`), `document_count` (how many documents the scores rest on) and, only for a rubric file other than `rubric.json`, `rubric_path`. It finds the rubric in the same order as step 1 and returns which one it used, the worksheet, composite, band, coverage, gates and knock-out result; report them the same way. Where the tool is not available but you can run commands, run it as `node ${CLAUDE_SKILL_DIR}/../deliverable-html/scripts/run.mjs score_with_rubric <arguments.json>` with the same arguments. If you cannot do either, show the worksheet below in full and label the composite "arithmetic not tool-verified".
 
 Worksheet, using the rubric's own method (`composite.method`, normally `weighted_mean_of_assessed`), gates and rounding:
 
@@ -110,7 +110,7 @@ Assessed <n> of <m> criteria (coverage <c>) · Composite <score or withheld> [ar
 strong_consider <n> of <m> (<p>%, expected 5-10%) · consider <n> (<p>%, expected 20-25%) · drift: none | <what and suggested re-anchoring>
 ```
 
-**Key risks** are strings in that exact format, so they can be carried unchanged into `score_company` and into the Screening deliverable's `scorecard.risks`, which `save_deliverable` saves on a platform deal. Use the vocabulary in the rubric's `output_schema` where it defines one; the default vocabulary is:
+**Key risks** are strings in that exact format, so they can be carried unchanged into `skafld-vc:score_company` and into the Screening deliverable's `scorecard.risks`, which `skafld-vc:save_deliverable` saves on a platform deal. Use the vocabulary in the rubric's `output_schema` where it defines one; the default vocabulary is:
 
 - Types (twelve, after the Risk Factor Summation sheet of the GoingVC valuation workbook): `competition`, `technology`, `litigation`, `international`, `reputation`, `exit`, `management`, `stage`, `legislation_political`, `manufacturing`, `sales_marketing`, `funding`.
 - Classes (five, after the Stanford Search Fund Primer, 2021, which sorts diligence findings into deal killers, price issues, terms issues, and risks to mitigate or opportunities): `deal_killer`, `price`, `terms`, `operating_risk`, `opportunity`.
@@ -126,7 +126,7 @@ Example: `management (operating_risk): no one on the team has sold to hospital b
 - Never compute or round the composite when a scoring tool is available; without one, show the worksheet and mark it not tool-verified.
 - Across a batch, report the band distribution against the expected 5-10% / 20-25% and flag drift (step 8).
 - Never contact the founder or draft founder-facing messages.
-- Name no network in the scorecard except as the house profile from `whoami` names it.
+- Name no network in the scorecard except as the house profile from `skafld-vc:whoami` names it.
 
 ## Sources
 

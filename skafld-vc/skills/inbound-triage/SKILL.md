@@ -9,7 +9,7 @@ One pass, one page, consistent across every application. Triage is not a scoreca
 
 ## Before starting
 
-- **Mandate.** When the platform is connected, call `whoami` and read `house.thesis` and `house.check_range_usd` (plus `decision_format` and `board_seats` for the optional screens). Without a platform, use the network's thesis and cheque range if the user gave them; if not, ask. Never apply a mandate that is not in the profile or the user's words.
+- **Mandate.** When the platform is connected, call `skafld-vc:whoami` and read `house.thesis` and `house.check_range_usd` (plus `decision_format` and `board_seats` for the optional screens). Without a platform, use the network's thesis and cheque range if the user gave them; if not, ask. Never apply a mandate that is not in the profile or the user's words.
 - **Miss-rate tolerance.** State the house's tolerance for passing on companies that later succeed, if the user or the house has set one; otherwise write "not set". Screening can be tuned to an explicit miss rate and the trade-off is steep: a live screener at one VC auto-rejected 23% of inbound founders at a 1% miss rate and 57% at a 10% miss rate (Maurer, Buz, Dremel and de Melo 2024).
 
 ## Procedure
@@ -27,7 +27,7 @@ One pass, one page, consistent across every application. Triage is not a scoreca
    - _Genesis_: the product-first or company-first tag from `skafld-vc:founder-research` when it has run; an unvalidated heuristic, recorded and never weighed.
 7. **The three early-stage reads.** A credible team for this specific problem, evidence someone wants the product, and a reason the timing is now. Absent evidence is written "not in the materials", never read as a negative.
 8. **Optional fund-side screens**, run only when the house profile calls for them:
-   - _Portfolio conflict_: when the platform is connected, search `query_deals` over funded and active deals for direct competitors. When `house.board_seats` is true a direct conflict is a hard filter ("Does this company directly compete with others in which the VC has a vested interest?", "Complete Guide to VC Due Diligence", GoingVC Research Library, n.d.); otherwise it is recorded as a fact for the committee.
+   - _Portfolio conflict_: when the platform is connected, search `skafld-vc:query_deals` over funded and active deals for direct competitors. When `house.board_seats` is true a direct conflict is a hard filter ("Does this company directly compete with others in which the VC has a vested interest?", "Complete Guide to VC Due Diligence", GoingVC Research Library, n.d.); otherwise it is recorded as a fact for the committee.
    - _Lead-investor reliance_: when `house.decision_format` is `partner_screen`, say whether the lead named in step 6 has done diligence the house can rely on for depth (same guide); a triage fact, never a substitute for the house's own read.
    - _Off-stage or off-size_: a round the house cannot size into, per `house.check_range_usd`, is REFER, not PASS on merit (same guide: off-stage deals "can be passed on (or perhaps referred out)").
 9. **Decide.** PASS (a deal killer, a mandate miss, or none of the three reads), SCREEN (two or three reads present), REFER (good company outside the mandate or cheque range; name where it should go). A pass that was one vote or one read short is marked "near miss".

@@ -15,12 +15,12 @@ This skill fills these parts of a `portfolio_review`: `period`, `highlights`, `l
 
    - A file or pasted text the person gave you.
    - Where the person has connected their mail (Gmail), search it by the sender (the founders' names or the company's domain) and the period (the month or quarter, and words such as "update" or "investor letter"), then read the thread and its attachments. Where they have connected Google Drive, search it for the update or board pack for the period.
-   - With a platform connected, `search_documents` for the company.
+   - With a platform connected, `skafld-vc:search_documents` for the company.
    - Otherwise, or when nothing matches, ask the person for the update. Never reconstruct one from memory or the web.
 
    Mail and Drive are read only: never send, reply, forward, draft, label, move, share or delete anything, and read only the threads and files about this company and period. Record where the update was found in `period.sourceDocuments`.
 
-   For context: with a platform connected (`skafld-vc:platform-access`), call `whoami` for the house profile and read the company's IC memo and last portfolio review with `get_deliverables`; otherwise use the files the user gave. The IC memo's monitoring hand-off is the plan the update is measured against. `house.board_seats` tells you whether to expect a board pack as well as investor letters; `house.name` names the network. List what is missing (no prior update, no IC memo, no close documents).
+   For context: with a platform connected (`skafld-vc:platform-access`), call `skafld-vc:whoami` for the house profile and read the company's IC memo and last portfolio review with `skafld-vc:get_deliverables`; otherwise use the files the user gave. The IC memo's monitoring hand-off is the plan the update is measured against. `house.board_seats` tells you whether to expect a board pack as well as investor letters; `house.name` names the network. List what is missing (no prior update, no IC memo, no close documents).
 
 2. **Map the update to one fixed structure.** The widely used investor-update templates converge on the same order: a short summary, key metrics with the change from last period, highlights, lowlights or worries, team, fundraising, asks and thanks (Harris of YC, as circulated by Visible, 2019; Founder Collective, 2017; Bromberg, 2024; Warp, 2024). A board pack adds activities measured against what diligence expected, concerns with the options for each, results against history, budget and projections, a three-month operating plan with activities and benchmarks, and opportunities (Stanford Search Fund Primer, 2021). Fill each field from what the update says:
 

@@ -11,7 +11,7 @@ This skill fills `kpis` and `cash` in a `portfolio_review`. The metric set is in
 
 ## How
 
-1. **Collect the baselines.** The current period's stated figures (from `skafld-vc:founder-update`), the prior periods (previous portfolio reviews, or earlier updates), the company's budget if it shared one, and the plan baseline in the IC memo's monitoring hand-off: each metric with its value expected by a date. With a platform connected, read the IC memo and earlier reviews with `get_deliverables` and the documents with `search_documents`; otherwise use the files the user gave. A baseline that does not exist is "none", not zero.
+1. **Collect the baselines.** The current period's stated figures (from `skafld-vc:founder-update`), the prior periods (previous portfolio reviews, or earlier updates), the company's budget if it shared one, and the plan baseline in the IC memo's monitoring hand-off: each metric with its value expected by a date. With a platform connected, read the IC memo and earlier reviews with `skafld-vc:get_deliverables` and the documents with `skafld-vc:search_documents`; otherwise use the files the user gave. A baseline that does not exist is "none", not zero.
 
 2. **Fix the business model and the ARR band**, and select the tiers in `references/kpi-set.md`. Load `skafld-vc:stage-calibration` for the stage bar. The benchmark row for each metric depends on both.
 

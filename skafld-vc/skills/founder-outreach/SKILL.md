@@ -7,7 +7,7 @@ description: Drafts founder-facing messages for a named person to send, such as 
 
 ## House profile first
 
-When the platform is connected, call `whoami` for `house.name` and `house.thesis`, and use the sender the user names. Without a platform, use the network name and thesis the user gave; if none, leave `<house>` placeholders for the sender to fill.
+When the platform is connected, call `skafld-vc:whoami` for `house.name` and `house.thesis`, and use the sender the user names. Without a platform, use the network name and thesis the user gave; if none, leave `<house>` placeholders for the sender to fill.
 
 ## Voice
 

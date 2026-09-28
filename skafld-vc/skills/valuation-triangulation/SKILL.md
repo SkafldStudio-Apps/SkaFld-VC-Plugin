@@ -15,7 +15,7 @@ The formulas, defaults and a worked example are in `references/methods.md`. Read
 - The terms, from `skafld-vc:term-sheet` (run it first if no one has).
 - Sector, stage, region, AI or not, lead investor, quarter of the round.
 - The rubric composite from `skafld-vc:deal-scorecard`, for placement.
-- The cheque: `house.check_range_usd` from `whoami` when the platform is connected, else the cheque the user names.
+- The cheque: `house.check_range_usd` from `skafld-vc:whoami` when the platform is connected, else the cheque the user names.
 - Exit evidence for the sector (acquisition prices or revenue multiples) from a source you can cite.
 
 Anything missing is marked not assessed (an agent's deliverable writes `[TBD - not found in documents]`) and the step that needs it says so. Never fill an input from memory.

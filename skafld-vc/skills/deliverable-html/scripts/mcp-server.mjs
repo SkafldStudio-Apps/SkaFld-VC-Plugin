@@ -17,14 +17,7 @@
 // `node ${CLAUDE_PLUGIN_ROOT}/skills/deliverable-html/scripts/mcp-server.mjs`.
 import { createInterface } from "node:readline"
 
-import { exportReply, writeExport } from "./export.mjs"
-import { scoreDocuments } from "./score.mjs"
-import {
-  projectDir,
-  RenderError,
-  writeDeliverable,
-  writePackage,
-} from "./write.mjs"
+import { runTool } from "./tools.mjs"
 
 const SERVER = { name: "skafld-vc-deliverables", version: "1.2.0" }
 
@@ -217,41 +210,8 @@ function toolResult(text, isError = false) {
 }
 
 async function callTool(name, args = {}) {
-  try {
-    const project = () => ({
-      project: projectDir(process.env, args.project_dir),
-    })
-    if (name === "export_document") {
-      return toolResult(exportReply(await writeExport(args)))
-    }
-    if (name === "render_deliverable") {
-      const out = writeDeliverable(args.deliverable, project())
-      return toolResult(`Wrote ${out.html} (source ${out.json}).`)
-    }
-    if (name === "score_with_rubric") {
-      return toolResult(JSON.stringify(scoreDocuments(args), null, 2))
-    }
-    if (name === "render_package") {
-      const out = writePackage(
-        {
-          files: Array.isArray(args.files) ? args.files : [],
-          deliverables: Array.isArray(args.deliverables)
-            ? args.deliverables
-            : [],
-          person: typeof args.person === "string" ? args.person : undefined,
-        },
-        project()
-      )
-      return toolResult(`Wrote ${out.html} (source ${out.json}).`)
-    }
-    return toolResult(`Unknown tool ${name}`, true)
-  } catch (err) {
-    if (err instanceof RenderError) {
-      const lines = err.errors.map((e) => `- ${e}`).join("\n")
-      return toolResult(`${err.message}${lines ? `:\n${lines}` : ""}`, true)
-    }
-    return toolResult(`render failed: ${err?.message ?? err}`, true)
-  }
+  const { text, isError } = await runTool(name, args)
+  return toolResult(text, isError)
 }
 
 let queue = Promise.resolve()

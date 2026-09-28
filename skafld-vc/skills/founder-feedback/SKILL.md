@@ -15,7 +15,7 @@ A person at the house asks for it, and a person uses it; nothing is sent by an a
 
 ## How
 
-1. **Gather the evidence.** The Screening report (scorecard reasoning, deck audit, founder table, research, ranked questions) where one exists; otherwise the deck, application and documents the user gives. With the platform, `get_deliverables` for the deal's current Screening. Read `house.name` from `whoami`, or use the name the user gives. Feedback rests only on what those materials show.
+1. **Gather the evidence.** The Screening report (scorecard reasoning, deck audit, founder table, research, ranked questions) where one exists; otherwise the deck, application and documents the user gives. With the platform, `skafld-vc:get_deliverables` for the deal's current Screening. Read `house.name` from `skafld-vc:whoami`, or use the name the user gives. Feedback rests only on what those materials show.
 2. **Try the product first.** The guide asks reviewers to get to know the product (a beta sign-up or a demo) before commenting on it. If no one at the house has, the Product area is "not discussed" and becomes a question.
 3. **Rate each area**, internally, as `strong`, `adequate`, `gap` or `not_discussed`, with the evidence behind it. An area the materials do not cover is `not_discussed`, never a gap. Judge against the stage bar from the Screening or `skafld-vc:stage-calibration`: an incomplete team at pre-seed is not a gap.
    - **Story**: is the problem and solution clear; is there a case for why now and for why this team.
@@ -44,7 +44,7 @@ A person at the house asks for it, and a person uses it; nothing is sent by an a
    - `areas`: all seven, each once, in the guide's order (`story`, `business_model`, `competition`, `metrics`, `team`, `product`, `valuation`), with the founder-facing `strengths`, `suggestions` and `questions` for that area, and `sourceIds`;
    - founder-facing fields: `note` (Markdown: a one-sentence thank-you specific to what they shared, and anything else to send) and `nextStep` (the step the person chooses; never an outcome);
    - `disclosureCheck`: `passed` (true only when every founder-facing line passed step 7), `items` (how many lines were checked) and `removed` (what was taken out to pass).
-9. **Render and export.** Render the deliverable with `render_deliverable` for the team: the HTML shows the brief and the note together and is internal. Export the founder copy with `export_document` and `audience: "founder"` (Word or PDF), which leaves out the brief and every internal field; export it only when `disclosureCheck.passed` is true. Nothing is saved to a platform: this is a plugin-only deliverable, and `save_deliverable` does not take it.
+9. **Render and export.** Render the deliverable with `deliverables:render_deliverable` for the team: the HTML shows the brief and the note together and is internal. Export the founder copy with `deliverables:export_document` and `audience: "founder"` (Word or PDF), which leaves out the brief and every internal field; export it only when `disclosureCheck.passed` is true. Nothing is saved to a platform: this is a plugin-only deliverable, and `skafld-vc:save_deliverable` does not take it.
 10. **Hand it over.** Give the team HTML and the founder copy's path to the person who asked. If they want a covering message or a call invitation, draft it with `skafld-vc:founder-outreach` (its feedback-call prep type, under 150 words). A person reads the founder copy and sends it; you never do.
 
 ## Output

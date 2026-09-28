@@ -25,6 +25,8 @@ Each agent's first step decides which case it is in, with two branches:
 - **Documents only**: the normal case. The agent reads your firm profile with `get_profile` and works from what you give it.
 - **Platform**: only when `whoami` answers. Everything that follows under **Platform**, **A deal on the platform** or **With a platform** applies only there.
 
+Tools are written with their server, as Anthropic's skill guide recommends: `deliverables:render_deliverable` and `setup:get_profile` are the plugin's own local tools, `exa:` and `apollo:` the research connectors, and `skafld-vc:` the platform's tools, which exist only with a platform.
+
 Terms that only mean something with a platform:
 
 | Term                                                                                                                                                                         | What it is                                                                                                                                                                           |

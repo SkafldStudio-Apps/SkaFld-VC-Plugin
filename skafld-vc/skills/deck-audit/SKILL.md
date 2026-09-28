@@ -47,7 +47,7 @@ A reading aid for a human reviewer, not a verdict. Every finding quotes the slid
 
 7. **Calibrate to stage.** Load `skafld-vc:stage-calibration`. A missing item the stage does not yet produce (no retention curve at pre-seed, no go-to-market numbers at idea stage) is marked "not expected at this stage", not missing, and is `not_assessed` in a scorecard, never a low score.
 
-8. **Compare with platform data.** With a platform connected, read the deal's extracted data with `get_deal_details` and search its documents with `search_documents`; flag every difference between the deck and the record. Where fit with an investor's mandate matters (sector, stage, geography), read it from the house profile from `whoami`; without a platform, use the saved firm profile's thesis and mandate (`get_profile`) or the thesis the user gave.
+8. **Compare with platform data.** With a platform connected, read the deal's extracted data with `skafld-vc:get_deal_details` and search its documents with `skafld-vc:search_documents`; flag every difference between the deck and the record. Where fit with an investor's mandate matters (sector, stage, geography), read it from the house profile from `skafld-vc:whoami`; without a platform, use the saved firm profile's thesis and mandate (`setup:get_profile`) or the thesis the user gave.
 
 9. **Write the founder question list**, ranked by how much a good answer would move the scorecard. Always include the three hypothetical questions from the founder-pitch guide, which test how the founders communicate and think through a problem (GoingVC founder-pitch guide, undated):
 

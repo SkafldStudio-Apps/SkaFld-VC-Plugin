@@ -14,7 +14,7 @@ Facts about professional history, each with a source and a verification mark. Th
 3. The company website, product and pricing pages, changelog or release notes.
 4. Press, podcasts, talks, publications, patents, and code repositories where relevant.
 5. Prior ventures: outcome, role, duration, co-founders, and whether revenue or an exit is on the public record.
-6. With a platform connected: the deal record through `get_deal_details` and the deal's documents through `search_documents`.
+6. With a platform connected: the deal record through `skafld-vc:get_deal_details` and the deal's documents through `skafld-vc:search_documents`.
 
 ## Procedure
 
@@ -50,7 +50,7 @@ Facts about professional history, each with a source and a verification mark. Th
 
    By stage: at pre-seed the founders should cover building the product and reaching the first customers, and a missing CFO or CMO is not a finding. At seed, check that the function the go-to-market depends on is covered or in the hiring plan. At Series A, functional leads are in place or hired against a dated plan; median Series A headcount was 13 in 2025 (Carta data as summarised by PMF Show, 2025). Compare the gaps with the deck's hiring plan and use of funds.
 
-7. **Assess relevance.** Does each founder's history bear on the problem the company is solving, the customer it sells to, or the discipline it needs most? Where fit with an investor's mandate matters, read the sectors and stage from the house profile from `whoami`; without a platform, use the saved firm profile's thesis and mandate (`get_profile`) or the thesis the user gave. Keep relevance to the company's problem separate from fit with the mandate.
+7. **Assess relevance.** Does each founder's history bear on the problem the company is solving, the customer it sells to, or the discipline it needs most? Where fit with an investor's mandate matters, read the sectors and stage from the house profile from `skafld-vc:whoami`; without a platform, use the saved firm profile's thesis and mandate (`setup:get_profile`) or the thesis the user gave. Keep relevance to the company's problem separate from fit with the mandate.
 
 8. **List reference-call targets** from professional history only: former managers (especially a founder or CEO they reported to), co-founders from prior ventures, direct reports, early customers, and investors in prior rounds. Never anyone at a founder's current employer (1752vc, Causo and GoingVC reference-check guides, 2026). Group them by the four referee types in `references/reference-call-questions.md`, which is the protocol for the human caller. The agent never contacts anyone.
 

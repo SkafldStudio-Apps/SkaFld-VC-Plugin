@@ -6,7 +6,7 @@ user-invocable: false
 
 # Document export
 
-`export_document` writes one file in `./skafld-vc/` in the brand the person chose. It uses the bundled exporter: pure JavaScript with the fonts included, and no Word, LibreOffice, Python or browser needed.
+`deliverables:export_document` writes one file in `./skafld-vc/` in the brand the person chose. Where the tool is not available but you can run commands, run it as `node ${CLAUDE_SKILL_DIR}/../deliverable-html/scripts/run.mjs export_document <arguments.json>` with the same arguments. It uses the bundled exporter: pure JavaScript with the fonts included, and no Word, LibreOffice, Python or browser needed.
 
 ## Formats
 
@@ -25,7 +25,7 @@ When someone asks for "a deck" without a format, make `pptx` and offer `deck_pdf
 
 ## Sources
 
-- **A deliverable written this session:** pass its file name as `file` (for example `"harbor-robotics-ic-memo-2026-09-28.json"`, returned by `render_deliverable`). A package from `render_package` works the same way, for Word and PDF.
+- **A deliverable written this session:** pass its file name as `file` (for example `"harbor-robotics-ic-memo-2026-09-28.json"`, returned by `deliverables:render_deliverable`). A package from `deliverables:render_package` works the same way, for Word and PDF.
 - **A deliverable you hold as JSON:** pass it as `deliverable`.
 - **Any other answer** (a market map, a portfolio update, meeting notes): write it as Markdown and pass `markdown` with a `title`. Use `#` for the title, `##` for each section or slide, lists, tables, and `>` for a statement slide. Each `##` becomes a slide in a deck.
 
@@ -33,9 +33,9 @@ Always pass `project_dir`: the absolute path of the folder you are working in.
 
 ## Brand
 
-Leave `brand` out and the file uses, in order: a `brand/` folder in the project, the brand the person saved with `/skafld-vc:setup`, or the SkaFld VC default. With a platform connected, pass `whoami`'s `house.brand` as `brand` for the firm's own documents. Pass `house` as `house.short_name` so reports say "<house> company".
+Leave `brand` out and the file uses, in order: a `brand/` folder in the project, the brand the person saved with `/skafld-vc:setup`, or the SkaFld VC default. With a platform connected, pass `skafld-vc:whoami`'s `house.brand` as `brand` for the firm's own documents. Pass `house` as `house.short_name` so reports say "<house> company".
 
-The first time a file comes out in the default brand, the tool says no brand has been chosen. Ask the person once, in one line: keep the SkaFld look, or set up their firm's brand (it takes a minute, starting from their website). Setting it up is `/skafld-vc:setup`. If they keep the default, call `use_default_brand` so nobody asks again. If you are a subagent and cannot ask, put that one line at the end of your final message.
+The first time a file comes out in the default brand, the tool says no brand has been chosen. Ask the person once, in one line: keep the SkaFld look, or set up their firm's brand (it takes a minute, starting from their website). Setting it up is `/skafld-vc:setup`. If they keep the default, call `setup:use_default_brand` so nobody asks again. If you are a subagent and cannot ask, put that one line at the end of your final message.
 
 ## Then
 

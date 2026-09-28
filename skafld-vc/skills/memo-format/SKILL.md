@@ -8,7 +8,7 @@ user-invocable: false
 
 ## House profile first
 
-When the platform is connected, call `whoami` and read `house`: `name`, `thesis`, `network_fit` (`label`, `description`), `decision_format`, `board_seats`, `check_range_usd`. Without a platform, use the network's thesis and network-fit description if the user gave them; otherwise write "not provided" in those sections rather than inventing a house view. Never name a network in the memo that the profile or the user did not supply.
+When the platform is connected, call `skafld-vc:whoami` and read `house`: `name`, `thesis`, `network_fit` (`label`, `description`), `decision_format`, `board_seats`, `check_range_usd`. Without a platform, use the network's thesis and network-fit description if the user gave them; otherwise write "not provided" in those sections rather than inventing a house view. Never name a network in the memo that the profile or the user did not supply.
 
 ## Audience and length
 
