@@ -1,0 +1,204 @@
+{
+  "format": "skafld-vc.deliverable/v1",
+  "type": "screening",
+  "company": {
+    "name": "Sample Company",
+    "kind": "outside",
+    "stage": "Seed",
+    "website": "https://sample.example"
+  },
+  "generatedAt": "2026-01-15T15:00:00.000Z",
+  "preparedBy": {
+    "agent": "brand-preview",
+    "runtime": "claude_code"
+  },
+  "rubricVersion": 3,
+  "status": "draft",
+  "summary": "Sample Company sells autonomous mooring arms to mid-size ports. The team is credible and two paid pilots are live; the unit economics are unproven at seed.",
+  "sources": [
+    {
+      "id": "deck",
+      "title": "Sample Company seed deck (14 slides)",
+      "kind": "deck"
+    },
+    {
+      "id": "platform",
+      "title": "Deal 412 record",
+      "url": "/deals/412",
+      "kind": "platform"
+    },
+    {
+      "id": "press",
+      "title": "Port Technology International: Harbor pilots at Savannah",
+      "url": "https://porttech.example/articles/harbor-savannah",
+      "kind": "web"
+    },
+    {
+      "id": "apollo-ceo",
+      "title": "Apollo person match: Maya Chen",
+      "kind": "apollo"
+    }
+  ],
+  "openItems": [
+    {
+      "text": "Confirm the Savannah pilot converts to a paid contract",
+      "owner": "Deal lead",
+      "closes": "Signed contract or LOI"
+    }
+  ],
+  "body": {
+    "verdict": {
+      "decision": "Advance to screening call",
+      "band": "consider",
+      "reason": "Two paid pilots and a founder who ran automation at a top-10 port meet the seed bar [^deck].",
+      "decidedBy": [
+        "Founder ran terminal automation at the Port of Rotterdam for six years",
+        "Two paid pilots, one at Savannah [^press]",
+        "Labour shortages make the timing now"
+      ],
+      "hardFilters": {
+        "mandate": true,
+        "roundSize": true,
+        "networkConnection": true
+      }
+    },
+    "stageBar": "Stage: seed. Reasonable evidence at this stage: product in market, first paid pilots, early retention. Not reasonable to expect: cohort economics or a sales team.",
+    "scorecard": {
+      "rubricVersion": 3,
+      "scale": {
+        "min": 1,
+        "max": 5
+      },
+      "composite": {
+        "score": 3.8,
+        "band": "consider"
+      },
+      "published": {
+        "score": 3.8,
+        "withheld": false,
+        "withheldBecause": []
+      },
+      "coverage": 0.85,
+      "criteria": [
+        {
+          "key": "team_founders",
+          "name": "Team and founders",
+          "weight": 0.2,
+          "status": "scored",
+          "score": 4.5,
+          "reasoning": "CEO ran terminal automation at a top-10 port; CTO shipped industrial arms at a robotics firm.",
+          "sources": ["Apollo", "deck p.12"],
+          "sourceIds": ["apollo-ceo"]
+        },
+        {
+          "key": "market_opportunity",
+          "name": "Market opportunity",
+          "weight": 0.15,
+          "status": "scored",
+          "score": 3.5,
+          "reasoning": "Bottom-up sizing covers 310 mid-size ports; the TAM slide is top-down only.",
+          "sources": ["deck p.5"],
+          "sourceIds": ["deck"]
+        },
+        {
+          "key": "traction_validation",
+          "name": "Traction and validation",
+          "weight": 0.125,
+          "status": "scored",
+          "score": 3.5,
+          "reasoning": "Two paid pilots; no renewals yet.",
+          "sources": ["https://porttech.example/articles/harbor-savannah"],
+          "sourceIds": ["press"]
+        },
+        {
+          "key": "business_model",
+          "name": "Business model and unit economics",
+          "weight": 0.1,
+          "status": "not_assessed",
+          "reasoning": "Pilot pricing and hardware cost per unit are not in the materials; a unit cost sheet would resolve it."
+        }
+      ],
+      "missingConnectors": ["Apollo company enrichment"],
+      "highlights": [
+        "Operator founder with direct port experience",
+        "Paid pilots at seed"
+      ],
+      "risks": ["Hardware margin unknown", "Long port procurement cycles"]
+    },
+    "founders": [
+      {
+        "name": "Maya Chen",
+        "role": "CEO",
+        "history": "Head of terminal automation, Port of Rotterdam, 2018 to 2024. **Verified** by Apollo and the company site.",
+        "verification": "verified",
+        "gap": "Why leave a senior port role? Ask on the call.",
+        "sourceIds": ["apollo-ceo"]
+      },
+      {
+        "name": "Luis Ortega",
+        "role": "CTO",
+        "history": "Robotics lead at an industrial arm maker, per the deck only.",
+        "verification": "claimed",
+        "notChecked": true
+      }
+    ],
+    "foundersNote": "Complementary: operations and robotics. Reference targets: the Rotterdam automation director; the Savannah pilot sponsor.",
+    "deckAudit": {
+      "slides": 14,
+      "missingSlides": ["Competition"],
+      "claims": [
+        {
+          "slide": 5,
+          "claim": "$4.2B addressable market",
+          "status": "unsupported",
+          "basis": "asserted",
+          "note": "Top-down figure with no method.",
+          "sourceIds": ["deck"]
+        },
+        {
+          "slide": 9,
+          "claim": "Two paid pilots live",
+          "status": "supported",
+          "basis": "sourced",
+          "sourceIds": ["press"]
+        },
+        {
+          "slide": 11,
+          "claim": "60% gross margin at scale",
+          "status": "not_checked",
+          "basis": "marketing"
+        }
+      ],
+      "inconsistencies": [
+        "Use of funds hires 9 engineers; the hiring plan slide shows 6."
+      ]
+    },
+    "research": [
+      {
+        "topic": "Press and pilot coverage",
+        "status": "checked",
+        "findings": "Savannah pilot confirmed by trade press in August 2026 [^press].",
+        "connector": "Exa"
+      },
+      {
+        "topic": "Company headcount and funding history",
+        "status": "not_checked",
+        "connector": "Apollo"
+      }
+    ],
+    "missingConnectors": ["Apollo company enrichment"],
+    "questions": [
+      {
+        "question": "What does the Savannah pilot cost you per arm, and what do they pay?",
+        "why": "Resolves business model, currently not assessed."
+      },
+      {
+        "question": "What is the conversion path from pilot to fleet contract?"
+      },
+      {
+        "question": "Which competitors have ports evaluated alongside you?",
+        "why": "The deck has no competition slide."
+      }
+    ]
+  }
+}

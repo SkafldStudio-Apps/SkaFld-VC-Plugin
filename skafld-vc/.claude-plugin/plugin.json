@@ -1,0 +1,11 @@
+{
+  "name": "skafld-vc",
+  "version": "1.0.1",
+  "description": "Venture capital agents and skills for screening, diligence, investment committee memos, returns, market sizing, unit economics, cap tables and deal flow, working from your documents alone. Scores against a research-based default rubric or your own, and exports branded HTML, Word, PDF and slide decks. No platform needed; firms with a SkaFld VC platform add the SkaFld VC Platform connector.",
+  "author": {
+    "name": "SkaFld Studio"
+  },
+  "homepage": "https://skafldstudio.com",
+  "repository": "https://github.com/skafldstudio-apps/skafld-vc-plugin",
+  "license": "MIT"
+}

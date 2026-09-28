@@ -1,0 +1,319 @@
+{
+  "schema_version": 1,
+  "scale": {
+    "min": 1,
+    "max": 5,
+    "description": "Score each criterion from 1.0 to 5.0 as a percentile of the deals this network sees at the same stage: 5 = top decile, 4 = top quartile, 3 = median, 2 = bottom quartile, 1 = bottom decile. Anchors are comparative, never adjectives."
+  },
+  "criteria": [
+    {
+      "key": "team_founders",
+      "name": "Team and founders",
+      "weight": 0.2,
+      "description": "Whether these founders are the best available chance to build this company: validated cues only.",
+      "evaluates": "Validated cues, in order: a prior founding that reached a real exit or $10m-plus revenue; three or more years employed in the sector on the team; leadership or management experience; preparedness, shown as command of the market size, the unit economics and the plan; role coverage for the stage or a credible plan. Not cues: school, degree, age, displayed passion, a technical CEO, the number of co-founders. 5: two or more validated cues verified from sources other than the deck. 4: one verified cue and no gaps. 3: cues claimed but single-sourced. 2: sector or leadership experience thin. 1: neither, or an integrity concern (also a knock-out). Team predicts whether the first round closes more than it predicts scale; do not let it carry the score alone."
+    },
+    {
+      "key": "market_opportunity",
+      "name": "Market opportunity",
+      "weight": 0.2,
+      "description": "Whether the market can produce an outcome large enough to return the network's capital: size derived from fund math, growth, timing and share realism.",
+      "evaluates": "Derive the bar: required exit = cheque / ownership x target multiple; required revenue = exit / a stated exit multiple; required addressable market = revenue / an assumed leader share of 15 to 25% (higher only with network effects). 5: bottom-up sizing that reconciles to top-down clears the bar with room, growth above 20% a year, a stated why-now. 4: clears the bar, growth 15 to 20%. 3: clears the bar only with an aggressive share or on top-down alone. 2: below the bar or growth under 10%. 1: contracting, or the plan needs more than 25% share without network effects. Category creators: size the problem replaced and an expansion scenario with the elasticity stated. Market and product together predict scale; score them from separate evidence."
+    },
+    {
+      "key": "product_differentiation",
+      "name": "Product and differentiation",
+      "weight": 0.175,
+      "description": "Whether the product is a step change with a barrier behind it, and whether the team can build it.",
+      "evaluates": "For each claimed advantage write the benefit and the barrier (what stops a well-funded competitor); no barrier means no moat. Seed-stage powers are counter-positioning and cornered resources; brand and process power are out of window at seed. For existing markets at least one of: ten times better on a dimension buyers pay for, or network effects that meet the winner-take-all conditions. First-mover without a named mechanism is a red flag. Technical verdict from the diligence call: Technically Sound, Workable, Here Be Dragons. 5: a named barrier that applies at this stage and Technically Sound. 4: barrier plausible, Workable. 3: differentiation without a barrier. 2: incremental. 1: none, or Here Be Dragons."
+    },
+    {
+      "key": "traction_validation",
+      "name": "Traction and validation",
+      "weight": 0.175,
+      "description": "Evidence, appropriate to stage, that customers want this and will pay: rated by class of proof.",
+      "evaluates": "Proof ladder from strongest to weakest: paid and retained, paid, behavioural (usage, cohorts), product (pilots, LOIs naming a buyer), discovery (interviews with n). Stage-relative: at pre-seed discovery and pilots are the bar; at seed paying customers with retention that flattens; at Series A ARR near $3m, growth above 2x, net dollar retention above 100%. 5: proof a class above the stage bar. 4: at bar with a second class supporting it. 3: at bar, single class. 2: below bar for the claimed stage. 1: vanity or cumulative metrics only. Note customer concentration when one buyer is over 25% of revenue. Absent because of stage: not_assessed."
+    },
+    {
+      "key": "problem_solution_fit",
+      "name": "Problem and customer pull",
+      "weight": 0.1,
+      "description": "Whether a named customer has the problem badly enough to change behaviour for this solution.",
+      "evaluates": "Customer evidence only, because this criterion is otherwise collinear with market and product: the core user named in one phrase; interviews or discovery with the count and what they said; pull (customers asking) versus push; a why-now that is external, not the founders' readiness. 5: pull documented from named customers and a dated why-now. 4: discovery with n above 20 and consistent findings. 3: problem clear, evidence thin. 2: solution looking for a problem. 1: unrealistic framing of the problem."
+    },
+    {
+      "key": "business_model",
+      "name": "Business model and unit economics",
+      "weight": 0.1,
+      "description": "Whether the way the company makes money fits the business and can scale, against dated benchmarks for its model and ARR band.",
+      "evaluates": "Use the benchmark table for the business model and ARR band with year and sample (software gross margin about 77 to 80% at the median, 60 to 70% bottom quartile; CAC payback medians 5, 8, 14, 20 months by ARR band; net dollar retention 100 to 105% median, 110% top quartile; burn multiple under 1 amazing, under 2 good, about 3 at seed). Compute payback on gross margin with fully loaded CAC; with under 12 months of cohorts report realised cohort value, not a formula LTV. 5: recurring revenue and top-quartile efficiency for the band. 4: median or better. 3: path to revenue clear, efficiency unknown. 2: below band. 1: no clear path to revenue or margins that imply competing on price. Under $1m ARR most of this is not_assessed."
+    },
+    {
+      "key": "deal_terms",
+      "name": "Deal terms and financials",
+      "weight": 0.05,
+      "description": "Whether the ask, the price and the terms are reasonable and consistent, judged against comparables and standard terms rather than a formula.",
+      "evaluates": "Decode the ask (post = raise / ownership; effective pre = pre less the pool carved from it; state the instrument). Price: the subject's percentile against pipeline and external comparables from the same regime, quarter and sector; the VC-method ceiling with a dilution path. Terms: flag anything beyond 1x non-participating, pari passu, broad-based weighted average and no redemption, with the prevalence figure beside it. Runway 12 to 24 months to a named milestone with specific uses of funds; a bottom-quartile round size is a risk signal. 5: price at or below the comparables median, standard terms, runway to milestone. 4: price up to the 75th percentile with a reason. 3: price above range but explained. 2: proformas that do not reconcile or off-market terms. 1: overfunding with no uses, or a price the ceiling cannot support. Never present a blended value; headline post-money is the price of the last preferred, not the company's value."
+    }
+  ],
+  "composite": {
+    "method": "weighted_mean_of_assessed",
+    "description": "Weighted mean of the assessed criteria only. Not-assessed criteria are excluded and the remaining weights renormalise to the weight present. Before scoring, check the knock-outs; any that is triggered forces the recommendation to pass with the knock-out named, whatever the composite: (1) no one on the team has worked in the sector; (2) no one on the team has led people; (3) misrepresentation or an integrity concern in the materials or references; (4) a regulatory or technical impossibility the plan depends on; (5) an addressable market below the bar derived from the network's cheque, ownership and target multiple; (6) an ask or valuation far outside the stage benchmark with no explanation. Top band condition: strong_consider also requires market_opportunity and product_differentiation both at 4 or above and no criterion at 2 or below; otherwise report consider. Score each criterion from its own evidence before reading the others, and write the memo last."
+  },
+  "recommendation": {
+    "rounding": {
+      "decimals": 1,
+      "method": "half_up",
+      "before_banding": true
+    },
+    "bands": [
+      {
+        "recommendation": "strong_consider",
+        "min_score": 4.2
+      },
+      {
+        "recommendation": "consider",
+        "min_score": 3.5
+      },
+      {
+        "recommendation": "neutral",
+        "min_score": 2.8
+      },
+      {
+        "recommendation": "pass",
+        "min_score": 2.0
+      }
+    ],
+    "floor": "strong_pass",
+    "withheld": "insufficient_evidence"
+  },
+  "gates": {
+    "min_coverage": 0.5,
+    "min_document_chunks": 1,
+    "description": "Coverage is the share of total criterion weight that was assessed. Below min_coverage, or with fewer than min_document_chunks readable document chunks, the composite is withheld (null) and the recommendation is the withheld value. Never score absence down; missing evidence is not_assessed."
+  },
+  "not_assessed": {
+    "status": "not_assessed",
+    "default_reasoning": "No evidence bearing on this criterion was found in the provided materials.",
+    "rule": "If the material contains no evidence bearing on a criterion, set its status to not_assessed, omit the score, and say in the reasoning what document or section would be needed. A missing, null or non-numeric score is treated the same way. Never represent missing information as a low score.",
+    "shape": {
+      "type": "object",
+      "required": ["status", "reasoning"],
+      "properties": {
+        "status": {
+          "const": "not_assessed"
+        },
+        "reasoning": {
+          "type": "string"
+        }
+      },
+      "not": {
+        "required": ["score"]
+      }
+    }
+  },
+  "stage_calibration": {
+    "rule": "Score relative to what is reasonable at the company's stage. Use the round label the company gives, then sanity-check it against ask size, instrument, team size, product status, revenue and elapsed time since the last round. If they disagree, state the discrepancy and score against the more conservative reading. Stage benchmarks below are 2024-2025 US medians (Carta, Point Nine) and skew to software and the coastal hubs; adjust down outside them and say so.",
+    "stages": [
+      {
+        "stage": "Idea",
+        "typical_ask": "under $500k, usually a SAFE",
+        "product": "Prototype or design partner conversations",
+        "reasonable_traction": "Customer discovery notes with the number of interviews, a waitlist, LOIs that name a buyer",
+        "team": "Founders only; at least one with three or more years in the sector"
+      },
+      {
+        "stage": "Pre-seed",
+        "typical_ask": "$250k to $2.5m on post-money SAFEs; median caps about $7.5m under $250k raised, $10m at $250k to $1m, $15m at $1m to $2.5m (Carta 2025)",
+        "product": "MVP live with a handful of users",
+        "reasonable_traction": "Pre-revenue is normal; pilots, first paying customers, early retention",
+        "team": "Founders plus first hires"
+      },
+      {
+        "stage": "Seed",
+        "typical_ask": "$2m to $6m; median about $3.5m at about $16m pre-money (Carta 2025); a bottom-quartile round size halves the odds of reaching Series A",
+        "product": "Product in market",
+        "reasonable_traction": "About half of seed companies are pre-revenue; the rest run from a few hundred thousand to about $1m to $1.5m ARR; sub-$1m-ARR software grows about 100% a year at the median; retention curves that flatten",
+        "team": "Single digits to low teens"
+      },
+      {
+        "stage": "Series A",
+        "typical_ask": "$8m to $15m; median about $10m at about $48m pre-money, 18% dilution (Carta 2025)",
+        "product": "Product-market fit demonstrated, not claimed",
+        "reasonable_traction": "ARR about $3m at the median and $1m to $5m typical, growth above 2x year on year, net dollar retention above 100% for B2B, burn multiple under 2; 20 to 25 months from seed at the median",
+        "team": "About 13 at the median, 10 to 20"
+      }
+    ],
+    "procedure": [
+      "Write one line: \"Stage: <stage>. Reasonable evidence at this stage: <list>. Not reasonable to expect: <list>.\"",
+      "Carry that line into every downstream skill so a reader sees the bar that was applied.",
+      "When evidence is above the bar, say so; it is a highlight, not the baseline.",
+      "When evidence is below the bar for the claimed stage, score it down and name the gap. When it is absent because the stage does not produce it yet, use not_assessed.",
+      "Check the raise against the milestone it must reach: 12 to 24 months of runway to the next round's bar, with uses of funds more specific than building the MVP."
+    ],
+    "anti_patterns": [
+      "\"No revenue\" at idea stage is not a risk; it is the definition of the stage, and half of seed companies are still pre-revenue.",
+      "A pre-seed company \"lacking a sales team\" is not a finding.",
+      "An incomplete management team at pre-seed or seed is not a finding; a complete team is not required to be investable.",
+      "More than 24 months since the seed round is a question to ask, not a failing score; only about a fifth of seed companies reach Series A within two years.",
+      "A Series A company with only anecdotal retention is a real gap."
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "required": [
+      "knockouts",
+      "criteria_scores",
+      "key_highlights",
+      "key_risks",
+      "deal_memo",
+      "extracted_metrics"
+    ],
+    "properties": {
+      "knockouts": {
+        "type": "array",
+        "description": "One entry per knock-out in the composite description, evaluated before scoring.",
+        "items": {
+          "type": "object",
+          "required": ["key", "triggered", "evidence"],
+          "properties": {
+            "key": {
+              "type": "string"
+            },
+            "triggered": {
+              "type": "boolean"
+            },
+            "evidence": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "criteria_scores": {
+        "type": "object",
+        "description": "One entry per criterion, keyed by criterion key. Each entry is either scored or not_assessed. Score each from its own evidence before reading the others.",
+        "additionalProperties": {
+          "oneOf": [
+            {
+              "type": "object",
+              "required": ["score", "reasoning"],
+              "properties": {
+                "score": {
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 5
+                },
+                "reasoning": {
+                  "type": "string"
+                },
+                "status": {
+                  "const": "scored"
+                },
+                "evidence_class": {
+                  "type": "string",
+                  "enum": [
+                    "paid",
+                    "behavioural",
+                    "product",
+                    "discovery",
+                    "none"
+                  ]
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": ["status", "reasoning"],
+              "properties": {
+                "status": {
+                  "const": "not_assessed"
+                },
+                "reasoning": {
+                  "type": "string"
+                }
+              },
+              "not": {
+                "required": ["score"]
+              }
+            }
+          ]
+        }
+      },
+      "key_highlights": {
+        "type": "array",
+        "description": "Highlights as strings; lead with the evidence class (paid, behavioural, product, discovery) where one applies.",
+        "items": {
+          "type": "string"
+        }
+      },
+      "key_risks": {
+        "type": "array",
+        "description": "Risks as strings, each formatted '<type> (<class>): <risk>; mitigant: <mitigant or none>'. Type from: competition, technology, litigation, international, reputation, exit, management, stage, legislation_political, manufacturing, sales_marketing, funding. Class from: deal_killer, price, terms, operating_risk, opportunity. Order by severity.",
+        "items": {
+          "type": "string"
+        }
+      },
+      "deal_memo": {
+        "type": "string"
+      },
+      "extracted_metrics": {
+        "type": "object",
+        "properties": {
+          "ask_amount": {},
+          "valuation": {},
+          "instrument": {},
+          "revenue": {},
+          "arr": {},
+          "mrr": {},
+          "users": {},
+          "growth_rate": {},
+          "gross_margin": {},
+          "burn_multiple": {},
+          "runway_months": {},
+          "source_channel": {}
+        }
+      }
+    }
+  },
+  "band_conditions": [
+    {
+      "recommendation": "strong_consider",
+      "requires": {
+        "all_at_least": {
+          "market_opportunity": 4,
+          "product_differentiation": 4
+        },
+        "none_at_or_below": 2
+      },
+      "otherwise": "consider",
+      "description": "Market and product together predict scale; team alone predicts only the first round (Jang and Kaplan, NBER w33483, 2025). The top band needs both at 4 or above and no criterion at 2 or below."
+    }
+  ],
+  "knockouts": [
+    {
+      "key": "no_sector_experience",
+      "description": "No one on the team has worked in the company's sector (a knock-out in VC conjoint studies; Franke et al., ETP 2008)."
+    },
+    {
+      "key": "no_leadership_experience",
+      "description": "No one on the team has led people (Franke et al., ETP 2008)."
+    },
+    {
+      "key": "integrity_concern",
+      "description": "Misrepresentation or an integrity concern in the materials or the references."
+    },
+    {
+      "key": "impossible_dependency",
+      "description": "The plan depends on a regulatory or technical impossibility."
+    },
+    {
+      "key": "market_below_bar",
+      "description": "The addressable market is below the bar derived from the network's cheque, ownership and target multiple."
+    },
+    {
+      "key": "ask_far_off_benchmark",
+      "description": "The ask or valuation is far outside the stage benchmark with no explanation."
+    }
+  ],
+  "knockout_recommendation": "pass"
+}

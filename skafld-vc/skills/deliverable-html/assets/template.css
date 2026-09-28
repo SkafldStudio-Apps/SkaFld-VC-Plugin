@@ -1,0 +1,630 @@
+/* GENERATED from app/globals.css by scripts/deliverables/build-theme.ts; do not edit. Regenerate with: pnpm deliverables:theme */
+
+:root {
+  color-scheme: light dark;
+  --background: #fafafa;
+  --border: #e4e4e7;
+  --brand-cream: #faf8f3;
+  --card: #ffffff;
+  --foreground: #0a0a0a;
+  --gold-signal: #a67c1a;
+  --muted: #f4f4f5;
+  --muted-foreground: #71717a;
+  --radius: 0rem;
+  --text-body: 0.875rem;
+  --text-body--line-height: 1.6;
+  --text-caption: 0.6875rem;
+  --text-caption--line-height: 1.4;
+  --text-display: 1.875rem;
+  --text-display--letter-spacing: -0.02em;
+  --text-display--line-height: 1.15;
+  --text-heading: 1.125rem;
+  --text-heading--line-height: 1.4;
+  --text-label: 0.75rem;
+  --text-label--line-height: 1.4;
+  --text-title: 1.5rem;
+  --text-title--letter-spacing: -0.02em;
+  --text-title--line-height: 1.2;
+  --tone-danger-edge: oklch(0.88 0.08 20);
+  --tone-danger-soft: oklch(0.96 0.03 20);
+  --tone-danger-strong: oklch(0.52 0.2 25);
+  --tone-info-edge: oklch(0.88 0.07 250);
+  --tone-info-soft: oklch(0.96 0.03 250);
+  --tone-info-strong: oklch(0.5 0.17 255);
+  --tone-neutral-edge: oklch(0.9 0 0);
+  --tone-neutral-soft: oklch(0.97 0 0);
+  --tone-neutral-strong: oklch(0.45 0 0);
+  --tone-success-edge: oklch(0.88 0.08 150);
+  --tone-success-soft: oklch(0.96 0.04 150);
+  --tone-success-strong: oklch(0.48 0.13 150);
+  --tone-warning-edge: oklch(0.9 0.1 80);
+  --tone-warning-soft: oklch(0.97 0.05 80);
+  --tone-warning-strong: oklch(0.55 0.13 65);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #111214;
+    --border: rgb(255 255 255 / 8%);
+    --brand-cream: #1a1a1a;
+    --card: #17191c;
+    --foreground: #ededed;
+    --gold-signal: #c9a24a;
+    --muted: #1d2024;
+    --muted-foreground: #8a8f98;
+    --tone-danger-edge: oklch(0.65 0.22 25 / 30%);
+    --tone-danger-soft: oklch(0.65 0.22 25 / 15%);
+    --tone-danger-strong: oklch(0.78 0.16 22);
+    --tone-info-edge: oklch(0.65 0.18 255 / 30%);
+    --tone-info-soft: oklch(0.65 0.18 255 / 15%);
+    --tone-info-strong: oklch(0.78 0.13 250);
+    --tone-neutral-edge: oklch(1 0 0 / 14%);
+    --tone-neutral-soft: oklch(1 0 0 / 8%);
+    --tone-neutral-strong: oklch(0.78 0 0);
+    --tone-success-edge: oklch(0.7 0.17 150 / 30%);
+    --tone-success-soft: oklch(0.7 0.17 150 / 15%);
+    --tone-success-strong: oklch(0.78 0.15 150);
+    --tone-warning-edge: oklch(0.8 0.16 75 / 30%);
+    --tone-warning-soft: oklch(0.8 0.16 75 / 15%);
+    --tone-warning-strong: oklch(0.85 0.15 80);
+  }
+}
+
+/* Print is always light. */
+@media print {
+  :root {
+    color-scheme: light;
+    --background: #fafafa;
+    --border: #e4e4e7;
+    --brand-cream: #faf8f3;
+    --card: #ffffff;
+    --foreground: #0a0a0a;
+    --gold-signal: #a67c1a;
+    --muted: #f4f4f5;
+    --muted-foreground: #71717a;
+    --tone-danger-edge: oklch(0.88 0.08 20);
+    --tone-danger-soft: oklch(0.96 0.03 20);
+    --tone-danger-strong: oklch(0.52 0.2 25);
+    --tone-info-edge: oklch(0.88 0.07 250);
+    --tone-info-soft: oklch(0.96 0.03 250);
+    --tone-info-strong: oklch(0.5 0.17 255);
+    --tone-neutral-edge: oklch(0.9 0 0);
+    --tone-neutral-soft: oklch(0.97 0 0);
+    --tone-neutral-strong: oklch(0.45 0 0);
+    --tone-success-edge: oklch(0.88 0.08 150);
+    --tone-success-soft: oklch(0.96 0.04 150);
+    --tone-success-strong: oklch(0.48 0.13 150);
+    --tone-warning-edge: oklch(0.9 0.1 80);
+    --tone-warning-soft: oklch(0.97 0.05 80);
+    --tone-warning-strong: oklch(0.55 0.13 65);
+  }
+}
+
+/*
+ * Deliverable template: the static half of the stylesheet. It uses only the
+ * custom properties below (the --dl-* ones defined here) and the tokens that
+ * scripts/deliverables/build-theme.ts copies from app/globals.css, so a design
+ * change flows through when the theme is regenerated.
+ *
+ * Rules from docs/technical/design-system.md: square corners (--radius),
+ * hairline borders, gold only for the verdict, cream and neutral surfaces,
+ * tones for status, the six-step type ramp, no gradients, sentence case.
+ *
+ * Fonts: the app loads DM Sans, Instrument Serif and Geist Mono through
+ * next/font/google at build time; the repo holds no font files, and a
+ * deliverable may make no request, so they are not embedded. The stacks name
+ * the brand font first (used when installed) and fall back to close system
+ * faces.
+ */
+
+:root {
+  --dl-font-sans:
+    "DM Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica,
+    Arial, sans-serif;
+  --dl-font-display:
+    "Instrument Serif", ui-serif, Georgia, "Times New Roman", serif;
+  --dl-font-mono:
+    "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --dl-hairline: 1px solid var(--border);
+  --dl-measure: 52rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--dl-font-sans);
+  font-size: var(--text-body);
+  line-height: var(--text-body--line-height);
+  font-variant-numeric: tabular-nums;
+}
+
+.doc {
+  max-width: var(--dl-measure);
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+}
+
+/* Header */
+
+.doc-header {
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
+  border-bottom: var(--dl-hairline);
+}
+
+.doc-type {
+  margin: 0 0 0.25rem;
+  color: var(--muted-foreground);
+  font-size: var(--text-label);
+  line-height: var(--text-label--line-height);
+  font-weight: 600;
+}
+
+.doc-title {
+  margin: 0 0 0.5rem;
+  font-family: var(--dl-font-display);
+  font-weight: 400;
+  font-size: var(--text-display);
+  line-height: var(--text-display--line-height);
+  letter-spacing: var(--text-display--letter-spacing);
+}
+
+.doc-meta {
+  margin: 0.125rem 0;
+  color: var(--muted-foreground);
+  font-size: var(--text-label);
+  line-height: var(--text-label--line-height);
+}
+
+.doc-status {
+  margin: 0.75rem 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+
+.lead {
+  margin-bottom: 1.5rem;
+  font-size: var(--text-heading);
+  line-height: var(--text-heading--line-height);
+}
+
+/* Sections */
+
+.section {
+  padding: 1.25rem 0;
+  border-top: var(--dl-hairline);
+}
+
+.doc-header + .section,
+.lead + .section,
+.part-header + .section,
+.part-header + .lead {
+  border-top: 0;
+}
+
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0 0 0.75rem;
+  font-weight: 600;
+}
+
+.section > h2,
+.package-part .section > h3 {
+  font-size: var(--text-heading);
+  line-height: var(--text-heading--line-height);
+}
+
+.section h3,
+.section h4,
+.section h5,
+.section h6 {
+  font-size: var(--text-body);
+  line-height: var(--text-body--line-height);
+  margin-top: 1rem;
+}
+
+.part-title {
+  margin: 0 0 0.25rem;
+  font-family: var(--dl-font-display);
+  font-weight: 400;
+  font-size: var(--text-title);
+  line-height: var(--text-title--line-height);
+  letter-spacing: var(--text-title--letter-spacing);
+}
+
+p {
+  margin: 0 0 0.75rem;
+}
+
+ul,
+ol {
+  margin: 0 0 0.75rem;
+  padding-left: 1.25rem;
+}
+
+li {
+  margin: 0.25rem 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--muted-foreground);
+  text-underline-offset: 2px;
+}
+
+code,
+pre,
+.mono {
+  font-family: var(--dl-font-mono);
+}
+
+code {
+  font-size: 0.9em;
+  background: var(--muted);
+  padding: 0 0.25em;
+}
+
+pre {
+  background: var(--muted);
+  border: var(--dl-hairline);
+  padding: 0.75rem;
+  overflow-x: auto;
+  font-size: var(--text-label);
+}
+
+pre code {
+  background: none;
+  padding: 0;
+}
+
+blockquote {
+  margin: 0 0 0.75rem;
+  padding: 0 0 0 0.875rem;
+  border-left: var(--dl-hairline);
+  color: var(--muted-foreground);
+}
+
+hr {
+  border: 0;
+  border-top: var(--dl-hairline);
+  margin: 1rem 0;
+}
+
+q {
+  quotes: "\201C" "\201D";
+}
+
+.muted,
+.empty,
+.item-meta {
+  color: var(--muted-foreground);
+}
+
+.item-meta {
+  font-size: var(--text-label);
+  line-height: var(--text-label--line-height);
+}
+
+.label {
+  margin: 0.75rem 0 0.25rem;
+  font-size: var(--text-label);
+  font-weight: 600;
+  color: var(--muted-foreground);
+}
+
+.facts {
+  color: var(--muted-foreground);
+  font-size: var(--text-label);
+}
+
+.notice {
+  padding: 0.5rem 0.75rem;
+  background: var(--brand-cream);
+  border: var(--dl-hairline);
+}
+
+/* Facts grid (label over mono value) */
+
+.facts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
+  gap: 0;
+  margin: 0 0 1rem;
+  border: var(--dl-hairline);
+  background: var(--card);
+}
+
+.facts-grid > div {
+  padding: 0.5rem 0.75rem;
+  border-right: var(--dl-hairline);
+  border-bottom: var(--dl-hairline);
+  margin: 0 -1px -1px 0;
+}
+
+.facts-grid dt {
+  color: var(--muted-foreground);
+  font-size: var(--text-caption);
+  line-height: var(--text-caption--line-height);
+}
+
+.facts-grid dd {
+  margin: 0.125rem 0 0;
+}
+
+/* Tables */
+
+.table-wrap {
+  overflow-x: auto;
+  margin: 0 0 1rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--card);
+  border: var(--dl-hairline);
+}
+
+th,
+td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.5rem 0.625rem;
+  border-bottom: var(--dl-hairline);
+}
+
+th {
+  color: var(--muted-foreground);
+  font-size: var(--text-label);
+  line-height: var(--text-label--line-height);
+  font-weight: 600;
+  background: var(--muted);
+}
+
+td p:last-child,
+td ul:last-child {
+  margin-bottom: 0;
+}
+
+.align-right {
+  text-align: right;
+}
+
+.align-center {
+  text-align: center;
+}
+
+.scorecard td:nth-child(2),
+.scorecard td:nth-child(3) {
+  white-space: nowrap;
+}
+
+.score {
+  font-weight: 600;
+}
+
+/* Badges: tones, square, hairline edge */
+
+.badge {
+  display: inline-block;
+  padding: 0 0.375rem;
+  border: 1px solid var(--tone-neutral-edge);
+  border-radius: var(--radius);
+  background: var(--tone-neutral-soft);
+  color: var(--tone-neutral-strong);
+  font-size: var(--text-caption);
+  line-height: 1.6;
+  font-weight: 600;
+  white-space: nowrap;
+  vertical-align: baseline;
+}
+
+.tone-neutral {
+  background: var(--tone-neutral-soft);
+  color: var(--tone-neutral-strong);
+  border-color: var(--tone-neutral-edge);
+}
+.tone-success {
+  background: var(--tone-success-soft);
+  color: var(--tone-success-strong);
+  border-color: var(--tone-success-edge);
+}
+.tone-warning {
+  background: var(--tone-warning-soft);
+  color: var(--tone-warning-strong);
+  border-color: var(--tone-warning-edge);
+}
+.tone-danger {
+  background: var(--tone-danger-soft);
+  color: var(--tone-danger-strong);
+  border-color: var(--tone-danger-edge);
+}
+.tone-info {
+  background: var(--tone-info-soft);
+  color: var(--tone-info-strong);
+  border-color: var(--tone-info-edge);
+}
+
+/* The verdict: the one gold element on the page */
+
+.verdict {
+  padding: 0.75rem 1rem;
+  margin: 0 0 1rem;
+  background: var(--card);
+  border: var(--dl-hairline);
+  border-left: 2px solid var(--gold-signal);
+}
+
+.verdict-decision {
+  margin: 0 0 0.25rem;
+  color: var(--gold-signal);
+  font-size: var(--text-heading);
+  line-height: var(--text-heading--line-height);
+  font-weight: 600;
+}
+
+.verdict-reason p:last-child,
+.verdict-band {
+  margin: 0;
+}
+
+.verdict-band {
+  margin-bottom: 0.375rem;
+}
+
+/* Research, questions, open items */
+
+.research,
+.questions,
+.open-items,
+.truths,
+.sources {
+  padding-left: 1.25rem;
+}
+
+.research {
+  list-style: none;
+  padding-left: 0;
+}
+
+.research > li {
+  padding: 0.5rem 0;
+  border-bottom: var(--dl-hairline);
+}
+
+.research-topic {
+  margin: 0 0 0.25rem;
+  font-weight: 600;
+}
+
+.cite {
+  font-family: var(--dl-font-mono);
+  font-size: var(--text-caption);
+  line-height: 0;
+  margin-left: 0.125rem;
+}
+
+.cite a {
+  text-decoration: none;
+  color: var(--muted-foreground);
+}
+
+.cite a::before {
+  content: "[";
+}
+
+.cite a::after {
+  content: "]";
+}
+
+.sources {
+  font-size: var(--text-label);
+  line-height: var(--text-label--line-height);
+}
+
+.workstream + .workstream {
+  margin-top: 1rem;
+}
+
+/* Package */
+
+.cover {
+  padding-bottom: 1.5rem;
+}
+
+.toc {
+  padding: 1rem 0 1.5rem;
+  border-bottom: var(--dl-hairline);
+}
+
+.toc h2 {
+  font-size: var(--text-heading);
+  line-height: var(--text-heading--line-height);
+}
+
+.package-part {
+  padding-top: 2rem;
+}
+
+.part-header {
+  padding-bottom: 0.75rem;
+  border-bottom: var(--dl-hairline);
+  margin-bottom: 0.5rem;
+}
+
+.doc-footer {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: var(--dl-hairline);
+  color: var(--muted-foreground);
+  font-size: var(--text-caption);
+  line-height: var(--text-caption--line-height);
+}
+
+/* Print: light values (the theme re-declares them for print), no page
+   chrome, each package part on a new page, links print their target. */
+
+@page {
+  margin: 16mm 14mm;
+}
+
+@media print {
+  body {
+    background: none;
+    font-size: 10pt;
+  }
+
+  .doc {
+    max-width: none;
+    padding: 0;
+  }
+
+  .package-part {
+    break-before: page;
+  }
+
+  .section,
+  tr,
+  .verdict,
+  .facts-grid > div {
+    break-inside: avoid;
+  }
+
+  h2,
+  h3,
+  h4 {
+    break-after: avoid;
+  }
+
+  .table-wrap {
+    overflow: visible;
+  }
+
+  a[href^="http"]::after,
+  a[href^="mailto:"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.85em;
+    color: var(--muted-foreground);
+    word-break: break-all;
+  }
+
+  .cite a::after {
+    content: "]";
+  }
+}

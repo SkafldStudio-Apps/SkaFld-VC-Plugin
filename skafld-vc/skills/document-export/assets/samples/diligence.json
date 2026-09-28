@@ -1,0 +1,173 @@
+{
+  "format": "skafld-vc.deliverable/v1",
+  "type": "diligence",
+  "company": {
+    "name": "Sample Company",
+    "kind": "outside",
+    "stage": "Seed",
+    "website": "https://sample.example"
+  },
+  "generatedAt": "2026-01-15T15:00:00.000Z",
+  "preparedBy": {
+    "agent": "brand-preview",
+    "runtime": "claude_code"
+  },
+  "status": "draft",
+  "sources": [
+    {
+      "id": "dr-fin",
+      "title": "data room: financials-2026.xlsx",
+      "kind": "data_room"
+    },
+    {
+      "id": "dr-cap",
+      "title": "data room: cap-table.pdf",
+      "kind": "data_room"
+    }
+  ],
+  "openItems": [],
+  "body": {
+    "stageBar": "Stage: seed. Diligence depth: founder references, pilot customer calls, a unit cost check and a clean cap table.",
+    "workstreams": [
+      {
+        "key": "team",
+        "needs": [
+          {
+            "item": "Reference call with the Rotterdam automation director",
+            "kind": "call",
+            "status": "missing"
+          },
+          {
+            "item": "Founder background check",
+            "kind": "document",
+            "status": "partial",
+            "note": "CEO verified; CTO not yet."
+          }
+        ]
+      },
+      {
+        "key": "financial",
+        "needs": [
+          {
+            "item": "Monthly financials for 2026",
+            "kind": "document",
+            "status": "in_data_room",
+            "sourceIds": ["dr-fin"]
+          },
+          {
+            "item": "Unit cost sheet per arm",
+            "kind": "document",
+            "status": "missing"
+          }
+        ],
+        "notes": "Burn is about $180k a month per the financials [^dr-fin]."
+      },
+      {
+        "key": "legal_corporate",
+        "needs": [
+          {
+            "item": "Cap table",
+            "kind": "document",
+            "status": "in_data_room",
+            "sourceIds": ["dr-cap"]
+          }
+        ]
+      }
+    ],
+    "dataRoom": [
+      {
+        "document": "financials-2026.xlsx",
+        "workstream": "financial",
+        "status": "present",
+        "sourceIds": ["dr-fin"]
+      },
+      {
+        "document": "cap-table.pdf",
+        "workstream": "legal_corporate",
+        "status": "outdated",
+        "note": "Dated before the SAFE in March."
+      },
+      {
+        "document": "Pilot contracts",
+        "workstream": "market_customers",
+        "status": "missing"
+      }
+    ],
+    "unitEconomics": {
+      "analysis": "Only pilot revenue is present: $240k across two pilots. Gross margin cannot be computed without hardware cost.",
+      "missing": ["Hardware cost per arm", "Installation cost per berth"]
+    },
+    "capTable": {
+      "analysis": "| Holder | Shares | % |\n| --- | ---: | ---: |\n| Founders | 8,000,000 | 80% |\n| Option pool | 1,000,000 | 10% |\n| Angels | 1,000,000 | 10% |",
+      "missing": ["March 2026 SAFE terms"]
+    },
+    "deckAudit": {
+      "claims": [
+        {
+          "slide": 9,
+          "claim": "Two paid pilots live",
+          "status": "supported",
+          "sourceIds": ["dr-fin"]
+        },
+        {
+          "slide": 11,
+          "claim": "60% gross margin at scale",
+          "status": "contradicted",
+          "note": "Financials show pilot hardware sold at cost."
+        }
+      ]
+    },
+    "gaps": [
+      {
+        "task": "Request the unit cost sheet per arm",
+        "closes": "Unit cost sheet",
+        "owner": "Deal lead",
+        "workstream": "financial"
+      },
+      {
+        "task": "Schedule the Rotterdam reference call",
+        "closes": "Reference call",
+        "owner": "Associate",
+        "workstream": "team"
+      },
+      {
+        "task": "Get the updated cap table with the SAFE",
+        "closes": "Current cap table",
+        "workstream": "legal_corporate"
+      }
+    ],
+    "requests": [
+      {
+        "request": "Monthly management accounts for the last 12 months",
+        "detail": "P&L, balance sheet and cash flow; unaudited is fine.",
+        "workstream": "financial",
+        "priority": "required",
+        "due": "2026-01-22"
+      },
+      {
+        "request": "Unit cost breakdown per unit sold",
+        "detail": "Materials, labour and installation, with the volume each figure assumes.",
+        "workstream": "financial",
+        "priority": "required",
+        "due": "2026-01-22"
+      },
+      {
+        "request": "Fully diluted cap table including any SAFEs or notes",
+        "workstream": "legal_corporate",
+        "priority": "required",
+        "due": "2026-01-22"
+      },
+      {
+        "request": "Introductions to two customers for a 20-minute reference call",
+        "workstream": "market_customers",
+        "priority": "required",
+        "due": "2026-01-26"
+      },
+      {
+        "request": "Product roadmap for the next 18 months",
+        "workstream": "product_technology",
+        "priority": "helpful"
+      }
+    ]
+  }
+}

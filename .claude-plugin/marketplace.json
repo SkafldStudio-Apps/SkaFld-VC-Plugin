@@ -1,0 +1,38 @@
+{
+  "name": "skafld-vc",
+  "owner": {
+    "name": "SkaFld Studio"
+  },
+  "metadata": {
+    "description": "SkaFld VC: venture capital agents and skills for Claude Code and Cowork. Start with SkaFld VC; add SkaFld VC Platform only if your firm runs a SkaFld VC platform.",
+    "version": "1.0.1"
+  },
+  "plugins": [
+    {
+      "name": "skafld-vc",
+      "displayName": "SkaFld VC",
+      "source": "./skafld-vc",
+      "description": "Start here. Screening, diligence plans, IC memos, returns, market sizing, unit economics, cap tables and deal flow, from your own documents. Branded HTML, Word, PDF and deck exports. Works with no platform.",
+      "category": "productivity",
+      "tags": [
+        "venture capital",
+        "angel investing",
+        "due diligence",
+        "investment memo",
+        "startups"
+      ]
+    },
+    {
+      "name": "skafld-vc-platform",
+      "displayName": "SkaFld VC Platform (for SkaFld platform customers)",
+      "source": "./skafld-vc-platform",
+      "description": "Only if your firm runs a SkaFld VC platform: connects SkaFld VC to your firm's pipeline, documents, rubric and house profile, and installs SkaFld VC with it. Asks for your platform's address. No platform? Use SkaFld VC on its own, or contact hello@skafldstudio.com to get one.",
+      "category": "productivity",
+      "tags": [
+        "venture capital",
+        "skafld platform",
+        "connector"
+      ]
+    }
+  ]
+}

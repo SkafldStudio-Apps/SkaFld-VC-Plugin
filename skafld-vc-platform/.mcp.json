@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "skafld-vc": {
+      "type": "http",
+      "url": "${user_config.platform_url}/api/mcp",
+      "timeout": 310000
+    }
+  }
+}

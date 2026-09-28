@@ -1,0 +1,35 @@
+{
+  "format": "skafld-vc.brand/v1",
+  "id": "skafld-vc",
+  "name": "SkaFld VC",
+  "website": "skafldstudio.com",
+  "footer": "Confidential",
+  "colors": {
+    "accent": "#E07800",
+    "accent_light": "#FFB168",
+    "accent_deep": "#B35F00",
+    "ink": "#1A1A1A",
+    "body": "#333333",
+    "muted": "#777777",
+    "line": "#E6E1DA",
+    "panel": "#FAF6F1",
+    "table_header": "#2D2D2D",
+    "table_header_text": "#FFFFFF",
+    "table_alt": "#F7F5F2",
+    "paper": "#FFFFFF"
+  },
+  "fonts": {
+    "display": { "family": "Manrope", "weight": 800 },
+    "heading": { "family": "Manrope", "weight": 700 },
+    "body": { "family": "Inter" },
+    "label": { "family": "DM Sans", "weight": 500 }
+  },
+  "logo": { "primary": "logo.png", "on_dark": "logo.png", "mark": "logo.png" },
+  "style": {
+    "bullet": "—",
+    "rail": "rail.png",
+    "heading_rule": true,
+    "label_uppercase": true,
+    "label_tracking": 0.1
+  }
+}
