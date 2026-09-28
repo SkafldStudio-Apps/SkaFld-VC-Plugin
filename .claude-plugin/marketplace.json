@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "SkaFld VC: venture capital agents and skills for Claude Code and Cowork. Start with SkaFld VC; add SkaFld VC Platform only if your firm runs a SkaFld VC platform.",
-    "version": "1.1.0"
+    "version": "1.1.1"
   },
   "plugins": [
     {

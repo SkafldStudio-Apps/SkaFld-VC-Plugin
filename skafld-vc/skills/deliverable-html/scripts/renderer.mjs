@@ -889,6 +889,21 @@ function checkScreening(c, b, path, cites) {
       `${sp}.coverage`,
       "must be a number from 0 to 1"
     )
+    c.arr(
+      s,
+      "knockouts",
+      sp,
+      (k, p) => {
+        c.str(k, "key", p)
+        c.req(
+          typeof k.triggered === "boolean",
+          `${p}.triggered`,
+          "must be a boolean"
+        )
+        c.optStr(k, "evidence", p)
+      },
+      { optional: true }
+    )
     c.arr(s, "criteria", sp, (cr, p) => {
       c.str(cr, "key", p)
       c.optStr(cr, "name", p)
@@ -2438,6 +2453,16 @@ function priceBody(ctx, v) {
   }${ctx.cites(v.sourceIds)}<p class="muted">The answers are shown side by side and never blended into one value. The headline post-money is the price of the last preferred share, not the company's value.</p>`
 }
 
+/** A triggered knock-out forces pass whatever the composite: say which. */
+function knockoutNote(ctx, knockouts) {
+  const hit = (knockouts ?? []).filter((k) => k.triggered)
+  if (hit.length === 0) return ""
+  return `<p class="label">Knock-out: recommendation forced to pass</p>${table(
+    ["Knock-out", "Evidence"],
+    hit.map((k) => [escapeHtml(humanize(k.key)), md(ctx, k.evidence ?? "")])
+  )}`
+}
+
 function screeningScorecard(ctx, s) {
   const withheld = s.published.withheld
     ? `Withheld${s.published.withheldBecause?.length ? ` (${escapeHtml(s.published.withheldBecause.join(", "))})` : ""}`
@@ -2466,7 +2491,7 @@ function screeningScorecard(ctx, s) {
     ctx,
     "scorecard",
     "Scorecard",
-    `${summary}${table(["Criterion", "Weight", "Score", "Reasoning"], rows, "scorecard")}${list(ctx, "Highlights", s.highlights)}${list(ctx, "Risks", s.risks)}`
+    `${summary}${knockoutNote(ctx, s.knockouts)}${table(["Criterion", "Weight", "Score", "Reasoning"], rows, "scorecard")}${list(ctx, "Highlights", s.highlights)}${list(ctx, "Risks", s.risks)}`
   )
 }
 

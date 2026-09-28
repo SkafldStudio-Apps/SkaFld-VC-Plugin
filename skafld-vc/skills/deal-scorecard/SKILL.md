@@ -49,7 +49,7 @@ While scoring, note any deal killer. The classic list: historical performance va
 
 ### 6. The composite
 
-**With the platform**: call `score_company` with one entry per criterion (scored with its evidence and sources, or `not_assessed` with what would be needed). Report the composite, band, coverage and withheld state exactly as the tool returns them. Never compute, adjust or round them yourself.
+**With the platform**: call `score_company` with one entry per criterion (scored with its evidence and sources, or `not_assessed` with what would be needed), and, where the rubric has a `knockouts` list, your step 3 results as `knockouts` (`key`, `triggered`, `evidence`); the tool then forces the knock-out recommendation itself and returns the triggered ones as `knockouts_triggered`. Report the composite, band, coverage and withheld state exactly as the tool returns them. Never compute, adjust or round them yourself.
 
 **Without the platform**: if the plugin's local `score_with_rubric` tool is available, call it with `criteria` (an object keyed by criterion: `{"score": n, "reasoning": "..."}` or `{"status": "not_assessed", "reasoning": "what would be needed"}`), `knockouts` (your step 3 results as `[{"key", "triggered", "evidence"}]`), `document_count` (how many documents the scores rest on) and, only for a rubric file other than `rubric.json`, `rubric_path`. It finds the rubric in the same order as step 1 and returns which one it used, the worksheet, composite, band, coverage, gates and knock-out result; report them the same way. If no scoring tool is available, show the worksheet below in full and label the composite "arithmetic not tool-verified".
 
