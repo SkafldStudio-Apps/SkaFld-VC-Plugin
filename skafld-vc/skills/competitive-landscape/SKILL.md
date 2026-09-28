@@ -8,8 +8,10 @@ description: Map a startup's competitive landscape (direct competitors, substitu
 ## Procedure
 
 1. **Named and omitted.** Start from the deck's competition slide; list who is named and who is omitted.
-2. **Search**, with any search or company-data connector the user has connected (for example Exa or Apollo organizations) or otherwise web search, for direct competitors, substitutes the customer uses today (including doing nothing or a spreadsheet), incumbents that could add the feature, and well-funded adjacent entrants.
-3. **Profile each**: what they sell, to whom, stage and last round with date and source, pricing if public, one line on positioning.
+2. **Search**, with any search or company-data connector the user has connected (for example Exa or Apollo organizations) or otherwise web search, for direct competitors, substitutes the customer uses today (including doing nothing or a spreadsheet), incumbents that could add the feature, and well-funded adjacent entrants. Include adjacent or tangential markets whose companies could move in (GoingVC Founder Feedback Guide, n.d.).
+   - _Participant lists_: for an industry with trade bodies or trade shows, search for the trade association's member directory and the most recent exhibitor list of the main trade show for the segment (for example the queries "<segment> association member directory" and "<segment> <year> exhibitor list", then fetch the list page). These are a free count of the participants in a segment and a source of names the deck omits (Stanford GSB Search Fund Primer 2021, Parts IV and V). Record the list, its date and how many members fit the company's segment; a list shows who is present, not who is winning.
+3. **Profile each**: what they sell, to whom, stage and last round with date and source, pricing if public, one line on positioning, and, where a source gives them: size (revenue or headcount, headcount marked as often self-reported), market share, profitability, ownership (founder-held, venture-backed with lead, corporate-owned, public) and the management team; the business model; strengths and weaknesses in one line each; and the points of difference against the company on product, price, brand, channel and function (the competitor profile in Stanford GSB Search Fund Primer 2021, Exhibit 25; the per-competitor fields in the GoingVC Founder Feedback Guide, n.d.). A field no source gives is left blank, never estimated.
+   - _Optional 2x2_: when the reader wants a picture, place the company and its competitors on the two axes that matter most to the target buyer, chosen from price, product quality, service quality, feature set, ease of use, strength of benefit, target market and brand (GoingVC Founder Feedback Guide, n.d.). Name the evidence for each placement; a 2x2 drawn from the deck's own claims is labelled as the company's view.
 4. **Concentration.** Estimate the leader's share and the number of viable players, using the leader-share table in `skafld-vc:market-sizing`. Vertical SaaS categories typically need four to nine players to reach 80% of the market (Product Philosophy 2025, directional).
 5. **Test each claimed advantage with 7 Powers.** A power exists only when a _benefit_ (better cash flows, lower cost or higher price) is paired with a _barrier_ (what stops a well-funded competitor from copying it). Write the barrier sentence first; if it cannot be written, there is no moat yet (Helmer 2016). The seven powers: scale economies, network economies, counter-positioning (the incumbent will not copy because it would damage its existing business), switching costs (financial, procedural, relational), branding, cornered resource, process power.
 
@@ -35,8 +37,9 @@ description: Map a startup's competitive landscape (direct competitors, substitu
 
 ```
 ## Landscape — <Company>
-| Competitor | Type (direct / substitute / incumbent / adjacent) | Stage & funding [source, date] | Positioning | Threat |
+| Competitor | Type (direct / substitute / incumbent / adjacent) | Stage & funding [source, date] | Size · share · profitability | Ownership | Positioning | Points of difference (product / price / brand / channel / function) | Threat |
 | ... |
+Participant lists: <association or show, date>: <n> members in segment | not searched
 Omitted from the deck: ...
 Concentration: leader ~<n>% [source]; <k> viable players
 Claimed advantages:
@@ -57,6 +60,7 @@ Pipeline / portfolio conflict: none found | <deal, stage> | not checked (no plat
 ## Sources
 
 - Eisenmann, T., Parker, G. and Van Alstyne, M. (2006). "Strategies for Two-Sided Markets." _Harvard Business Review_ 84(10). https://hbr.org/2006/10/strategies-for-two-sided-markets
+- GoingVC Investor Program (n.d.). Founder Feedback Guide, Competition area (per-competitor fields and 2x2 axes; practitioner guide).
 - GoingVC Research Library (n.d.). "Complete Due Diligence for Angels", "Company and competitors" chapter (practitioner guide).
 - Golder, P. and Tellis, G. (1993). "Pioneer Advantage: Marketing Logic or Marketing Legend?" _Journal of Marketing Research_ 30(2). https://gtellis.net/wp-content/uploads/2020/09/pioneering-advantage-marketing-logic-or-marketing-legend.pdf
 - Helmer, H. (2016). _7 Powers: The Foundations of Business Strategy._ https://7powers.com/
@@ -65,3 +69,4 @@ Pipeline / portfolio conflict: none found | <deal, stage> | not checked (no plat
 - Product Philosophy (Ova) (2025). "Winner-Take-Most vs Multi-Homing in Vertical SaaS" (analyst estimates; directional). https://productphilosophy.com/articles/winner-take-most-multi-homing-vertical-saas
 - Robinson, W. and Min, S. (2002). "Is the First to Market the First to Fail?" _Journal of Marketing Research_ 39(1). https://journals.sagepub.com/doi/10.1509/jmkr.39.1.120.18938
 - Shapiro, C. and Varian, H. (1999). _Information Rules_, chapters 5-7 (lock-in classes). https://www.inforules.com/contents-h.htm
+- Stanford GSB Center for Entrepreneurial Studies (2021). _2021 Search Fund Primer_, Parts IV and V (trade-association and trade-show lists as industry sources) and Exhibit 25 (sample due diligence topics: competitor profiles and points of difference).

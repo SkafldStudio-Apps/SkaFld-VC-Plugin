@@ -4,7 +4,7 @@
 // <project>/skafld-vc/ and nowhere else. It opens no network
 // connection; the agents get these two tools instead of Bash or Write.
 //
-//   render_deliverable  { deliverable }                    one Screening report, Diligence plan or IC memo
+//   render_deliverable  { deliverable }                    one Sourcing longlist, Screening report, Diligence plan, IC memo or Portfolio review
 //   render_package      { files?, deliverables?, person? } one Package combining several for one company
 //   score_with_rubric   { criteria, ... }                  documents-only scoring against a rubric
 //   export_document     { format, file? | deliverable? | markdown?, ... }
@@ -42,7 +42,7 @@ const TOOLS = [
   {
     name: "render_deliverable",
     title: "Write an HTML deliverable",
-    description: `Validate one deliverable (a Screening report, Diligence plan or IC memo) and write it as a self-contained HTML file in ./skafld-vc/, with its JSON beside it. Returns the paths, or the validation errors to fix. ${FORMAT_HINT}`,
+    description: `Validate one deliverable (a Sourcing longlist, Screening report, Founder feedback, Diligence plan, IC memo or Portfolio review) and write it as a self-contained HTML file in ./skafld-vc/, with its JSON beside it. Returns the paths, or the validation errors to fix. ${FORMAT_HINT}`,
     inputSchema: {
       type: "object",
       properties: {
@@ -143,7 +143,7 @@ TOOLS.push({
   name: "export_document",
   title: "Export as Word, PDF, PowerPoint or Excel",
   description:
-    'Write a branded file in ./skafld-vc/: docx (Word report), pdf (PDF report), pptx (PowerPoint deck), deck_pdf (the deck as PDF) or xlsx (a Diligence plan only: audience "founder" is the request list to send to the company, built from body.requests and nothing else; "team" is the internal tracker). The source is a deliverable or package written earlier (file), a deliverable object, or Markdown (any answer: # title, ## sections, lists, tables). The brand is the one named, else the project\'s brand/ folder, else the person\'s saved brand, else the SkaFld VC default. Load the skafld-vc:document-export skill first.',
+    'Write a branded file in ./skafld-vc/: docx (Word report), pdf (PDF report), pptx (PowerPoint deck), deck_pdf (the deck as PDF) or xlsx (a Diligence plan only: audience "founder" is the request list to send to the company, built from body.requests and nothing else; "team" is the internal tracker). A Founder feedback exports as docx or pdf; audience "founder" is the copy to send, without anything internal. The source is a deliverable or package written earlier (file), a deliverable object, or Markdown (any answer: # title, ## sections, lists, tables). The brand is the one named, else the project\'s brand/ folder, else the person\'s saved brand, else the SkaFld VC default. Load the skafld-vc:document-export skill first.',
   inputSchema: {
     type: "object",
     properties: {
@@ -173,7 +173,7 @@ TOOLS.push({
         type: "string",
         enum: ["founder", "team"],
         description:
-          "xlsx only: founder (the request list to send; the default) or team (internal tracker).",
+          "Who the file is for. xlsx (a Diligence plan): founder, the request list to send (the default), or team, the internal tracker. docx or pdf of a Founder feedback: founder, the copy to send, without the internal brief, ratings or anything internal (refused unless its disclosure check passed); leave it out for the internal version. Ignored otherwise.",
       },
       contact: {
         type: "string",

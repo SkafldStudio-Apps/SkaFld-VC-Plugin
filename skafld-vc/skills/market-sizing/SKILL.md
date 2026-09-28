@@ -5,13 +5,13 @@ description: Size a startup's market bottom-up (customers × revenue per custome
 
 # Market sizing
 
-A market is "big enough" only relative to what the investment needs. This skill derives that bar from the deal, sizes the market bottom-up, and states the share assumption that connects the two. No study relates the market size stated in a deck to later outcomes (none found in the 2026-09 evidence review), so the output is a reasoned range with its assumptions in the open, never a verdict on a single number.
+A market is "big enough" only relative to what the investment needs. This skill derives that bar from the deal, sizes the market bottom-up, and states the share assumption that connects the two. No study relates the market size stated in a deck to later outcomes (no published study found, literature search, September 2026), so the output is a reasoned range with its assumptions in the open, never a verdict on a single number.
 
 ## Procedure
 
 1. **Customer unit.** Define it precisely: which buyer, which segment, which geography, which budget line.
 2. **Bottom-up size.** Market = number of customers × revenue per customer (Pear VC, "Fundraising and Demo Day 101", 2026). Count customers from a citable source with its year; take revenue per customer from the company's pricing, contracts or a stated comparable. Show TAM (all customers of this unit), SAM (those the company can reach with its current product and channel) and SOM (what it can plausibly win by a stated year). Sequoia's template asks for TAM top-down, SAM bottom-up and SOM (Sequoia, "Writing a Business Plan", c. 2010-18).
-3. **Reconcile with the deck.** Put the deck's top-down figure beside yours with its definition and source. Explain the gap in one paragraph rather than choosing a side.
+3. **Reconcile with the deck.** Put the deck's top-down figure beside yours with its definition and source. Where public companies sell into the same segment, their annual reports (10-K filings on SEC EDGAR, with XBRL segment data) give a dated top-down cross-check of spend and leader share. Explain the gap in one paragraph rather than choosing a side.
 4. **The derived bar.** Compute what this investment needs, not a fixed floor (method: Lightspeed, "A TAM Masterclass", 2023):
 
    - required exit value = cheque ÷ ownership at exit × target multiple
@@ -20,7 +20,7 @@ A market is "big enough" only relative to what the investment needs. This skill 
 
    Ownership at exit is entry ownership after the dilution path in `skafld-vc:returns-analysis` (one path for both skills). The target multiple is stage-specific and comes from the same skill (a 10x reference at seed; Gompers et al. 2020 report a 5x median required by VCs, higher for early stage; Payne 2011/2019 reports angels seeking 20-30x). The exit revenue multiple comes from dated exit comparables for the sector; if none is given, say "exit multiple not sourced" and show the chain at two stated values rather than inventing one. Show every line of the arithmetic.
 
-5. **Leader share.** Choose the share from the table below and say why. Flag any plan that needs more than 25% share without network effects that meet the winner-take-all conditions (the conditions from Eisenmann, Parker and Van Alstyne 2006; the 25% flag is a stated rule of the 2026-09 evidence review, not a published threshold).
+5. **Leader share.** Choose the share from the table below and say why. Flag any plan that needs more than 25% share without network effects that meet the winner-take-all conditions (the conditions from Eisenmann, Parker and Van Alstyne 2006; the 25% flag is this skill's rule, not a published threshold: no study setting one was found, literature search, September 2026).
 6. **Market entry test.** Classify the market:
    - _Existing market_: at least one of real product differentiation (at least 10x better), perceived differentiation, or network effects must hold ("Complete Due Diligence for Angels", GoingVC Research Library, n.d.). Name which, with evidence. This is consistent with the benefit-and-barrier test in 7 Powers (Helmer 2016).
    - _New category_: if the founders cannot name their core users in a single phrase, the market may not exist (same guide). Run the TAM-expansion test below.
@@ -90,3 +90,4 @@ Range: <low> to <high>; drivers: 1. ... 2. ...
 - Product Philosophy (Ova) (2025). "Winner-Take-Most vs Multi-Homing in Vertical SaaS" (analyst estimates; directional). https://productphilosophy.com/articles/winner-take-most-multi-homing-vertical-saas
 - Sequoia Capital (c. 2010-18). "Writing a Business Plan" pitch template. https://www.nebraskaangels.org/file_download/7370ce25-b802-4cb9-b293-8b95737da264
 - Tunguz, T. (2018). "Does Winner Take Most in SaaS?" (directional). https://tomtunguz.com/does-winner-take-most-in-saas/
+- U.S. Securities and Exchange Commission. EDGAR full-text search; 10-K filings and XBRL financial data. https://www.sec.gov/edgar/search/

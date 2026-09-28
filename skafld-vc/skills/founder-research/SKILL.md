@@ -1,6 +1,6 @@
 ---
 name: founder-research
-description: Research a founding team from the application, deck, public sources and any people-data connector into a factual profile: professional timeline, the outcome-validated team cues (prior founding outcome, sector years, leadership, preparedness), role coverage for the stage, gaps and reference-call targets. Records non-cues without scoring them. Use for triage, the scorecard team criterion and diligence prep.
+description: Research a founding team from the application, deck, public sources and any people-data connector into a factual profile: professional timeline, the outcome-validated team cues (prior founding outcome, sector years, leadership, preparedness), role coverage for the stage, gaps and reference-call targets; and synthesise reference or customer call notes and transcripts the person supplies into findings by workstream and class. Records non-cues without scoring them. Use for triage, the scorecard team criterion, diligence prep and reference-call write-ups.
 ---
 
 # Founder research
@@ -10,7 +10,7 @@ Facts about professional history, each with a source and a verification mark. Th
 ## Sources, in order
 
 1. The application and the deck (what the founders claim).
-2. A people or company data connector if the user has one connected (for example Apollo): roles, tenure, company size, funding history.
+2. A people or company data connector if the user has one connected (for example Apollo): roles, tenure, company size, funding history. With Apollo connected, one lookup of the company's job postings (Apollo organization job postings) gives open roles as a proxy for headcount growth and hiring plan; name the lookup and ask before it, since Apollo lookups can spend the person's credits, and say that postings show intent to hire, not hires.
 3. The company website, product and pricing pages, changelog or release notes.
 4. Press, podcasts, talks, publications, patents, and code repositories where relevant.
 5. Prior ventures: outcome, role, duration, co-founders, and whether revenue or an exit is on the public record.
@@ -54,7 +54,16 @@ Facts about professional history, each with a source and a verification mark. Th
 
 8. **List reference-call targets** from professional history only: former managers (especially a founder or CEO they reported to), co-founders from prior ventures, direct reports, early customers, and investors in prior rounds. Never anyone at a founder's current employer (1752vc, Causo and GoingVC reference-check guides, 2026). Group them by the four referee types in `references/reference-call-questions.md`, which is the protocol for the human caller. The agent never contacts anyone.
 
-9. **Record what needs a direct question** rather than an inference: short tenures, unexplained gaps, contested departures, a claimed outcome that no source confirms.
+9. **Record what needs a direct question** rather than an inference: short tenures, unexplained gaps, contested departures, a claimed outcome that no source confirms. Always add one direct question for the founder call: whether the founders would accept board governance and a change of CEO if the company one day needed it. Angel screening worksheets treat an unwillingness to step aside as a deal killer (Payne 2011, rev. 2019), but no outcome study of it was found (literature search, September 2026), so mark it "unvalidated practitioner deal-killer": record the answer as a fact for the humans, never infer it from the materials, and never let it move a score on its own.
+
+## Synthesis mode: call notes or transcripts supplied
+
+When the person supplies notes or transcripts of reference or customer calls, pasted or from a connected transcript service (for example Fireflies, Gong or Apollo Conversations), read them only; never create, send or schedule anything in that service, and never contact anyone. Then:
+
+1. **Write up each call** in the per-referee template of `references/reference-call-questions.md` §5, from what was said: block ratings with the verbatim story behind each, "no basis" where the referee did not observe the behaviour, consistency with the founder's account, and the answer bands the call cleared, did not clear or did not test. A call that did not follow the protocol is written up as far as it goes and marked "unstructured".
+2. **Roll up** as §5 says: the pattern across referees, on-list against off-list differences, shared phrasing that suggests coaching, and which hypotheses are cleared, not cleared or untested.
+3. **Map each finding** to a diligence workstream (`team`, `market_customers`, `product_technology`, `financial`, `legal_corporate`, `deal_terms`) and a finding class: `deal_killer` (a history materially different from what was reported, an ethics or integrity concern), `price`, `terms` (only where a standard term such as vesting or a milestone tranche addresses it), `operating_risk` or `opportunity` (Stanford GSB Search Fund Primer 2021, Part VI, classes adapted to seed). A deal killer is reported first. Give each finding its bookends (the least and the most it could move price or plan).
+4. **Close or open gaps.** Say which open diligence questions the calls closed and which remain, and list the next calls if the eight-to-twelve plan is not complete. The output feeds the Diligence plan's `findings` (`finding`, `class`, `low`, `high`, `workstream`, and `lever` for a terms finding) and `gaps`; it is a draft for the human team.
 
 ## Output
 
@@ -74,7 +83,18 @@ Genesis: product-first / company-first / unclear (unvalidated heuristic) — <ev
 Edge and skin in the game: ...
 Role coverage for <stage>: <role: covered by / planned hire / gap>; matches hiring plan: yes / partly / no
 Reference targets by type: on-list personal ...; off-list personal ...; on-list customer ...; off-list prospective customer ...
-Questions for the founder call: ...
+Questions for the founder call: ... (always including governance and CEO change, unvalidated practitioner deal-killer)
+```
+
+In synthesis mode:
+
+```
+## Reference synthesis: <Company> (<n> calls: on-list personal <n>, off-list personal <n>, customer <n>, prospect <n>)
+<one §5 write-up per call; "unstructured" where the call did not follow the protocol>
+Roll-up: <pattern across referees; on-list vs off-list; coaching signals; hypotheses cleared / not cleared / untested>
+| Finding | Referee(s) | Workstream | Class | Low / high impact | Status |
+Gaps closed: ... · Still open: ... · Next calls: ...
+Draft for the human team; nobody was contacted.
 ```
 
 ## Rules
@@ -97,6 +117,8 @@ Questions for the founder call: ...
 - Eisenmann, "Determinants of Early-Stage Startup Performance: Survey Results", HBS Working Paper 21-057, 2020. https://www.hbs.edu/ris/Publication%20Files/21-057_0c4f5410-3dcb-4c2f-8c4e-6fcbc358b92f.pdf
 - Lyonnet and Stern, "Venture Capital (Mis)allocation in the Age of AI", 2022-2024. https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4260882
 - Greenberg and Mollick, "Sole Survivors: Solo Ventures Versus Founding Teams", 2018. https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3107898
+- Payne, B. (2011, rev. 2019). "Scorecard Valuation Methodology" and the angel screening worksheet (coachability and unwillingness to step aside as deal killers). Angel Capital Association. https://angelcapitalassociation.org/blog/blog-scorecard-valuation-methodology-rev-2019-establishing-the-valuation-of-pre-revenue-start-up-companies/
+- Stanford GSB Center for Entrepreneurial Studies (2021). _2021 Search Fund Primer_, Part VI "Evaluating due diligence findings" (deal killers, price, terms, risks).
 - Carta, "State of Private Markets Q1 and Q2 2025; Series A Q2 2025", 2025. https://carta.com/data/state-of-private-markets-q2-2025/ ; https://carta.com/data/series-a-fundraising-q2-2025/ (headcount figure as summarised in https://www.pmf.show/blog/series-a-requirements-2025-arr-bar-carta-data)
 - GoingVC Research Library, "Complete Due Diligence for Angels", Management Assessments chapter (genesis test after Kupor, role need-to-have skills, "skin in the game", "keep background checks and inquiries to those who have actually worked with the person"), undated. Practitioner guide read from a reference folder; no public URL recorded.
 - Founder reference-check practice guides (1752vc, Causo, GoingVC), 2026, for the rule against calling a current employer. https://www.1752.vc/learn/how-vcs-run-founder-reference-checks ; https://hub.causo.ai/guides/vc-reference-calls ; https://www.goingvc.com/post/how-to-reference-check-a-founder

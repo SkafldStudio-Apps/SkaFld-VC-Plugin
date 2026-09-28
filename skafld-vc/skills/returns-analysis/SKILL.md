@@ -19,11 +19,22 @@ Half to two thirds of early-stage investments return less than 1x; about 5-7% re
 4. **Scenarios.** Three to five: loss, modest exit, strong exit, outlier (and breakeven if useful). For each give exit value, exit ownership, proceeds to the cheque, gross multiple and years to exit.
    - **Pay each scenario through the preference stack**, not ownership × exit value. Each preferred class takes the greater of its preference and its as-converted share, senior classes first; ownership × exit value is only correct above the conversion point (Gornall and Strebulaev: the headline post-money is the price of the last preferred, not the company's value, and averages 48% above fair value, 2020; the latest preferred is worth on average 56% more than common, 2021). In loss and modest scenarios show the stack.
    - **Years to exit** default to the angel-group ladder: 3.0 years for under 1x, 3.3 for 1-5x, 4.6 for 5-10x, 4.9 for 10-30x, 6.0 for above 30x (Wiltbank and Boeker 2007, "lemons ripen faster than plums"). Outlier outcomes at seed come from the fat-tailed regime only after about five years (Othman 2019, AngelList: power-law exponent below 2 after ~5.1 years), and today's gaps are long: unicorns' median time since first VC round is 8.5 years (PitchBook-NVCA Venture Monitor, 2025 editions).
-5. **Probabilities.** Coarse judgments, labelled as such, starting from the base rates and adjusted with a stated reason (scorecard, traction, terms).
+5. **Probabilities.** Coarse judgments, labelled as such, starting from the default outcome prior (under 1x 55-65%, 1-3x 25-30%, 3-10x 5-10%, 10x or more 3-6%; section 5 of the `references/methods.md` of `skafld-vc:valuation-triangulation`, synthesised from the base rates above) and adjusted with a stated reason (scorecard, traction, terms). A company past its next-round bar earns a lower failure probability than one that is not (Damodaran, 2009).
 6. **Judgment-weighted multiple.** Sum of probability × multiple, named "judgment-weighted multiple", never "expected multiple": with a power-law exponent near 2 a sample mean does not estimate the true mean (Neumann 2017). Give two sensitivities in one sentence each: the outlier probability halves; the outlier goes to zero.
 7. **Break-even at the stage target.** The exit value at which proceeds reach the stage target multiple, after dilution and through the stack, and whether that exit is plausible against the market from `skafld-vc:market-sizing`.
-8. **Fund-returner line.** The exit value at which the house's aggregate cheque returns its fund or allocation N times at the exit ownership. Sapphire's arithmetic: 7.5% ownership needs a $666M exit to return a $50M fund (Thompson 2022); Pear VC: "$1B exit, 5% ownership = $50M return" (Pear VC 2026). Ask the user for the fund or allocation size; the house profile has only the per-deal cheque range, not a fund size. If unknown, show the line per $10M of fund and say so.
-9. **What has to be true.** Three bullets a committee member can test in diligence, always including the three-year checkpoint: a priced up-round led by an outside investor within about three years, because a seed deal not marked up by then is unlikely ever to be (AngelList 2023), and only 25-30% of seed companies reached Series A within 24 months in a normal year (Carta, 2018 cohorts; about 15-17% for 2022 cohorts).
+8. **Fund-returner line.** The exit value at which the house's aggregate cheque returns its fund or allocation N times at the exit ownership. Sapphire's arithmetic: 7.5% ownership needs a $666M exit to return a $50M fund (Thompson 2022); Pear VC: "$1B exit, 5% ownership = $50M return" (Pear VC 2026). Ask the user for the fund or allocation size; the house profile has only the per-deal cheque range, not a fund size. If unknown, show the line per $10M of fund and say so. Whenever a memo or a person calls the deal a fund returner, print the asset-class base rates beside the line, so the claim is read against what funds actually return: the US venture index returned a pooled net IRR of 14.86% over 10 years and 12.85% over 20 years (Cambridge Associates, US Venture Capital Index to Q4 2025, 2,816 funds, 2026), and the median venture fund's TVPI is below 2.0x (PitchBook, as cited by GoingVC, "How to Maximize Returns and Minimize Risk in VC", n.d.; the PitchBook release itself was not seen). A fund returner is by definition the rare outcome: say which row of the outcome prior it sits in.
+9. **What has to be true.** Walk the critical path first. One author treats the chance of success as the product of the probabilities of the objectives that must all go right, so a single weak link sinks the case (GoingVC, Early-Stage Valuations guide, undated). Use the guide's seven as prompts, one line each on what the evidence says and what would test it:
+
+   1. Product feasibility: can a competent team build the product at an acceptable cost?
+   2. Product team: is the current team able to build it, or can such a team be hired?
+   3. Market appeal: will customers buy it once they know about it?
+   4. Marketing: will the go-to-market plan work, or can one that works be designed?
+   5. Delivery team: can the sales, delivery and support teams do what is needed, or be assembled?
+   6. Management team: can management cope at each stage?
+   7. No major adverse event: nothing outside the plan (regulation, a platform change, a lawsuit) derails it.
+
+   A prompt the evidence cannot answer is "not assessed", not a low probability; never multiply the seven into a point probability. Then write three bullets a committee member can test in diligence, drawn from the weakest links, always including the three-year checkpoint: a priced up-round led by an outside investor within about three years, because a seed deal not marked up by then is unlikely ever to be (AngelList 2023), and only 25-30% of seed companies reached Series A within 24 months in a normal year (Carta, 2018 cohorts; about 15-17% for 2022 cohorts).
+
 10. **Portfolio note.** One line: the judgment-weighted multiple is reachable only across a diversified portfolio; with a power-law exponent near 2, about 34 or more positions give a 90% chance of returning capital (Neumann 2017), and each added company is worth about +9 bps of median IRR (Koh and Othman 2020, AngelList, 10,665 LP portfolios).
 
 ## IRR rule
@@ -44,7 +55,8 @@ Base rates: 50-70% of deals <1x; 5-7% ≥10x; top decile of exits 75-85% of cash
 
 Judgment-weighted multiple: <n>x · outlier probability halved: <n>x · outlier to zero: <n>x
 Break-even at <target>x: exit $<E> — plausible? ...
-Fund-returner: exit $<F> returns <fund> <N>x at <y>%
+Fund-returner: exit $<F> returns <fund> <N>x at <y>% · asset class: 14.86% net 10-year pooled IRR [Cambridge Associates 2026, n=2,816 funds]; median fund TVPI < 2.0x [PitchBook via GoingVC]
+Critical path: feasibility <...> · product team <...> · market appeal <...> · marketing <...> · delivery team <...> · management <...> · no major adverse event <...>
 What has to be true: 1. ... 2. ... 3. Outside-led priced up-round by <date>
 Portfolio note: ...
 ```
@@ -61,10 +73,12 @@ Portfolio note: ...
 - AngelList (2023). "Do Startup Valuations Matter for Investment Returns?" https://www.angellist.com/blog/do-startup-valuations-matter-for-investment-returns
 - Berkus, D. (2016). "After 20 Years: Updating the Berkus Method." https://berkonomics.com/?p=2752
 - Carta (2026). State of Private Markets Q1 2026; VC fundraising benchmarks (Jul 2026); Round Benchmarking Tool; Founder Ownership 2026. https://carta.com/data/state-of-private-markets-q1-2026/ ; https://carta.com/data/linkedin-vc-fundraising-benchmarks-2026/ ; https://carta.com/data/founder-ownership-2026/
+- Cambridge Associates (2026). US Venture Capital Index and Selected Benchmark Statistics, Q4 2025 (2,816 funds). https://www.cambridgeassociates.com/wp-content/uploads/2026/06/2025-Q4-USVC-Benchmark-Book.pdf
 - Carta (2024-2026). Seed-to-Series-A graduation cohorts. https://carta.com/data/newsletter-graduation-rate-from-seed-to-series-a/
 - Cooley (2026). Q2 2026 Venture Financing Report (166 deals). https://www.cooley.com/news/insight/2026/2026-08-17-q2-2026-venture-financing-report
+- Damodaran, A. (2009). "Valuing Young, Start-up and Growth Companies." NYU Stern working paper. https://pages.stern.nyu.edu/~adamodar/pdfiles/papers/younggrowth.pdf
 - Evans, B. (2016). "In praise of failure" (Horsley Bridge data, 7,000+ investments 1985-2014). https://www.ben-evans.com/benedictevans/2016/4/28/winning-and-losing
-- GoingVC (n.d.). "How to Maximize Returns and Minimize Risk in VC" and the GoingVC Fund Model workbook (practitioner material).
+- GoingVC (n.d.). "How to Maximize Returns and Minimize Risk in VC" (citing PitchBook for median fund TVPI); Early-Stage Valuations guide (critical-path objectives); the GoingVC Fund Model workbook. Practitioner material; no public URL.
 - Gompers, P., Gornall, W., Kaplan, S. and Strebulaev, I. (2020). "How Do Venture Capitalists Make Decisions?" _Journal of Financial Economics_ 135(1); 885 VCs. https://www.nber.org/system/files/working_papers/w22587/w22587.pdf
 - Gornall, W. and Strebulaev, I. (2020). "Squaring Venture Capital Valuations with Reality." _Journal of Financial Economics_ 135(1); and (2021) "A Valuation Model of VC-Backed Companies with Multiple Financing Rounds", SSRN 3725240. https://www.nber.org/system/files/working_papers/w23895/w23895.pdf
 - Koh, S. and Othman, A. (2020). "How Portfolio Size Affects Early-Stage Venture Returns." AngelList. https://angel.co/pdf/lp-performance.pdf

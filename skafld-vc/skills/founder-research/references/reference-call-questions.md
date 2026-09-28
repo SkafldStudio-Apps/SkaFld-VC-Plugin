@@ -1,8 +1,8 @@
 # Reference-call protocol for the human caller
 
-This is for the person on the investing team who makes the calls. **The agent never contacts referees, customers or founders.** It drafts the plan, the answer bands and the question sheet, and it reads the notes afterwards.
+This is for the person on the investing team who makes the calls. **The agent never contacts referees, customers or founders.** It drafts the plan, the answer bands and the question sheet, and afterwards it writes up the notes or transcripts the team supplies (`skafld-vc:founder-research`, synthesis mode).
 
-What the protocol can and cannot do: no study tests whether founder reference checks predict venture outcomes. In employee selection, reference checks predict job performance at about r = .26 (Schmidt and Hunter, 1998), and structure is what gives them that modest validity: highly structured reference reports outperform unstructured ones by two to three times (.21 against .11 observed; Pajo, 1996), and a short structured phone protocol run by untrained staff reached r = .25 (Taylor, Pajo, Cheung and Stringfield, 2004). So the calls use the same questions, behavioural answers and one anchored rating per block. Label the exercise as structured to reduce leniency, not as a predictor.
+What the protocol can and cannot do: no study tests whether founder reference checks predict venture outcomes. In employee selection, reference checks predict job performance at about r = .26 (Schmidt and Hunter, 1998). Treat that figure as a ceiling: the later re-estimate of selection validities found the earlier corrections too generous by .10 to .20 across methods and could not revise the reference-check figure for lack of data, so .26 stands unrevised and is probably high (Sackett, Zhang, Berry and Lievens, 2022). Structure is what gives them that modest validity: highly structured reference reports outperform unstructured ones by two to three times (.21 against .11 observed; Pajo, 1996), and a short structured phone protocol run by untrained staff reached r = .25 (Taylor, Pajo, Cheung and Stringfield, 2004). So the calls use the same questions, behavioural answers and one anchored rating per block. Label the exercise as structured to reduce leniency, not as a predictor.
 
 ## 1. Plan the calls
 
@@ -25,7 +25,7 @@ Rules for choosing referees:
 
 ## 2. Write the answer bands before calling
 
-For each hypothesis the team needs confirmed, write down before the first call the answer that would clear the bar and the answer that would not (Rosenblum, 2022). Share the bands with the deal team; for customer calls, share them with the founder too (Rosenblum, 2022).
+For each hypothesis the team needs confirmed, write down before the first call the answer that would clear the bar and the answer that would not (Rosenblum, 2022). Share the bands with the deal team; for customer calls, share them with the founder too (Rosenblum, 2022). Share the hypotheses, never the question sheet: do not send the questions to the founder or the referees in advance, because a referee who has been briefed on the questions gives rehearsed answers, and identical phrasing across referees is the main coaching tell (reference-check guides, 2026).
 
 ```
 Hypothesis: <e.g. "The CEO delivers on commitments to customers">
@@ -73,7 +73,7 @@ Record "no basis" when the referee did not observe the behaviour; it is not a lo
 
 ## 4. Question sheet (customer and prospective-customer calls)
 
-Ask of every customer and prospect (OpenView, 2012; reference-check guides, 2026). Include at least one churned customer or lost prospect; call all customers if there are fewer than ten.
+Ask of every customer and prospect (OpenView, 2012; reference-check guides, 2026). As with personal references, the questions are not sent in advance. Include at least one churned customer or lost prospect; call all customers if there are fewer than ten.
 
 1. What were you doing before you used this product?
 2. What triggered the search for something new?
@@ -104,6 +104,7 @@ Roll-up across all calls: the pattern across referees, not any single call; wher
 ## Sources
 
 - Schmidt and Hunter, "The Validity and Utility of Selection Methods in Personnel Psychology", Psychological Bulletin 124(2), 1998. https://www.emilkirkegaard.dk/en/wp-content/uploads/Schmidt-and-Hunter-1998-Validity-and-Utility-Psychological-Bulletin.pdf
+- Sackett, Zhang, Berry and Lievens, "Revisiting meta-analytic estimates of validity in personnel selection: Addressing systematic overcorrection for restriction of range", Journal of Applied Psychology 107(11), 2022. https://gwern.net/doc/statistics/meta-analysis/2021-sackett.pdf
 - Pajo, "Reference reports: a meta-analytic review of predictive validity", PhD thesis, Massey University, 1996. https://exa.ai/library/publication/0rhsfkvxp6l
 - Taylor, Pajo, Cheung and Stringfield, "Dimensionality and Validity of a Structured Telephone Reference Check Procedure", Personnel Psychology 57, 2004. https://exa.ai/library/publication/vvpt5g8v90v ; OPM summary https://www.opm.gov/policy-data-oversight/assessment-and-selection/other-assessment-methods/reference-checking
 - Gompers, Gornall, Kaplan and Strebulaev, "How Do Venture Capitalists Make Decisions?", Journal of Financial Economics 135(1), 2020. https://www.nber.org/digest/dec16/how-do-venture-capitalists-make-decisions

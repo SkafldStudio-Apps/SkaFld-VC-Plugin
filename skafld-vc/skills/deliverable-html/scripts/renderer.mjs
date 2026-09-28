@@ -30,10 +30,30 @@ export const LEGACY_DELIVERABLE_FORMATS = Object.freeze([
 export const LEGACY_PACKAGE_FORMATS = Object.freeze([
   "anchor-angels.package/v1",
 ])
+/** The types the platform stores on a deal (deal_deliverables). */
 export const DELIVERABLE_TYPES = Object.freeze([
   "screening",
   "diligence",
   "ic_memo",
+])
+/**
+ * Types only the plugin writes, for its Sourcing and Portfolio agents and
+ * founder feedback prepared for a person: they render and export like the
+ * rest, and the platform never stores them.
+ */
+export const LOCAL_DELIVERABLE_TYPES = Object.freeze([
+  "thesis_longlist",
+  "founder_feedback",
+  "portfolio_review",
+])
+/** Every type, in lifecycle order (a Package's section order). */
+export const ALL_DELIVERABLE_TYPES = Object.freeze([
+  "thesis_longlist",
+  "screening",
+  "founder_feedback",
+  "diligence",
+  "ic_memo",
+  "portfolio_review",
 ])
 
 /**
@@ -51,11 +71,17 @@ const TYPE_LABELS = {
   screening: "Screening report",
   diligence: "Diligence plan",
   ic_memo: "IC memo",
+  thesis_longlist: "Sourcing longlist",
+  founder_feedback: "Founder feedback",
+  portfolio_review: "Portfolio review",
 }
 const TYPE_SLUGS = {
   screening: "screening",
   diligence: "diligence-plan",
   ic_memo: "ic-memo",
+  thesis_longlist: "sourcing-longlist",
+  founder_feedback: "founder-feedback",
+  portfolio_review: "portfolio-review",
 }
 /** The deal team's time zone: the default for every date the renderer prints. */
 export const DEFAULT_TIME_ZONE = "America/Chicago"
@@ -137,15 +163,149 @@ const TRUTH_STATUSES = ["supported", "contradicted", "open"]
 const MEMO_SECTIONS = [
   "recommendation",
   "company",
+  "useOfFunds",
   "whyNow",
+  "thesisFit",
   "whyTeam",
   "whatHasToBeTrue",
   "traction",
   "terms",
+  "valuation",
   "risks",
   "networkFit",
+  "planBaseline",
   "openItems",
 ]
+// memo-format's finding classes (Stanford search fund primer, adapted);
+// `opportunity` is a Diligence finding only.
+const FINDING_CLASSES = [
+  "deal_killer",
+  "price",
+  "terms",
+  "operating_risk",
+  "opportunity",
+]
+const RISK_CLASSES = ["deal_killer", "price", "terms", "operating_risk"]
+const GAP_PRIORITIES = ["deal_killer", "elephant", "ant"]
+// The proof ladder that closes a gap, strongest first.
+const EVIDENCE_CLASSES = ["paid", "behavioural", "product", "discovery", "none"]
+// technical-diligence's verdicts.
+const TECH_VERDICTS = [
+  "technically_sound",
+  "workable",
+  "here_be_dragons",
+  "not_assessed",
+]
+// valuation-triangulation's ceiling line: the ask sits below or above it.
+const CEILING_RESULTS = ["below", "above", "not_assessed"]
+// anti-portfolio's pass-reason codes (the inbound-triage vocabulary).
+const PASS_REASONS = [
+  "out_of_scope",
+  "product_model",
+  "market",
+  "financial_valuation",
+  "team",
+  "agency",
+  "not_recorded",
+]
+const PASS_STAGES = [
+  "pre_screen",
+  "screen",
+  "diligence",
+  "committee",
+  "negotiation",
+]
+// thesis-fit's source channels.
+const CHANNELS = [
+  "network",
+  "self_generated",
+  "investor_referral",
+  "portfolio",
+  "inbound",
+  "event",
+]
+const CHECK_POINTS = ["12m", "24m", "36m"]
+const CHECK_OUTCOMES = [
+  "raised_priced",
+  "operating",
+  "acquired",
+  "shut_down",
+  "not_found",
+  "not_checked",
+  "due",
+]
+// founder-feedback's seven areas, in the guide's order, and its ratings.
+const FEEDBACK_AREAS = [
+  "story",
+  "business_model",
+  "competition",
+  "metrics",
+  "team",
+  "product",
+  "valuation",
+]
+const FEEDBACK_STATUSES = ["strong", "adequate", "gap", "not_discussed"]
+const LABELS = {
+  deal_killer: "Deal killer",
+  price: "Price",
+  terms: "Terms",
+  operating_risk: "Operating risk",
+  opportunity: "Opportunity",
+  elephant: "Elephant",
+  ant: "Ant",
+  paid: "Paid",
+  behavioural: "Behavioural",
+  product: "Product",
+  discovery: "Discovery",
+  none: "None",
+  technically_sound: "Technically Sound",
+  workable: "Workable",
+  here_be_dragons: "Here Be Dragons",
+  not_assessed: "Not assessed",
+  below: "Below the ceiling",
+  above: "Above the ceiling",
+  out_of_scope: "Out of scope",
+  product_model: "Product or model",
+  market: "Market",
+  financial_valuation: "Financial or valuation",
+  team: "Team",
+  agency: "Agency",
+  not_recorded: "Reason not recorded",
+  pre_screen: "Pre-screen",
+  screen: "Screen",
+  diligence: "Diligence",
+  committee: "Committee",
+  negotiation: "Negotiation",
+  network: "Network",
+  self_generated: "Self-generated",
+  investor_referral: "Investor referral",
+  portfolio: "Portfolio",
+  inbound: "Inbound",
+  event: "Event",
+  "12m": "12 months",
+  "24m": "24 months",
+  "36m": "36 months",
+  raised_priced: "Raised a priced round",
+  operating: "Operating, no new round",
+  acquired: "Acquired",
+  shut_down: "Shut down",
+  not_found: "Not found",
+  not_checked: "Not checked",
+  due: "Due",
+  story: "Story",
+  business_model: "Business model",
+  competition: "Competition",
+  metrics: "Metrics",
+  valuation: "Valuation",
+  strong: "Strong",
+  adequate: "Adequate",
+  gap: "Gap",
+  not_discussed: "Not discussed",
+}
+/** A label for an enum value from LABELS, else the value humanized. */
+function label(key) {
+  return own(LABELS, key, humanize(key))
+}
 
 // Status to tone, following lib/design/colors.ts: success for good,
 // warning for partial or unproven, danger for contradicted or missing,
@@ -172,7 +332,45 @@ const TONES = {
   },
   risk: { mitigated: "success", open: "warning" },
   request: { required: "warning", helpful: "neutral" },
+  thesisStatus: {
+    view: "neutral",
+    monitor: "neutral",
+    pursue: "warning",
+    engaged_founder: "success",
+    investment_memo: "success",
+  },
+  kpi: { on_track: "success", watch: "warning", off_track: "danger" },
+  concern: { open: "warning", mitigating: "neutral", resolved: "success" },
   truth: { supported: "success", contradicted: "danger", open: "neutral" },
+  finding: {
+    deal_killer: "danger",
+    price: "warning",
+    terms: "warning",
+    operating_risk: "neutral",
+    opportunity: "success",
+  },
+  priority: { deal_killer: "danger", elephant: "warning", ant: "neutral" },
+  tech: {
+    technically_sound: "success",
+    workable: "warning",
+    here_be_dragons: "danger",
+    not_assessed: "neutral",
+  },
+  check: {
+    raised_priced: "success",
+    acquired: "success",
+    operating: "neutral",
+    shut_down: "danger",
+    not_found: "neutral",
+    not_checked: "neutral",
+    due: "warning",
+  },
+  feedback: {
+    strong: "success",
+    adequate: "neutral",
+    gap: "warning",
+    not_discussed: "neutral",
+  },
   recommendation: {
     strong_consider: "success",
     consider: "success",
@@ -200,6 +398,16 @@ const STATUS_LABELS = {
   mitigated: "Mitigated",
   open: "Open",
   not_assessed: "Not assessed",
+  view: "View",
+  monitor: "Monitor",
+  pursue: "Pursue",
+  engaged_founder: "Engaged founder",
+  investment_memo: "Investment memo",
+  on_track: "On track",
+  watch: "Watch",
+  off_track: "Off track",
+  mitigating: "Mitigating",
+  resolved: "Resolved",
 }
 
 // ---------------------------------------------------------------------------
@@ -575,6 +783,37 @@ function present(v) {
   return v !== undefined && v !== null
 }
 
+/** true, false or null (not checked), when set. */
+function optTriState(c, obj, key, path) {
+  const v = obj[key]
+  c.req(
+    v === undefined || v === null || typeof v === "boolean",
+    `${path}.${key}`,
+    "must be true, false or null"
+  )
+}
+
+/** A YYYY-MM-DD date, when set. */
+function optYmd(c, obj, key, path) {
+  const v = obj[key]
+  if (!present(v)) return
+  c.req(
+    typeof v === "string" && /^\d{4}-\d{2}-\d{2}$/.test(v),
+    `${path}.${key}`,
+    "must be a YYYY-MM-DD date"
+  )
+}
+
+/** The price verdict (valuation-triangulation): four answers and the counter. */
+function checkPrice(c, v, path, cites) {
+  if (!c.req(isObject(v), path, "must be an object when set")) return
+  for (const k of ["comparables", "ceiling", "breakEven"]) c.str(v, k, path)
+  for (const k of ["ask", "terms", "counter"]) c.optStr(v, k, path)
+  c.optOneOf(v, "askVsCeiling", CEILING_RESULTS, path)
+  optTriState(c, v, "termsStandard", path)
+  cites(v, path)
+}
+
 function checkScreening(c, b, path, cites) {
   if (present(b.verdict)) {
     const vp = `${path}.verdict`
@@ -589,15 +828,24 @@ function checkScreening(c, b, path, cites) {
       c.arr(b.verdict, "decidedBy", vp, "string", { optional: true })
       c.optStr(b.verdict, "referTo", vp)
       if (present(b.verdict.hardFilters)) {
-        c.req(
-          isObject(b.verdict.hardFilters),
-          `${vp}.hardFilters`,
-          "must be an object"
-        )
+        if (
+          c.req(
+            isObject(b.verdict.hardFilters),
+            `${vp}.hardFilters`,
+            "must be an object"
+          )
+        ) {
+          for (const k of ["stage", "geography"])
+            optTriState(c, b.verdict.hardFilters, k, `${vp}.hardFilters`)
+        }
       }
+      c.optStr(b.verdict, "sourceQuality", vp)
+      c.arr(b.verdict, "redFlags", vp, "string", { optional: true })
+      c.optStr(b.verdict, "thesisFit", vp)
     }
   }
   if (present(b.stageBar)) c.str(b, "stageBar", path)
+  if (present(b.price)) checkPrice(c, b.price, `${path}.price`, cites)
   const s = b.scorecard
   const sp = `${path}.scorecard`
   if (present(s) && c.req(isObject(s), sp, "must be an object")) {
@@ -722,6 +970,7 @@ const SECTION_KEYS = {
     "verdict",
     "stageBar",
     "scorecard",
+    "price",
     "founders",
     "foundersNote",
     "deckAudit",
@@ -734,21 +983,56 @@ const SECTION_KEYS = {
     "dataRoom",
     "unitEconomics",
     "capTable",
+    "techDetermination",
     "deckAudit",
+    "findings",
     "gaps",
     "requests",
+  ],
+  thesis_longlist: [
+    "thesis",
+    "mandate",
+    "marketMap",
+    "companies",
+    "antiPortfolio",
+    "sourcingActivity",
+    "nextActions",
+  ],
+  founder_feedback: ["brief", "areas", "note", "nextStep"],
+  portfolio_review: [
+    "header",
+    "period",
+    "highlights",
+    "lowlights",
+    "keyTakeaways",
+    "kpis",
+    "cash",
+    "concerns",
+    "consentItems",
+    "operatingPlan",
+    "opportunities",
+    "asksOfNetwork",
+    "position",
+    "cadence",
+    "transactionRecap",
+    "portfolioView",
+    "capTableEvents",
   ],
   ic_memo: [
     "recommendation",
     "company",
     "whyNow",
+    "thesisFit",
     "whyTeam",
     "whatHasToBeTrue",
     "traction",
     "terms",
+    "valuation",
+    "useOfFunds",
     "risks",
     "bearCase",
     "networkFit",
+    "planBaseline",
   ],
 }
 
@@ -799,15 +1083,42 @@ function checkDiligence(c, b, path, cites) {
       c.oneOf(d, "status", DATA_ROOM_STATUSES, p)
       c.optOneOf(d, "workstream", WORKSTREAMS, p)
       c.optStr(d, "note", p)
+      optYmd(c, d, "requestedAt", p)
+      optYmd(c, d, "receivedAt", p)
+      c.optStr(d, "requestedBy", p)
       cites(d, p)
     },
     opt
   )
   checkAnalysis(c, b.unitEconomics, `${path}.unitEconomics`)
   checkAnalysis(c, b.capTable, `${path}.capTable`)
+  const tp = `${path}.techDetermination`
+  if (
+    present(b.techDetermination) &&
+    c.req(isObject(b.techDetermination), tp, "must be an object when set")
+  ) {
+    c.oneOf(b.techDetermination, "verdict", TECH_VERDICTS, tp)
+    c.str(b.techDetermination, "driver", tp)
+    cites(b.techDetermination, tp)
+  }
   if (present(b.deckAudit)) {
     checkDeckAudit(c, b.deckAudit, `${path}.deckAudit`, cites)
   }
+  c.arr(
+    b,
+    "findings",
+    path,
+    (f, p) => {
+      c.str(f, "finding", p)
+      c.oneOf(f, "class", FINDING_CLASSES, p)
+      optFigure(c, f, "low", p)
+      optFigure(c, f, "high", p)
+      c.optStr(f, "lever", p)
+      c.optOneOf(f, "workstream", WORKSTREAMS, p)
+      cites(f, p)
+    },
+    opt
+  )
   c.arr(
     b,
     "gaps",
@@ -817,6 +1128,9 @@ function checkDiligence(c, b, path, cites) {
       c.str(g, "closes", p)
       c.optStr(g, "owner", p)
       c.optOneOf(g, "workstream", WORKSTREAMS, p)
+      c.optOneOf(g, "priority", GAP_PRIORITIES, p)
+      c.optOneOf(g, "evidence", EVIDENCE_CLASSES, p)
+      c.optStr(g, "substitute", p)
     },
     opt
   )
@@ -843,7 +1157,7 @@ function checkDiligence(c, b, path, cites) {
   )
 }
 
-function checkIcMemo(c, b, path) {
+function checkIcMemo(c, b, path, cites) {
   const opt = { optional: true }
   if (
     present(b.header) &&
@@ -863,9 +1177,11 @@ function checkIcMemo(c, b, path) {
     "recommendation",
     "company",
     "whyNow",
+    "thesisFit",
     "whyTeam",
     "traction",
     "terms",
+    "useOfFunds",
     "bearCase",
     "networkFit",
   ]) {
@@ -894,6 +1210,30 @@ function checkIcMemo(c, b, path) {
       c.str(r, "risk", p)
       c.optStr(r, "mitigant", p)
       c.oneOf(r, "status", RISK_STATUSES, p)
+      c.optOneOf(r, "class", RISK_CLASSES, p)
+      c.optStr(r, "type", p)
+      optFigure(c, r, "low", p)
+      optFigure(c, r, "high", p)
+    },
+    opt
+  )
+  if (present(b.valuation)) {
+    checkPrice(c, b.valuation, `${path}.valuation`, cites)
+  }
+  c.arr(
+    b,
+    "planBaseline",
+    path,
+    (x, p) => {
+      c.str(x, "metric", p)
+      c.req(
+        nonEmpty(x.target) || isNumber(x.target),
+        `${p}.target`,
+        "is required (a string or a number)"
+      )
+      optFigure(c, x, "today", p)
+      c.optStr(x, "by", p)
+      cites(x, p)
     },
     opt
   )
@@ -918,7 +1258,7 @@ function checkDeliverable(input, path, errors) {
     `${path}.format`,
     `must be "${DELIVERABLE_FORMAT}"`
   )
-  const typed = c.oneOf(input, "type", DELIVERABLE_TYPES, path)
+  const typed = c.oneOf(input, "type", ALL_DELIVERABLE_TYPES, path)
   checkCompany(c, input.company, `${path}.company`)
   checkDate(c, input.generatedAt, `${path}.generatedAt`)
   checkPreparedBy(c, input.preparedBy, `${path}.preparedBy`)
@@ -943,6 +1283,8 @@ function checkDeliverable(input, path, errors) {
     c.str(s, "title", p)
     c.optStr(s, "url", p)
     c.optStr(s, "kind", p)
+    c.optStr(s, "date", p)
+    c.optStr(s, "sample", p)
   })
   const cites = (obj, p) => {
     if (obj.sourceIds === undefined || obj.sourceIds === null) return
@@ -976,7 +1318,354 @@ function checkDeliverable(input, path, errors) {
   )
   if (input.type === "screening") checkScreening(c, input.body, bp, cites)
   if (input.type === "diligence") checkDiligence(c, input.body, bp, cites)
-  if (input.type === "ic_memo") checkIcMemo(c, input.body, bp)
+  if (input.type === "ic_memo") checkIcMemo(c, input.body, bp, cites)
+  if (input.type === "founder_feedback")
+    checkFounderFeedback(c, input.body, bp, cites)
+  if (input.type === "thesis_longlist") checkLonglist(c, input.body, bp, cites)
+  if (input.type === "portfolio_review")
+    checkPortfolio(c, input.body, bp, cites)
+}
+
+const THESIS_STATUSES = [
+  "view",
+  "monitor",
+  "pursue",
+  "engaged_founder",
+  "investment_memo",
+]
+const KPI_STATUSES = ["on_track", "watch", "off_track"]
+const KPI_BASES = ["stated", "derived", "benchmark"]
+const CONCERN_STATUSES = ["open", "mitigating", "resolved"]
+const OUTCOMES = ["loser", "breakeven", "decent", "good", "big", "too_early"]
+const OUTCOME_LABELS = {
+  loser: "Loser",
+  breakeven: "Breakeven",
+  decent: "Decent winner",
+  good: "Good winner",
+  big: "Big winner",
+  too_early: "Too early",
+}
+
+/** A string, or a number (figures such as 1200000 or 3.4 are allowed). */
+function optFigure(c, obj, key, path) {
+  const v = obj[key]
+  if (v === undefined || v === null) return
+  c.req(
+    typeof v === "string" || isNumber(v),
+    `${path}.${key}`,
+    "must be a string or a number"
+  )
+}
+
+function optStrArray(c, obj, key, path) {
+  c.arr(obj, key, path, "string", { optional: true })
+}
+
+function checkLonglist(c, b, path, cites) {
+  const opt = { optional: true }
+  if (
+    present(b.thesis) &&
+    c.req(isObject(b.thesis), `${path}.thesis`, "must be an object")
+  ) {
+    c.str(b.thesis, "title", `${path}.thesis`)
+    c.optStr(b.thesis, "version", `${path}.thesis`)
+    c.optOneOf(b.thesis, "decision", ["go", "no_go", "draft"], `${path}.thesis`)
+    optStrArray(c, b.thesis, "pillars", `${path}.thesis`)
+  }
+  if (
+    present(b.mandate) &&
+    c.req(isObject(b.mandate), `${path}.mandate`, "must be an object")
+  ) {
+    for (const k of ["sectors", "geographies", "stages", "superPriority"]) {
+      optStrArray(c, b.mandate, k, `${path}.mandate`)
+    }
+    c.optStr(b.mandate, "checkSize", `${path}.mandate`)
+  }
+  if (present(b.marketMap)) c.str(b, "marketMap", path)
+  c.arr(
+    b,
+    "companies",
+    path,
+    (co, p) => {
+      c.str(co, "name", p)
+      c.str(co, "oneLine", p)
+      for (const k of [
+        "website",
+        "stage",
+        "hq",
+        "funding",
+        "investors",
+        "fit",
+        "reason",
+      ]) {
+        c.optStr(co, k, p)
+      }
+      optFigure(c, co, "founded", p)
+      optFigure(c, co, "teamSize", p)
+      optStrArray(c, co, "pillars", p)
+      c.oneOf(co, "status", THESIS_STATUSES, p)
+      c.optOneOf(co, "channel", CHANNELS, p)
+      optFigure(c, co, "thesisVersion", p)
+      if (present(co.dealId)) {
+        c.req(Number.isInteger(co.dealId), `${p}.dealId`, "must be an integer")
+      }
+      cites(co, p)
+    },
+    opt
+  )
+  c.arr(
+    b,
+    "antiPortfolio",
+    path,
+    (a, p) => {
+      c.str(a, "company", p)
+      c.str(a, "passReason", p)
+      c.optStr(a, "passedAt", p)
+      c.optStr(a, "outcomeCheck", p)
+      c.optStr(a, "lesson", p)
+      c.optOneOf(a, "reasonCode", PASS_REASONS, p)
+      c.optOneOf(a, "stageReached", PASS_STAGES, p)
+      optFigure(c, a, "thesisVersion", p)
+      c.optOneOf(a, "channel", CHANNELS, p)
+      c.req(
+        !present(a.nearMiss) || typeof a.nearMiss === "boolean",
+        `${p}.nearMiss`,
+        "must be true or false when set"
+      )
+      c.arr(
+        a,
+        "checks",
+        p,
+        (x, xp) => {
+          c.oneOf(x, "at", CHECK_POINTS, xp)
+          c.oneOf(x, "outcome", CHECK_OUTCOMES, xp)
+          c.optStr(x, "date", xp)
+          c.optStr(x, "note", xp)
+          cites(x, xp)
+        },
+        { optional: true }
+      )
+      cites(a, p)
+    },
+    opt
+  )
+  if (
+    present(b.sourcingActivity) &&
+    c.req(
+      isObject(b.sourcingActivity),
+      `${path}.sourcingActivity`,
+      "must be an object"
+    )
+  ) {
+    const sp = `${path}.sourcingActivity`
+    c.optStr(b.sourcingActivity, "period", sp)
+    for (const k of ["contacted", "meetings", "introductions", "termSheets"])
+      optFigure(c, b.sourcingActivity, k, sp)
+    c.arr(
+      b.sourcingActivity,
+      "sources",
+      sp,
+      (x, p) => {
+        c.str(x, "source", p)
+        optFigure(c, x, "count", p)
+      },
+      opt
+    )
+  }
+  c.arr(
+    b,
+    "nextActions",
+    path,
+    (x, p) => {
+      c.str(x, "company", p)
+      c.str(x, "action", p)
+      c.optStr(x, "owner", p)
+      c.optStr(x, "by", p)
+    },
+    opt
+  )
+}
+
+function checkPortfolio(c, b, path, cites) {
+  const opt = { optional: true }
+  if (
+    present(b.header) &&
+    c.req(isObject(b.header), `${path}.header`, "must be an object")
+  ) {
+    c.optStr(b.header, "nextStageBar", `${path}.header`)
+    optFigure(c, b.header, "icPlanVersion", `${path}.header`)
+  }
+  c.arr(
+    b,
+    "capTableEvents",
+    path,
+    (x, p) => {
+      c.str(x, "event", p)
+      c.optStr(x, "date", p)
+      c.optStr(x, "note", p)
+    },
+    opt
+  )
+  if (
+    present(b.period) &&
+    c.req(isObject(b.period), `${path}.period`, "must be an object")
+  ) {
+    c.str(b.period, "label", `${path}.period`)
+    c.optStr(b.period, "start", `${path}.period`)
+    c.optStr(b.period, "end", `${path}.period`)
+    optStrArray(c, b.period, "sourceDocuments", `${path}.period`)
+  }
+  optStrArray(c, b, "highlights", path)
+  optStrArray(c, b, "lowlights", path)
+  optStrArray(c, b, "asksOfNetwork", path)
+  for (const k of [
+    "keyTakeaways",
+    "operatingPlan",
+    "opportunities",
+    "transactionRecap",
+  ]) {
+    if (present(b[k])) c.str(b, k, path)
+  }
+  c.arr(
+    b,
+    "kpis",
+    path,
+    (k, p) => {
+      c.str(k, "metric", p)
+      c.optStr(k, "unit", p)
+      for (const f of ["actual", "prior", "budget", "plan"])
+        optFigure(c, k, f, p)
+      c.optStr(k, "variance", p)
+      c.oneOf(k, "basis", KPI_BASES, p)
+      c.optOneOf(k, "status", KPI_STATUSES, p)
+      c.optStr(k, "note", p)
+      cites(k, p)
+    },
+    opt
+  )
+  if (
+    present(b.cash) &&
+    c.req(isObject(b.cash), `${path}.cash`, "must be an object")
+  ) {
+    for (const f of ["cash", "monthlyBurn", "runwayMonths"])
+      optFigure(c, b.cash, f, `${path}.cash`)
+    c.str(b.cash, "analysis", `${path}.cash`)
+    cites(b.cash, `${path}.cash`)
+  }
+  c.arr(
+    b,
+    "concerns",
+    path,
+    (x, p) => {
+      c.str(x, "concern", p)
+      optStrArray(c, x, "options", p)
+      c.oneOf(x, "status", CONCERN_STATUSES, p)
+    },
+    opt
+  )
+  c.arr(
+    b,
+    "consentItems",
+    path,
+    (x, p) => {
+      c.str(x, "item", p)
+      c.optStr(x, "due", p)
+      c.optStr(x, "note", p)
+    },
+    opt
+  )
+  if (
+    present(b.position) &&
+    c.req(isObject(b.position), `${path}.position`, "must be an object")
+  ) {
+    const pp = `${path}.position`
+    for (const f of ["invested", "ownership", "mark"])
+      optFigure(c, b.position, f, pp)
+    c.optOneOf(b.position, "outcome", OUTCOMES, pp)
+    c.optStr(b.position, "followOn", pp)
+    optFigure(c, b.position, "realisationYear", pp)
+  }
+  if (
+    present(b.cadence) &&
+    c.req(isObject(b.cadence), `${path}.cadence`, "must be an object")
+  ) {
+    const cp = `${path}.cadence`
+    c.str(b.cadence, "expected", cp)
+    c.optStr(b.cadence, "lastUpdate", cp)
+    c.req(
+      typeof b.cadence.onTime === "boolean",
+      `${cp}.onTime`,
+      "must be true or false"
+    )
+    c.optStr(b.cadence, "note", cp)
+  }
+  if (
+    present(b.portfolioView) &&
+    c.req(
+      isObject(b.portfolioView),
+      `${path}.portfolioView`,
+      "must be an object"
+    )
+  ) {
+    const vp = `${path}.portfolioView`
+    c.arr(b.portfolioView, "positions", vp, (x, p) => {
+      c.str(x, "company", p)
+      optFigure(c, x, "invested", p)
+      for (const k of ["stage", "sector", "vintage", "status"])
+        c.optStr(x, k, p)
+      c.optOneOf(x, "outcome", OUTCOMES, p)
+    })
+    c.str(b.portfolioView, "analysis", vp)
+  }
+}
+
+function checkFounderFeedback(c, b, path, cites) {
+  const opt = { optional: true }
+  for (const k of ["basedOn", "stageBar", "brief", "note", "nextStep"])
+    c.optStr(b, k, path)
+  const seen = new Set()
+  const listed = c.arr(b, "areas", path, (a, p) => {
+    if (c.oneOf(a, "area", FEEDBACK_AREAS, p)) {
+      c.req(!seen.has(a.area), `${p}.area`, `"${a.area}" is listed twice`)
+      seen.add(a.area)
+    }
+    c.oneOf(a, "status", FEEDBACK_STATUSES, p)
+    for (const k of ["evidence", "say", "doNotSay"]) c.optStr(a, k, p)
+    for (const k of ["strengths", "suggestions", "questions"])
+      optStrArray(c, a, k, p)
+    cites(a, p)
+  })
+  if (listed && Array.isArray(b.areas)) {
+    const missing = FEEDBACK_AREAS.filter((k) => !seen.has(k))
+    c.req(
+      missing.length === 0,
+      `${path}.areas`,
+      `must rate all seven areas (missing: ${missing.join(", ")}); an area the materials do not cover is not_discussed`
+    )
+  }
+  c.arr(b, "leaveAlone", path, "string", opt)
+  const dp = `${path}.disclosureCheck`
+  if (
+    c.req(
+      isObject(b.disclosureCheck),
+      dp,
+      "is required: { passed, items?, removed? } (run the disclosure check on the founder-facing fields)"
+    )
+  ) {
+    c.req(
+      typeof b.disclosureCheck.passed === "boolean",
+      `${dp}.passed`,
+      "must be true or false"
+    )
+    c.req(
+      !present(b.disclosureCheck.items) ||
+        (Number.isInteger(b.disclosureCheck.items) &&
+          b.disclosureCheck.items >= 0),
+      `${dp}.items`,
+      "must be a whole number when set"
+    )
+    c.arr(b.disclosureCheck, "removed", dp, "string", opt)
+  }
 }
 
 /**
@@ -1116,6 +1805,23 @@ function normalize(d) {
   if (d.type === "ic_memo") {
     b.agentDerived = b.agentDerived ?? []
   }
+  if (d.type === "thesis_longlist") {
+    b.companies = b.companies ?? []
+    b.antiPortfolio = b.antiPortfolio ?? []
+    b.nextActions = b.nextActions ?? []
+  }
+  if (d.type === "portfolio_review") {
+    for (const k of [
+      "highlights",
+      "lowlights",
+      "kpis",
+      "concerns",
+      "consentItems",
+      "asksOfNetwork",
+    ]) {
+      b[k] = b[k] ?? []
+    }
+  }
   return {
     ...d,
     sources: d.sources ?? [],
@@ -1146,9 +1852,11 @@ function criterionLabel(cr) {
  * - screening: each `not_assessed` criterion (what would be needed), each
  *   research topic `not_checked`, and one line naming the missing research
  *   connectors;
- * - diligence: each gap (task, what closes it, suggested owner);
- * - IC memo: its `openItems` (section 10 of memo-format) and each risk still
- *   `open`.
+ * - diligence: each deal-killer finding and each gap (task, what closes it,
+ *   suggested owner), deal killers first;
+ * - IC memo: its `openItems` (memo-format's last section) and each risk
+ *   still `open`;
+ * - founder feedback: a disclosure check that has not passed.
  * Screening call questions are not open items; they stay in the report.
  */
 export function collectOpenItems(d) {
@@ -1178,20 +1886,64 @@ export function collectOpenItems(d) {
     }
   }
   if (d.type === "diligence") {
-    for (const g of d.body.gaps) {
+    for (const f of d.body.findings ?? []) {
+      if (f.class === "deal_killer") {
+        items.push({
+          text: `Deal killer: ${f.finding}`,
+          sourceIds: f.sourceIds,
+          from: d.type,
+        })
+      }
+    }
+    const killers = d.body.gaps.filter((g) => g.priority === "deal_killer")
+    const rest = d.body.gaps.filter((g) => g.priority !== "deal_killer")
+    for (const g of [...killers, ...rest]) {
       items.push({
-        text: g.task,
+        text: g.priority === "deal_killer" ? `Deal killer: ${g.task}` : g.task,
         closes: g.closes,
         owner: g.owner,
         from: d.type,
       })
     }
   }
+  if (
+    d.type === "founder_feedback" &&
+    d.body.disclosureCheck?.passed !== true
+  ) {
+    items.push({
+      text: "Disclosure check not passed: the note is not ready for the founder",
+      from: d.type,
+    })
+  }
   if (d.type === "ic_memo") {
     for (const r of d.body.risks ?? []) {
       if (r.status === "open") {
         items.push({ text: `Open risk: ${r.risk}`, from: d.type })
       }
+    }
+  }
+  if (d.type === "portfolio_review") {
+    for (const x of d.body.concerns ?? []) {
+      if (x.status !== "resolved") {
+        items.push({ text: `Concern: ${x.concern}`, from: d.type })
+      }
+    }
+    for (const x of d.body.consentItems ?? []) {
+      items.push({
+        text: `Consent needed: ${x.item}`,
+        closes: x.due,
+        from: d.type,
+      })
+    }
+  }
+  if (d.type === "thesis_longlist") {
+    for (const x of d.body.nextActions ?? []) {
+      items.push({
+        text: `${x.company}: ${x.action}`,
+        owner: x.owner,
+        closes: x.by,
+        from: d.type,
+      })
     }
   }
   return items
@@ -1287,7 +2039,7 @@ export function buildPackage(deliverables, meta) {
       )
     }
   }
-  const order = (t) => DELIVERABLE_TYPES.indexOf(t)
+  const order = (t) => ALL_DELIVERABLE_TYPES.indexOf(t)
   const sorted = [...valid].sort(
     (a, b) =>
       order(a.type) - order(b.type) ||
@@ -1374,6 +2126,65 @@ function statusBadge(map, status) {
   return badge(
     own(map, status, "neutral"),
     own(STATUS_LABELS, status, humanize(status))
+  )
+}
+
+/** A badge for one of the new enums, labelled from LABELS. */
+function statusBadgeOf(map, status) {
+  return badge(own(map, status, "neutral"), label(status))
+}
+
+/** Diligence findings grouped by class, with their bookends. */
+function findingsSection(ctx, findings) {
+  const levers = findings.some((f) => f.lever)
+  const streams = findings.some((f) => f.workstream)
+  const counts = FINDING_CLASSES.map((k) => [
+    k,
+    findings.filter((f) => f.class === k).length,
+  ]).filter(([, n]) => n > 0)
+  const groups = counts
+    .map(([k]) => {
+      const rows = findings
+        .filter((f) => f.class === k)
+        .map((f) => [
+          `${inline(ctx, f.finding)}${ctx.cites(f.sourceIds)}`,
+          figure(f.low),
+          figure(f.high),
+          ...(levers ? [inline(ctx, f.lever ?? "")] : []),
+          ...(streams
+            ? [
+                escapeHtml(
+                  f.workstream
+                    ? own(
+                        WORKSTREAM_LABELS,
+                        f.workstream,
+                        humanize(f.workstream)
+                      )
+                    : ""
+                ),
+              ]
+            : []),
+        ])
+      return `<h${ctx.h + 1}>${statusBadgeOf(TONES.finding, k)}</h${ctx.h + 1}>${table(
+        [
+          "Finding",
+          "Low",
+          "High",
+          ...(levers ? ["Lever"] : []),
+          ...(streams ? ["Workstream"] : []),
+        ],
+        rows
+      )}`
+    })
+    .join("")
+  const killer = counts.some(([k]) => k === "deal_killer")
+    ? `<p class="notice">${badge("danger", "Deal killer")} A deal killer means the recommendation is pass, whatever the scores.</p>`
+    : ""
+  return section(
+    ctx,
+    "findings",
+    "Findings",
+    `<p class="facts">${counts.map(([k, n]) => `${mono(n)} ${escapeHtml(label(k).toLowerCase())}`).join(" · ")}</p>${killer}${groups}`
   )
 }
 
@@ -1486,7 +2297,11 @@ function sourcesSection(ctx, d) {
       const kind = s.kind
         ? ` <span class="muted">(${escapeHtml(s.kind)})</span>`
         : ""
-      return `<li id="${ctx.prefix}src-${i + 1}">${title}${kind}${url}</li>`
+      const dated = [s.date, s.sample]
+        .filter(nonEmpty)
+        .map((x) => `, ${escapeHtml(x)}`)
+        .join("")
+      return `<li id="${ctx.prefix}src-${i + 1}">${title}${dated}${kind}${url}</li>`
     })
     .join("")
   return section(ctx, "sources", "Sources", `<ol class="sources">${items}</ol>`)
@@ -1547,9 +2362,29 @@ function list(ctx, title, items) {
 }
 
 function screeningVerdict(ctx, v) {
-  const filters = v.hardFilters
-    ? `<p class="facts">Mandate ${filterMark(v.hardFilters.mandate)} · Round size ${filterMark(v.hardFilters.roundSize)} · Network connection ${filterMark(v.hardFilters.networkConnection)}</p>`
+  const hf = v.hardFilters
+  const extraFilters = hf
+    ? [
+        ["stage", "Stage"],
+        ["geography", "Geography"],
+      ]
+        .filter(([k]) => Object.hasOwn(hf, k))
+        .map(([k, name]) => ` · ${name} ${filterMark(hf[k])}`)
+        .join("")
     : ""
+  const filters = hf
+    ? `<p class="facts">Mandate ${filterMark(hf.mandate)} · Round size ${filterMark(hf.roundSize)} · Network connection ${filterMark(hf.networkConnection)}${extraFilters}</p>`
+    : ""
+  const h = ctx.h + 1
+  const triage = [
+    hasContent(v.sourceQuality)
+      ? `<h${h}>Source quality</h${h}>${md(ctx, v.sourceQuality)}`
+      : "",
+    hasContent(v.redFlags) ? list(ctx, "Red flags", v.redFlags) : "",
+    hasContent(v.thesisFit)
+      ? `<h${h}>Thesis fit</h${h}>${md(ctx, v.thesisFit)}`
+      : "",
+  ].join("")
   const decided =
     v.decidedBy && v.decidedBy.length > 0
       ? `<p class="label">Decided by</p><ol>${v.decidedBy.map((t) => `<li>${inline(ctx, t)}</li>`).join("")}</ol>`
@@ -1558,8 +2393,49 @@ function screeningVerdict(ctx, v) {
     ctx,
     "verdict",
     "Verdict",
-    `<div class="verdict"><p class="verdict-decision">${escapeHtml(v.decision)}</p>${v.band ? `<p class="verdict-band">${statusRec(v.band)}</p>` : ""}<div class="verdict-reason">${md(ctx, v.reason)}</div>${v.referTo ? `<p>Refer to: ${inline(ctx, v.referTo)}</p>` : ""}</div>${decided}${filters}`
+    `<div class="verdict"><p class="verdict-decision">${escapeHtml(v.decision)}</p>${v.band ? `<p class="verdict-band">${statusRec(v.band)}</p>` : ""}<div class="verdict-reason">${md(ctx, v.reason)}</div>${v.referTo ? `<p>Refer to: ${inline(ctx, v.referTo)}</p>` : ""}</div>${decided}${filters}${triage}`
   )
+}
+
+const CEILING_TONES = {
+  below: "success",
+  above: "danger",
+  not_assessed: "neutral",
+}
+
+/** The price verdict: four answers side by side, never blended, and the counter. */
+function priceBody(ctx, v) {
+  const facts = []
+  if (v.askVsCeiling) {
+    facts.push(
+      `Ceiling ${badge(own(CEILING_TONES, v.askVsCeiling, "neutral"), label(v.askVsCeiling))}`
+    )
+  }
+  if (Object.hasOwn(v, "termsStandard")) {
+    facts.push(
+      `Terms ${
+        v.termsStandard === true
+          ? badge("success", "Standard")
+          : v.termsStandard === false
+            ? badge("warning", "Off-market")
+            : badge("neutral", "Not checked")
+      }`
+    )
+  }
+  const rows = [
+    ["Ask", v.ask],
+    ["Comparables", v.comparables],
+    ["Ceiling", v.ceiling],
+    ["Break-even", v.breakEven],
+    ["Terms", v.terms],
+  ]
+    .filter(([, t]) => hasContent(t))
+    .map(([k, t]) => [escapeHtml(k), md(ctx, t)])
+  return `${facts.length ? `<p class="facts">${facts.join(" · ")}</p>` : ""}${table(["Test", "Answer"], rows)}${
+    hasContent(v.counter)
+      ? `<p class="label">Counter</p>${md(ctx, v.counter)}`
+      : ""
+  }${ctx.cites(v.sourceIds)}<p class="muted">The answers are shown side by side and never blended into one value. The headline post-money is the price of the last preferred share, not the company's value.</p>`
 }
 
 function screeningScorecard(ctx, s) {
@@ -1603,6 +2479,7 @@ function renderScreening(d, ctx) {
     out.push(section(ctx, "stage-bar", "Stage bar", md(ctx, b.stageBar)))
   }
   if (b.scorecard) out.push(screeningScorecard(ctx, b.scorecard))
+  if (b.price) out.push(section(ctx, "price", "Price", priceBody(ctx, b.price)))
   if (hasContent(b.founders) || hasContent(b.foundersNote)) {
     out.push(
       section(
@@ -1715,6 +2592,9 @@ function renderDiligence(d, ctx) {
       s,
       b.dataRoom.filter((x) => x.status === s).length,
     ]).filter(([, n]) => n > 0)
+    const tracked = b.dataRoom.some(
+      (x) => x.requestedAt || x.receivedAt || x.requestedBy
+    )
     out.push(
       section(
         ctx,
@@ -1723,7 +2603,13 @@ function renderDiligence(d, ctx) {
         `${counts.length ? `<p class="facts">${counts.map(([s, n]) => `${mono(n)} ${escapeHtml(own(STATUS_LABELS, s, humanize(s)).toLowerCase())}`).join(" · ")}</p>` : ""}${
           b.dataRoom.length > 0
             ? table(
-                ["Document", "Workstream", "Status", "Note"],
+                [
+                  "Document",
+                  "Workstream",
+                  "Status",
+                  ...(tracked ? ["Requested", "Received"] : []),
+                  "Note",
+                ],
                 b.dataRoom.map((x) => [
                   `${inline(ctx, x.document)}${ctx.cites(x.sourceIds)}`,
                   escapeHtml(
@@ -1736,6 +2622,12 @@ function renderDiligence(d, ctx) {
                       : ""
                   ),
                   statusBadge(TONES.dataRoom, x.status),
+                  ...(tracked
+                    ? [
+                        `${x.requestedAt ? mono(x.requestedAt) : ""}${x.requestedBy ? `<br><span class="muted">by ${escapeHtml(x.requestedBy)}</span>` : ""}`,
+                        x.receivedAt ? mono(x.receivedAt) : "",
+                      ]
+                    : []),
                   inline(ctx, x.note ?? ""),
                 ])
               )
@@ -1759,18 +2651,43 @@ function renderDiligence(d, ctx) {
     out.push(analysis("unit-economics", "Unit economics", b.unitEconomics))
   }
   if (b.capTable) out.push(analysis("cap-table", "Cap table", b.capTable))
+  if (b.techDetermination) {
+    const t = b.techDetermination
+    out.push(
+      section(
+        ctx,
+        "tech-determination",
+        "Technical determination",
+        `<p class="facts">Verdict ${statusBadgeOf(TONES.tech, t.verdict)}</p>${md(ctx, t.driver)}${ctx.cites(t.sourceIds)}<p class="muted">Execution risk over the next 12 to 24 months; not a survival prediction.</p>`
+      )
+    )
+  }
   if (b.deckAudit) out.push(deckAuditSection(ctx, b.deckAudit))
+  if (hasContent(b.findings)) out.push(findingsSection(ctx, b.findings))
   if (b.gaps.length > 0) {
+    const ranked = b.gaps.some((g) => g.priority || g.evidence)
     out.push(
       section(
         ctx,
         "gaps",
         "Gaps as tasks",
         table(
-          ["Task", "Closes with", "Suggested owner", "Workstream"],
+          [
+            "Task",
+            "Closes with",
+            ...(ranked ? ["Priority", "Evidence"] : []),
+            "Suggested owner",
+            "Workstream",
+          ],
           b.gaps.map((g) => [
             inline(ctx, g.task),
-            inline(ctx, g.closes),
+            `${inline(ctx, g.closes)}${g.substitute ? `<br><span class="muted">Substitute: ${inline(ctx, g.substitute)}</span>` : ""}`,
+            ...(ranked
+              ? [
+                  g.priority ? statusBadgeOf(TONES.priority, g.priority) : "",
+                  g.evidence ? escapeHtml(label(g.evidence)) : "",
+                ]
+              : []),
             escapeHtml(g.owner ?? ""),
             escapeHtml(
               g.workstream
@@ -1808,10 +2725,584 @@ function renderDiligence(d, ctx) {
 }
 
 // ---------------------------------------------------------------------------
+// Sourcing longlist (plugin only)
+// ---------------------------------------------------------------------------
+
+function bullets(ctx, items) {
+  return items.length
+    ? `<ul>${items.map((x) => `<li>${inline(ctx, x)}</li>`).join("")}</ul>`
+    : ""
+}
+
+/** A company website as a link when it is a safe http(s) URL, else text. */
+function linkOrText(url) {
+  const href = safeHref(url)
+  return href && /^https?:/i.test(href)
+    ? link(
+        href,
+        `<span class="muted">${escapeHtml(url.replace(/^https?:\/\//i, ""))}</span>`
+      )
+    : `<span class="muted">${escapeHtml(url)}</span>`
+}
+
+function figure(v) {
+  if (v === undefined || v === null || v === "") return ""
+  return escapeHtml(
+    typeof v === "number"
+      ? v.toLocaleString("en-US", { maximumFractionDigits: 2 })
+      : String(v)
+  )
+}
+
+/** A card's or pass's channel and thesis version, as a muted line. */
+function sourcingTags(x) {
+  const bits = [
+    x.channel ? label(x.channel) : "",
+    present(x.thesisVersion) ? `thesis v${x.thesisVersion}` : "",
+  ].filter(Boolean)
+  return bits.length
+    ? `<br><span class="muted">${escapeHtml(bits.join(" · "))}</span>`
+    : ""
+}
+
+/**
+ * The anti-portfolio by pass-reason code: passes, how many were checked, and
+ * how many later raised a priced round or were acquired. Only when coded.
+ */
+function passesByReason(passes) {
+  if (!passes.some((a) => a.reasonCode)) return ""
+  const checked = (a) =>
+    (a.checks ?? []).some(
+      (x) => x.outcome !== "not_checked" && x.outcome !== "due"
+    )
+  const later = (a) =>
+    (a.checks ?? []).some(
+      (x) => x.outcome === "raised_priced" || x.outcome === "acquired"
+    )
+  const rows = [...PASS_REASONS, null]
+    .map((code) => {
+      const group = passes.filter((a) => (a.reasonCode ?? null) === code)
+      return group.length === 0
+        ? null
+        : [
+            escapeHtml(code ? label(code) : "Not coded"),
+            mono(group.length),
+            mono(group.filter(checked).length),
+            mono(group.filter(later).length),
+          ]
+    })
+    .filter(Boolean)
+  const near = passes.filter((a) => a.nearMiss).length
+  return `<p class="label">By reason</p>${table(
+    ["Reason", "Passes", "Checked", "Later raised or acquired"],
+    rows
+  )}${near ? `<p class="facts">${mono(near)} near ${near === 1 ? "miss" : "misses"}</p>` : ""}`
+}
+
+function renderLonglist(d, ctx) {
+  const b = d.body
+  const out = []
+  if (b.thesis || b.mandate) {
+    const t = b.thesis ?? {}
+    const m = b.mandate ?? {}
+    const facts = [
+      t.title
+        ? `<p><strong>${escapeHtml(t.title)}</strong>${t.version ? ` ${mono(`v${t.version}`)}` : ""}${t.decision ? ` · ${escapeHtml(humanize(t.decision))}` : ""}</p>`
+        : "",
+      t.pillars?.length
+        ? `<p class="label">Pillars</p>${bullets(ctx, t.pillars)}`
+        : "",
+      [
+        m.sectors?.length ? `Sectors: ${escapeHtml(m.sectors.join(", "))}` : "",
+        m.geographies?.length
+          ? `Geographies: ${escapeHtml(m.geographies.join(", "))}`
+          : "",
+        m.stages?.length ? `Stages: ${escapeHtml(m.stages.join(", "))}` : "",
+        m.checkSize ? `Check size: ${escapeHtml(m.checkSize)}` : "",
+      ]
+        .filter(Boolean)
+        .map((x) => `<p class="facts">${x}</p>`)
+        .join(""),
+      m.superPriority?.length
+        ? `<p class="label">Must-haves</p>${bullets(ctx, m.superPriority)}`
+        : "",
+    ].join("")
+    out.push(section(ctx, "thesis", "Thesis and mandate", facts))
+  }
+  if (hasContent(b.marketMap))
+    out.push(section(ctx, "market-map", "Market map", md(ctx, b.marketMap)))
+  if (b.companies.length > 0) {
+    const counts = THESIS_STATUSES.map((st) => [
+      st,
+      b.companies.filter((c) => c.status === st).length,
+    ]).filter(([, n]) => n > 0)
+    out.push(
+      section(
+        ctx,
+        "companies",
+        "Companies",
+        `<p class="facts">${counts.map(([st, n]) => `${mono(n)} ${escapeHtml(own(STATUS_LABELS, st, humanize(st)).toLowerCase())}`).join(" · ")}</p>${table(
+          ["Company", "Stage and funding", "Fit", "Status"],
+          b.companies.map((c) => [
+            `<strong>${escapeHtml(c.name)}</strong>${c.website ? ` ${linkOrText(c.website)}` : ""}<br>${inline(ctx, c.oneLine)}${ctx.cites(c.sourceIds)}`,
+            escapeHtml(
+              [
+                c.stage,
+                c.founded ? `founded ${c.founded}` : "",
+                c.hq,
+                c.teamSize ? `${c.teamSize} people` : "",
+                c.funding,
+                c.investors,
+              ]
+                .filter(Boolean)
+                .join(" · ")
+            ),
+            `${c.pillars?.length ? `<span class="muted">${escapeHtml(c.pillars.join(", "))}</span><br>` : ""}${inline(ctx, c.fit ?? "")}`,
+            `${statusBadge(TONES.thesisStatus, c.status)}${c.reason ? `<br><span class="muted">${inline(ctx, c.reason)}</span>` : ""}${sourcingTags(c)}`,
+          ])
+        )}`
+      )
+    )
+  }
+  if (b.antiPortfolio.length > 0) {
+    out.push(
+      section(
+        ctx,
+        "anti-portfolio",
+        "Anti-portfolio",
+        `${table(
+          ["Company", "Why we passed", "What happened since", "Lesson"],
+          b.antiPortfolio.map((a) => [
+            `${escapeHtml(a.company)}${a.nearMiss ? ` ${badge("warning", "Near miss")}` : ""}${
+              a.passedAt || a.stageReached
+                ? `<br><span class="muted">${escapeHtml(
+                    [
+                      a.passedAt,
+                      a.stageReached ? `at ${label(a.stageReached)}` : "",
+                    ]
+                      .filter(Boolean)
+                      .join(" ")
+                  )}</span>`
+                : ""
+            }${sourcingTags(a)}`,
+            `${a.reasonCode ? `<strong>${escapeHtml(label(a.reasonCode))}</strong>: ` : ""}${inline(ctx, a.passReason)}${ctx.cites(a.sourceIds)}`,
+            `${inline(ctx, a.outcomeCheck ?? "")}${
+              a.checks?.length
+                ? `<ul class="checks">${a.checks
+                    .map(
+                      (x) =>
+                        `<li>${escapeHtml(label(x.at))}: ${statusBadgeOf(TONES.check, x.outcome)}${x.date ? ` ${mono(x.date)}` : ""}${x.note ? ` ${inline(ctx, x.note)}` : ""}${ctx.cites(x.sourceIds)}</li>`
+                    )
+                    .join("")}</ul>`
+                : ""
+            }`,
+            inline(ctx, a.lesson ?? ""),
+          ])
+        )}${passesByReason(b.antiPortfolio)}`
+      )
+    )
+  }
+  if (b.sourcingActivity) {
+    const a = b.sourcingActivity
+    out.push(
+      section(
+        ctx,
+        "sourcing-activity",
+        "Sourcing activity",
+        `${a.period ? `<p class="facts">${escapeHtml(a.period)}</p>` : ""}<p class="facts">${[
+          a.contacted !== undefined ? `${mono(a.contacted)} contacted` : "",
+          a.meetings !== undefined ? `${mono(a.meetings)} meetings` : "",
+          a.introductions !== undefined
+            ? `${mono(a.introductions)} introductions`
+            : "",
+          a.termSheets !== undefined ? `${mono(a.termSheets)} term sheets` : "",
+        ]
+          .filter(Boolean)
+          .join(" · ")}</p>${
+          a.sources?.length
+            ? table(
+                ["Source", "Count"],
+                a.sources.map((x) => [escapeHtml(x.source), figure(x.count)])
+              )
+            : ""
+        }`
+      )
+    )
+  }
+  if (b.nextActions.length > 0) {
+    out.push(
+      section(
+        ctx,
+        "next-actions",
+        "Next actions",
+        table(
+          ["Company", "Action", "Owner", "By"],
+          b.nextActions.map((x) => [
+            escapeHtml(x.company),
+            inline(ctx, x.action),
+            escapeHtml(x.owner ?? ""),
+            escapeHtml(x.by ?? ""),
+          ])
+        )
+      )
+    )
+  }
+  return out
+}
+
+// ---------------------------------------------------------------------------
+// Portfolio review (plugin only)
+// ---------------------------------------------------------------------------
+
+function renderPortfolio(d, ctx) {
+  const b = d.body
+  const out = []
+  if (
+    b.header &&
+    (hasContent(b.header.nextStageBar) || present(b.header.icPlanVersion))
+  ) {
+    out.push(
+      section(
+        ctx,
+        "baseline",
+        "Next-stage bar and plan",
+        `${present(b.header.icPlanVersion) ? `<p class="facts">Measured against the IC memo plan ${mono(`v${b.header.icPlanVersion}`)}</p>` : ""}${hasContent(b.header.nextStageBar) ? md(ctx, b.header.nextStageBar) : ""}`
+      )
+    )
+  }
+  if (b.period) {
+    out.push(
+      section(
+        ctx,
+        "period",
+        "Period",
+        `<p class="facts">${escapeHtml(b.period.label)}${b.period.start || b.period.end ? ` · ${escapeHtml([b.period.start, b.period.end].filter(Boolean).join(" to "))}` : ""}</p>${b.period.sourceDocuments?.length ? `<p class="muted">From ${escapeHtml(b.period.sourceDocuments.join(", "))}</p>` : ""}${
+          b.cadence
+            ? `<p class="facts">Updates expected ${escapeHtml(b.cadence.expected)}${b.cadence.lastUpdate ? `; last ${escapeHtml(b.cadence.lastUpdate)}` : ""} · ${b.cadence.onTime ? badge("success", "On time") : badge("warning", "Late")}</p>${b.cadence.note ? md(ctx, b.cadence.note) : ""}`
+            : ""
+        }`
+      )
+    )
+  } else if (b.cadence) {
+    out.push(
+      section(
+        ctx,
+        "cadence",
+        "Update cadence",
+        `<p class="facts">Expected ${escapeHtml(b.cadence.expected)} · ${b.cadence.onTime ? badge("success", "On time") : badge("warning", "Late")}</p>`
+      )
+    )
+  }
+  if (b.highlights.length || b.lowlights.length) {
+    out.push(
+      section(
+        ctx,
+        "highlights",
+        "Highlights and lowlights",
+        `${b.highlights.length ? `<p class="label">Highlights</p>${bullets(ctx, b.highlights)}` : ""}${b.lowlights.length ? `<p class="label">Lowlights</p>${bullets(ctx, b.lowlights)}` : ""}`
+      )
+    )
+  }
+  if (hasContent(b.keyTakeaways))
+    out.push(
+      section(ctx, "takeaways", "Key takeaways", md(ctx, b.keyTakeaways))
+    )
+  if (b.kpis.length > 0) {
+    out.push(
+      section(
+        ctx,
+        "kpis",
+        "KPIs against history, budget and plan",
+        table(
+          [
+            "Metric",
+            "Actual",
+            "Prior",
+            "Budget",
+            "IC plan",
+            "Variance",
+            "Status",
+          ],
+          b.kpis.map((k) => [
+            `${escapeHtml(k.metric)}${k.unit ? ` <span class="muted">(${escapeHtml(k.unit)})</span>` : ""}${ctx.cites(k.sourceIds)}<br><span class="muted">${escapeHtml(humanize(k.basis))}</span>`,
+            figure(k.actual),
+            figure(k.prior),
+            figure(k.budget),
+            figure(k.plan),
+            `${inline(ctx, k.variance ?? "")}${k.note ? `<br><span class="muted">${inline(ctx, k.note)}</span>` : ""}`,
+            k.status ? statusBadge(TONES.kpi, k.status) : "",
+          ])
+        )
+      )
+    )
+  }
+  if (b.cash) {
+    out.push(
+      section(
+        ctx,
+        "cash",
+        "Cash and runway",
+        `<p class="facts">${[
+          b.cash.cash !== undefined ? `Cash ${mono(b.cash.cash)}` : "",
+          b.cash.monthlyBurn !== undefined
+            ? `Burn ${mono(b.cash.monthlyBurn)} a month`
+            : "",
+          b.cash.runwayMonths !== undefined
+            ? `Runway ${mono(b.cash.runwayMonths)} months`
+            : "",
+        ]
+          .filter(Boolean)
+          .join(
+            " · "
+          )}</p>${md(ctx, b.cash.analysis)}${ctx.cites(b.cash.sourceIds)}`
+      )
+    )
+  }
+  if (b.concerns.length > 0) {
+    out.push(
+      section(
+        ctx,
+        "concerns",
+        "Concerns",
+        table(
+          ["Concern", "Options", "Status"],
+          b.concerns.map((x) => [
+            inline(ctx, x.concern),
+            bullets(ctx, x.options ?? []),
+            statusBadge(TONES.concern, x.status),
+          ])
+        )
+      )
+    )
+  }
+  if (b.consentItems.length > 0) {
+    out.push(
+      section(
+        ctx,
+        "consent",
+        "Decisions for investors",
+        table(
+          ["Item", "Due", "Note"],
+          b.consentItems.map((x) => [
+            inline(ctx, x.item),
+            escapeHtml(x.due ?? ""),
+            inline(ctx, x.note ?? ""),
+          ])
+        )
+      )
+    )
+  }
+  if (hasContent(b.operatingPlan))
+    out.push(
+      section(
+        ctx,
+        "operating-plan",
+        "Next three months",
+        md(ctx, b.operatingPlan)
+      )
+    )
+  if (hasContent(b.opportunities))
+    out.push(
+      section(ctx, "opportunities", "Opportunities", md(ctx, b.opportunities))
+    )
+  if (b.asksOfNetwork.length > 0)
+    out.push(
+      section(ctx, "asks", "Asks of the network", bullets(ctx, b.asksOfNetwork))
+    )
+  if (b.position) {
+    const p = b.position
+    out.push(
+      section(
+        ctx,
+        "position",
+        "Our position",
+        `<p class="facts">${[
+          p.invested !== undefined ? `Invested ${mono(p.invested)}` : "",
+          p.ownership !== undefined ? `Ownership ${mono(p.ownership)}` : "",
+          p.mark !== undefined ? `Mark ${mono(p.mark)}` : "",
+          p.outcome
+            ? `Outcome ${escapeHtml(own(OUTCOME_LABELS, p.outcome, p.outcome))}`
+            : "",
+          present(p.realisationYear)
+            ? `Realisation expected ${mono(p.realisationYear)}`
+            : "",
+        ]
+          .filter(Boolean)
+          .join(" · ")}</p>${p.followOn ? md(ctx, p.followOn) : ""}`
+      )
+    )
+  }
+  if (hasContent(b.capTableEvents)) {
+    out.push(
+      section(
+        ctx,
+        "cap-table-events",
+        "Cap table events",
+        table(
+          ["Date", "Event", "Note"],
+          b.capTableEvents.map((x) => [
+            x.date ? mono(x.date) : "",
+            inline(ctx, x.event),
+            inline(ctx, x.note ?? ""),
+          ])
+        )
+      )
+    )
+  }
+  if (b.portfolioView) {
+    const v = b.portfolioView
+    out.push(
+      section(
+        ctx,
+        "portfolio",
+        "The portfolio",
+        `${md(ctx, v.analysis)}${table(
+          [
+            "Company",
+            "Invested",
+            "Stage",
+            "Sector",
+            "Vintage",
+            "Status",
+            "Outcome",
+          ],
+          v.positions.map((x) => [
+            escapeHtml(x.company),
+            figure(x.invested),
+            escapeHtml(x.stage ?? ""),
+            escapeHtml(x.sector ?? ""),
+            escapeHtml(x.vintage ?? ""),
+            escapeHtml(x.status ?? ""),
+            escapeHtml(
+              x.outcome ? own(OUTCOME_LABELS, x.outcome, x.outcome) : ""
+            ),
+          ])
+        )}`
+      )
+    )
+  }
+  if (hasContent(b.transactionRecap))
+    out.push(
+      section(ctx, "recap", "Transaction recap", md(ctx, b.transactionRecap))
+    )
+  return out
+}
+
+// ---------------------------------------------------------------------------
+// Founder feedback (plugin only)
+// ---------------------------------------------------------------------------
+
+/** The areas in the guide's order, whatever order they were written in. */
+function feedbackAreas(b) {
+  const byArea = new Map(b.areas.map((a) => [a.area, a]))
+  return FEEDBACK_AREAS.filter((k) => byArea.has(k)).map((k) => byArea.get(k))
+}
+
+/**
+ * The team view: part A (the internal call brief) and part B (the note for
+ * the founder), each labelled, and the disclosure check. The founder copy
+ * is an export (audience "founder") with part B only.
+ */
+function renderFounderFeedback(d, ctx) {
+  const b = d.body
+  const areas = feedbackAreas(b)
+  const h = ctx.h + 1
+  const out = []
+  out.push(
+    section(
+      ctx,
+      "brief",
+      "A. Internal call brief",
+      `<p class="notice">${badge("danger", "Internal")} Not for the founder: ratings, evidence and what not to say stay with the team.</p>${
+        b.basedOn
+          ? `<p class="facts">Based on ${escapeHtml(b.basedOn)}</p>`
+          : ""
+      }${hasContent(b.stageBar) ? `<p class="label">Stage bar</p>${md(ctx, b.stageBar)}` : ""}${
+        hasContent(b.brief) ? md(ctx, b.brief) : ""
+      }${table(
+        ["Area", "Rating", "Evidence", "Say", "Do not say"],
+        areas.map((a) => [
+          escapeHtml(label(a.area)),
+          statusBadgeOf(TONES.feedback, a.status),
+          `${md(ctx, a.evidence ?? "")}${ctx.cites(a.sourceIds)}`,
+          inline(ctx, a.say ?? ""),
+          inline(ctx, a.doNotSay ?? ""),
+        ])
+      )}${list(ctx, "Leave alone on the call", b.leaveAlone)}`
+    )
+  )
+  const labelled = (key) =>
+    areas.flatMap((a) => (a[key] ?? []).map((t) => [a.area, t]))
+  const byArea = (title, items) =>
+    items.length
+      ? `<h${h}>${escapeHtml(title)}</h${h}><ul>${items
+          .map(
+            ([k, t]) =>
+              `<li><strong>${escapeHtml(label(k))}</strong>: ${inline(ctx, t)}</li>`
+          )
+          .join("")}</ul>`
+      : ""
+  const questions = areas.flatMap((a) => a.questions ?? [])
+  const notDiscussed = areas.filter((a) => a.status === "not_discussed")
+  out.push(
+    section(
+      ctx,
+      "note",
+      "B. Note for the founder",
+      `<p class="notice">${badge("info", "For the founder")} The founder copy (export with audience "founder") holds only this part, once the disclosure check has passed.</p>${
+        hasContent(b.note) ? md(ctx, b.note) : ""
+      }${byArea("What stands out", labelled("strengths"))}${byArea("Suggestions", labelled("suggestions"))}${list(ctx, "Questions we'd like to understand better", questions)}${
+        notDiscussed.length
+          ? `<p class="muted">Not discussed: ${escapeHtml(notDiscussed.map((a) => label(a.area)).join(", "))}</p>`
+          : ""
+      }${b.nextStep ? `<p><strong>Next step</strong>: ${inline(ctx, b.nextStep)}</p>` : ""}`
+    )
+  )
+  const dc = b.disclosureCheck
+  out.push(
+    section(
+      ctx,
+      "disclosure",
+      "Disclosure check",
+      `<p class="facts">${badge("danger", "Internal")} ${
+        dc.passed ? badge("success", "Passed") : badge("danger", "Not passed")
+      }${present(dc.items) ? ` on ${mono(dc.items)} ${dc.items === 1 ? "item" : "items"}` : ""}</p>${list(ctx, "Taken out", dc.removed)}`
+    )
+  )
+  return out
+}
+
+// ---------------------------------------------------------------------------
 // IC memo
 // ---------------------------------------------------------------------------
 
-/** memo-format's ten sections, in order; absent ones are left out. */
+/** memo-format's sections, in order; absent ones are left out. */
+/** The IC memo's risks; class, type and bookends only when a risk has them. */
+function riskTable(ctx, risks) {
+  const classed = risks.some((r) => r.class || r.type)
+  const bookends = risks.some((r) => present(r.low) || present(r.high))
+  return table(
+    [
+      "Risk",
+      ...(classed ? ["Class"] : []),
+      ...(bookends ? ["Low", "High"] : []),
+      "Mitigant",
+      "Status",
+    ],
+    risks.map((r) => [
+      inline(ctx, r.risk),
+      ...(classed
+        ? [
+            `${r.class ? statusBadgeOf(TONES.finding, r.class) : ""}${r.type ? `<br><span class="muted">${escapeHtml(r.type)}</span>` : ""}`,
+          ]
+        : []),
+      ...(bookends ? [figure(r.low), figure(r.high)] : []),
+      inline(ctx, r.mitigant ?? ""),
+      statusBadge(TONES.risk, r.status),
+    ])
+  )
+}
+
 function renderIcMemo(d, ctx) {
   const b = d.body
   const derived = new Set(b.agentDerived)
@@ -1833,7 +3324,9 @@ function renderIcMemo(d, ctx) {
   }
   text("recommendation", "recommendation", "Recommendation")
   text("company", "company", "The company in one paragraph")
+  text("useOfFunds", "use-of-funds", "Use of funds")
   text("whyNow", "why-now", "Why now")
+  text("thesisFit", "thesis-fit", "Thesis fit")
   text("whyTeam", "why-team", "Why this team")
   if (b.whatHasToBeTrue) {
     out.push(
@@ -1854,6 +3347,11 @@ function renderIcMemo(d, ctx) {
   }
   text("traction", "traction", "Traction and economics")
   text("terms", "terms", "Terms and returns")
+  if (b.valuation) {
+    out.push(
+      s("valuation", "valuation", "Price verdict", priceBody(ctx, b.valuation))
+    )
+  }
   if (b.risks || hasContent(b.bearCase)) {
     const risks = b.risks ?? []
     const incomplete =
@@ -1866,22 +3364,31 @@ function renderIcMemo(d, ctx) {
         "risks",
         "Risks and the bear case",
         `${incomplete}${
-          risks.length > 0
-            ? table(
-                ["Risk", "Mitigant", "Status"],
-                risks.map((r) => [
-                  inline(ctx, r.risk),
-                  inline(ctx, r.mitigant ?? ""),
-                  statusBadge(TONES.risk, r.status),
-                ])
-              )
-            : ""
+          risks.length > 0 ? riskTable(ctx, risks) : ""
         }${hasContent(b.bearCase) ? `<h${ctx.h + 1}>Bear case</h${ctx.h + 1}>${md(ctx, b.bearCase)}` : ""}`
       )
     )
   }
   text("networkFit", "network-fit", "Network fit")
-  // Section 10 is part of the house format whenever the memo is structured.
+  if (hasContent(b.planBaseline)) {
+    out.push(
+      s(
+        "planBaseline",
+        "monitoring",
+        "Monitoring hand-off",
+        `<p class="muted">The plan baseline later updates are measured against.</p>${table(
+          ["Metric", "Today", "Target", "By"],
+          b.planBaseline.map((x) => [
+            `${inline(ctx, x.metric)}${ctx.cites(x.sourceIds)}`,
+            figure(x.today),
+            figure(x.target),
+            escapeHtml(x.by ?? ""),
+          ])
+        )}`
+      )
+    )
+  }
+  // Open items are part of the house format whenever the memo is structured.
   if (out.length > 0 || d.openItems.length > 0) {
     out.push(
       s(
@@ -1945,7 +3452,13 @@ function renderParts(d, prefix, headingLevel) {
       ? renderScreening(d, ctx)
       : d.type === "diligence"
         ? renderDiligence(d, ctx)
-        : renderIcMemo(d, ctx)
+        : d.type === "thesis_longlist"
+          ? renderLonglist(d, ctx)
+          : d.type === "portfolio_review"
+            ? renderPortfolio(d, ctx)
+            : d.type === "founder_feedback"
+              ? renderFounderFeedback(d, ctx)
+              : renderIcMemo(d, ctx)
   if (hasContent(d.body.document)) {
     const main = !hasNarrativeSections(d)
     parts.push(
@@ -1979,6 +3492,9 @@ const DRAFT_TITLES = {
   screening: "Screening draft",
   diligence: "Plan",
   ic_memo: "Memo",
+  thesis_longlist: "Thesis notes",
+  founder_feedback: "Feedback notes",
+  portfolio_review: "Review",
 }
 
 function headerBlock(d, level, timeZone, house) {
@@ -2077,13 +3593,16 @@ export function renderPackage(pkg, options = {}) {
       .map(rubricVersionOf)
       .find((v) => v !== null && v !== undefined)
   const who = [...new Set(p.deliverables.map((d) => runBy(d.preparedBy)))]
+  const thesis = p.deliverables.find(
+    (d) => d.type === "thesis_longlist" && d.body.thesis?.title
+  )?.body.thesis
   const cover = `<header class="doc-header cover">
 <p class="doc-type">Deal package</p>
 <h1 class="doc-title">${escapeHtml(p.company.name)}</h1>
 <p class="doc-meta">${companyLine(p.company, p.house ?? options.house)}</p>
 <dl class="facts-grid">
 <div><dt>Date</dt><dd>${mono(localDay(p.generatedAt, options.timeZone))}</dd></div>
-<div><dt>Run by</dt><dd>${escapeHtml(who.join(", "))}</dd></div>
+${thesis ? `<div><dt>Thesis</dt><dd>${escapeHtml(thesis.title)}${thesis.version ? ` ${mono(`v${thesis.version}`)}` : ""}</dd></div>\n` : ""}<div><dt>Run by</dt><dd>${escapeHtml(who.join(", "))}</dd></div>
 <div><dt>Assembled by</dt><dd>${escapeHtml(runBy(p.preparedBy))} (${escapeHtml(own(RUNTIME_LABELS, p.preparedBy.runtime, p.preparedBy.runtime))})</dd></div>
 <div><dt>Rubric version</dt><dd>${rubric !== undefined && rubric !== null ? mono(`v${rubric}`) : "Not scored"}</dd></div>
 <div><dt>Sources</dt><dd>${mono(countSources(p.deliverables))}</dd></div>

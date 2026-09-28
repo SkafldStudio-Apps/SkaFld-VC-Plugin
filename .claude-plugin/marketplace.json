@@ -5,14 +5,14 @@
   },
   "metadata": {
     "description": "SkaFld VC: venture capital agents and skills for Claude Code and Cowork. Start with SkaFld VC; add SkaFld VC Platform only if your firm runs a SkaFld VC platform.",
-    "version": "1.0.1"
+    "version": "1.1.0"
   },
   "plugins": [
     {
       "name": "skafld-vc",
       "displayName": "SkaFld VC",
       "source": "./skafld-vc",
-      "description": "Start here. Screening, diligence plans, IC memos, returns, market sizing, unit economics, cap tables and deal flow, from your own documents. Branded HTML, Word, PDF and deck exports. Works with no platform.",
+      "description": "Start here. Sourcing, screening, diligence plans, IC memos and portfolio reviews, with returns, valuation, term sheets, unit economics and cap tables, from your own documents. Exa and Apollo research, branded HTML, Word, PDF, deck and Excel exports. Works with no platform.",
       "category": "productivity",
       "tags": [
         "venture capital",

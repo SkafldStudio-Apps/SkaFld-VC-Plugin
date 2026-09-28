@@ -52,7 +52,7 @@ Run all three after every modelled round. A failure means the model is wrong.
 - **Shares.** Company Capitalization CC = (issued shares + issued and promised options + unissued pool) / (1 - sum of a / cap). Each SAFE's shares = CC x a / cap, and all SAFE shares together = CC minus the shares before the SAFEs. Safe price = cap / CC.
 - Worked example (the User Guide): 9,250,000 shares + 650,000 issued and promised options + 100,000 unissued pool, with SAFEs converting into 15%: CC = 10,000,000 / 0.85 = 11,764,706, so the SAFEs receive 1,764,706 shares.
 
-Source: Y Combinator Post-Money SAFE User Guide and Primer, as summarised in the research report on diligence and terms (2026-09).
+Source: Y Combinator, Post-Money SAFE User Guide and Primer for the post-money SAFE v1.1 (2018-2026).
 
 ## 5. Pre-money SAFEs and MFN (not from the reference library; uncited)
 
@@ -116,9 +116,30 @@ Inputs from the tutorial's case study: 8,000,000 founder shares; two SAFEs of $5
 
 Applying section 2 (these results are computed here, not printed in the tutorial): both SAFEs convert at their discount price; P = (20,000,000 - 0.15 x 25,000,000 - 500,000 / 0.8 - 500,000 / 0.9) / 8,000,000 = about $1.8837; pool about 1,990,783 shares; converted SAFE shares about 626,728; new-money shares about 2,654,378; total about 13,271,889. Checks: total x P = $25.0M; pool = 15.0%; new money = 20.0% = $5M / $25M.
 
+## 9. Anti-dilution after a down round (NVCA, not the reference library)
+
+When the company later issues shares below a preferred series' conversion price, that series' conversion price is adjusted, which gives it more common shares on conversion and dilutes everyone else. Model it only when a down round is on the table, and read the charter's definition first.
+
+- **Broad-based weighted average** (the NVCA model and the market standard):
+
+  ```
+  CP2 = CP1 x (A + B) / (A + C)
+  ```
+
+  CP1 is the conversion price before the new issue and CP2 the adjusted one; A is the shares outstanding immediately before the new issue on the basis the charter defines (broad-based: common, preferred as converted and options outstanding, and in most charters the reserved pool; narrow-based counts fewer, which makes each cheap share move the price more); B is the shares the new money would have bought at CP1 (consideration received / CP1); C is the shares actually issued (NVCA Model Legal Documents, model term sheet 2020 and certificate of incorporation).
+
+- **Full ratchet**: CP2 = the new issue price, whatever the number of shares issued.
+- **Conversion shares after the adjustment** = shares of the series x original issue price / CP2.
+- **Check**: CP2 lies between the new issue price and CP1 for a weighted average, and equals the new issue price for a full ratchet.
+
+Example (derived here): CP1 = $1.00, A = 10,000,000, and $1,000,000 raised at $0.50, so B = 1,000,000 and C = 2,000,000. CP2 = $1.00 x 11,000,000 / 12,000,000 = $0.9167, so 2,000,000 preferred shares bought at $1.00 now convert into 2,181,818 common. Under a full ratchet they would convert into 4,000,000.
+
+Plain-language definitions of this and the other terms are in the `references/definitions.md` of `skafld-vc:term-sheet`.
+
 ## Sources
 
 - Carta (2026). Founder Ownership 2026. https://carta.com/data/founder-ownership-2026/
 - GoingVC (n.d.). Cap Tables 101; RL Convertible Tutorial workbook; Angels Cap Table template; The Complete Guide to Due Diligence for Angels. Practitioner reference library; no public URL.
 - Nivi and Ravikant (2007). The Option Pool Shuffle. Venture Hacks. https://venturehacks.com/option-pool-shuffle
+- NVCA (2020-2026). Model Legal Documents: model term sheet and certificate of incorporation (anti-dilution). https://nvca.org/model-legal-documents/
 - Y Combinator (2018-2026). Post-Money SAFE User Guide; Primer for the post-money SAFE v1.1; SAFE documents. https://www.ycombinator.com/documents ; https://www.ycombinator.com/safe

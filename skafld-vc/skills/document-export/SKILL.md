@@ -1,6 +1,6 @@
 ---
 name: document-export
-description: Export a deliverable, a package or any answer as a branded Word document, PDF, PowerPoint deck, PDF deck or (for a Diligence plan) an Excel request list or tracker. Use when someone asks for a file (Word, docx, PDF, slides, deck, PowerPoint, pptx, Excel, xlsx) or a version to send or present. Runs locally in Claude Code and Claude Desktop with nothing to install.
+description: Export a deliverable, a package or any answer as a branded Word document, PDF, PowerPoint deck, PDF deck, (for a Diligence plan) an Excel request list or tracker, or (for founder feedback) the founder copy. Use when someone asks for a file (Word, docx, PDF, slides, deck, PowerPoint, pptx, Excel, xlsx) or a version to send or present. Runs locally in Claude Code and Claude Desktop with nothing to install.
 ---
 
 # Document export
@@ -9,13 +9,16 @@ description: Export a deliverable, a package or any answer as a branded Word doc
 
 ## Formats
 
-| Ask                                  | `format`   | What it makes                                                                                                        |
-| ------------------------------------ | ---------- | -------------------------------------------------------------------------------------------------------------------- |
-| Word, docx, "an editable report"     | `docx`     | Cover, numbered sections, tables, sources; brand fonts embedded                                                      |
-| PDF, "to send"                       | `pdf`      | The same report as a PDF                                                                                             |
-| Slides, deck, PowerPoint             | `pptx`     | 16:9 editable deck: title, statements, key numbers, tables                                                           |
-| "Deck as PDF", "to present or share" | `deck_pdf` | The same deck as a PDF, exact everywhere                                                                             |
-| Excel for a Diligence plan           | `xlsx`     | `audience: "founder"`: the request list to send (see `skafld-vc:diligence-requests`); `"team"`: the internal tracker |
+| Ask                                  | `format`      | What it makes                                                                                                          |
+| ------------------------------------ | ------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| Word, docx, "an editable report"     | `docx`        | Cover, numbered sections, tables, sources; brand fonts embedded                                                        |
+| PDF, "to send"                       | `pdf`         | The same report as a PDF                                                                                               |
+| Slides, deck, PowerPoint             | `pptx`        | 16:9 editable deck: title, statements, key numbers, tables                                                             |
+| "Deck as PDF", "to present or share" | `deck_pdf`    | The same deck as a PDF, exact everywhere                                                                               |
+| Excel for a Diligence plan           | `xlsx`        | `audience: "founder"`: the request list to send (see `skafld-vc:diligence-requests`); `"team"`: the internal tracker   |
+| Founder feedback to send             | `docx`, `pdf` | `audience: "founder"`: the founder copy, the note and nothing internal; `"team"` (the default): the brief and the note |
+
+The team tracker carries the Diligence findings, gap priority and evidence, and who asked for each data-room document and when it was requested and received; the founder request list never does. A founder feedback deliverable has no deck, and its founder copy is refused until `body.disclosureCheck.passed` is true: fix the lines that failed, then export again.
 
 When someone asks for "a deck" without a format, make `pptx` and offer `deck_pdf`. When they want to send a deck to people outside the firm, make `deck_pdf`: it looks the same on every machine.
 

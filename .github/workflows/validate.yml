@@ -14,3 +14,8 @@ jobs:
           node-version: "22"
       - name: Manifest and plugin structure
         run: node scripts/validate.mjs
+      - name: Claude Code validation
+        run: |
+          npm install -g @anthropic-ai/claude-code
+          claude plugin validate .
+          for dir in skafld-vc skafld-vc-platform; do claude plugin validate "$dir"; done

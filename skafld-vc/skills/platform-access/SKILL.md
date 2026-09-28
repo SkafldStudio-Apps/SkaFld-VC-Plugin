@@ -95,4 +95,4 @@ Structured questions go to `query_deals` first; `search_documents` is for narrat
 ## Sources
 
 1. The platform's MCP tool descriptions and `whoami` response as served by the connected deployment (tool names, arguments, scope and write rules above), checked against the SkaFld VC platform source on 2026-09-28.
-2. GoingVC Research Library, "Complete Due Diligence for Angels" and "The Complete Guide to VC Due Diligence" (screening chapters), as read in the SkaFld VC reference-library scan, 2026-09-28: the angel-side solo decision and the fund-side decision format by team size, which `house.decision_format` encodes.
+2. GoingVC Research Library, "Complete Due Diligence for Angels" and "The Complete Guide to VC Due Diligence" (screening chapters), n.d., practitioner guides with no public URL: the angel-side solo decision and the fund-side decision format by team size, which `house.decision_format` encodes.

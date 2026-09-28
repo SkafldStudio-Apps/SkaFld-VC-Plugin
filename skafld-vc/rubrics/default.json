@@ -32,7 +32,7 @@
       "name": "Traction and validation",
       "weight": 0.175,
       "description": "Evidence, appropriate to stage, that customers want this and will pay: rated by class of proof.",
-      "evaluates": "Proof ladder from strongest to weakest: paid and retained, paid, behavioural (usage, cohorts), product (pilots, LOIs naming a buyer), discovery (interviews with n). Stage-relative: at pre-seed discovery and pilots are the bar; at seed paying customers with retention that flattens; at Series A ARR near $3m, growth above 2x, net dollar retention above 100%. 5: proof a class above the stage bar. 4: at bar with a second class supporting it. 3: at bar, single class. 2: below bar for the claimed stage. 1: vanity or cumulative metrics only. Note customer concentration when one buyer is over 25% of revenue. Absent because of stage: not_assessed."
+      "evaluates": "Proof ladder from strongest to weakest: paid and retained, paid, behavioural (usage, cohorts), product (pilots, LOIs naming a buyer), discovery (interviews with n). Stage-relative: at pre-seed discovery and pilots are the bar; at seed paying customers with retention that flattens; at Series A ARR near $3m, growth above 2x, net dollar retention above 100%. 5: proof a class above the stage bar. 4: at bar with a second class supporting it. 3: at bar, single class. 2: below bar for the claimed stage. 1: vanity or cumulative metrics only. Note customer concentration when one buyer is over 25% of revenue, the level at which concentration becomes a primary diligence topic (practitioner consensus: Glencoyne, L40 and Pomegra 2025; 10% is the SEC disclosure line); under $1m ARR 40 to 70% from one customer is common, so judge the trend, the contract term and whether a founder holds the relationship, not the level alone. Absent because of stage: not_assessed."
     },
     {
       "key": "problem_solution_fit",
@@ -53,12 +53,12 @@
       "name": "Deal terms and financials",
       "weight": 0.05,
       "description": "Whether the ask, the price and the terms are reasonable and consistent, judged against comparables and standard terms rather than a formula.",
-      "evaluates": "Decode the ask (post = raise / ownership; effective pre = pre less the pool carved from it; state the instrument). Price: the subject's percentile against pipeline and external comparables from the same regime, quarter and sector; the VC-method ceiling with a dilution path. Terms: flag anything beyond 1x non-participating, pari passu, broad-based weighted average and no redemption, with the prevalence figure beside it. Runway 12 to 24 months to a named milestone with specific uses of funds; a bottom-quartile round size is a risk signal. 5: price at or below the comparables median, standard terms, runway to milestone. 4: price up to the 75th percentile with a reason. 3: price above range but explained. 2: proformas that do not reconcile or off-market terms. 1: overfunding with no uses, or a price the ceiling cannot support. Never present a blended value; headline post-money is the price of the last preferred, not the company's value."
+      "evaluates": "Decode the ask (post = raise / ownership; effective pre = pre less the pool carved from it; state the instrument). Price: the subject's percentile against pipeline and external comparables from the same regime, quarter and sector; the VC-method ceiling with a dilution path. Terms: flag anything beyond 1x non-participating, pari passu, broad-based weighted average and no redemption, with the prevalence figure beside it. Runway 12 to 18 months to a named milestone, usually the next round's bar (Wittenborn 2015; Langer 2018), with specific uses of funds; a bottom-quartile round size is a risk signal. 5: price at or below the comparables median, standard terms, runway to milestone. 4: price up to the 75th percentile with a reason. 3: price above range but explained. 2: proformas that do not reconcile or off-market terms. 1: overfunding with no uses, or a price the ceiling cannot support. Never present a blended value; headline post-money is the price of the last preferred, not the company's value."
     }
   ],
   "composite": {
     "method": "weighted_mean_of_assessed",
-    "description": "Weighted mean of the assessed criteria only. Not-assessed criteria are excluded and the remaining weights renormalise to the weight present. Before scoring, check the knock-outs; any that is triggered forces the recommendation to pass with the knock-out named, whatever the composite: (1) no one on the team has worked in the sector; (2) no one on the team has led people; (3) misrepresentation or an integrity concern in the materials or references; (4) a regulatory or technical impossibility the plan depends on; (5) an addressable market below the bar derived from the network's cheque, ownership and target multiple; (6) an ask or valuation far outside the stage benchmark with no explanation. Top band condition: strong_consider also requires market_opportunity and product_differentiation both at 4 or above and no criterion at 2 or below; otherwise report consider. Score each criterion from its own evidence before reading the others, and write the memo last."
+    "description": "Weighted mean of the assessed criteria only. Not-assessed criteria are excluded and the remaining weights renormalise to the weight present. Before scoring, check the knock-outs; any that is triggered forces the recommendation to pass with the knock-out named, whatever the composite: (1) no one on the team has worked in the sector; (2) no one on the team has led people; (3) misrepresentation or an integrity concern in the materials or references; (4) a regulatory or technical impossibility the plan depends on; (5) an addressable market below the bar derived from the network's cheque, ownership and target multiple; (6) an ask or valuation far outside the stage benchmark with no explanation; (7) a founder who says they would not accept board governance or a CEO change if the company needed one (an unvalidated practitioner deal-killer; Payne 2019). Top band condition: strong_consider also requires market_opportunity and product_differentiation both at 4 or above and no criterion at 2 or below; otherwise report consider. Score each criterion from its own evidence before reading the others, and write the memo last."
   },
   "recommendation": {
     "rounding": {
@@ -149,7 +149,7 @@
       "Carry that line into every downstream skill so a reader sees the bar that was applied.",
       "When evidence is above the bar, say so; it is a highlight, not the baseline.",
       "When evidence is below the bar for the claimed stage, score it down and name the gap. When it is absent because the stage does not produce it yet, use not_assessed.",
-      "Check the raise against the milestone it must reach: 12 to 24 months of runway to the next round's bar, with uses of funds more specific than building the MVP."
+      "Check the raise against the milestone it must reach: 12 to 18 months of runway to the next round's bar (Wittenborn 2015; Langer 2018), with uses of funds more specific than building the MVP. Frame the round as the money that buys that milestone: at seed it is the Series A row's evidence, and a Series A raise should fund the team and product that reach the next round's bar. Eighteen to 24 months is practitioner context for a longer plan, not the test."
     ],
     "anti_patterns": [
       "\"No revenue\" at idea stage is not a risk; it is the definition of the stage, and half of seed companies are still pre-revenue.",
@@ -313,6 +313,10 @@
     {
       "key": "ask_far_off_benchmark",
       "description": "The ask or valuation is far outside the stage benchmark with no explanation."
+    },
+    {
+      "key": "founder_refuses_governance",
+      "description": "A founder says they would not accept board governance or a CEO change if the company needed one. Unvalidated: universal as a deal-killer in angel screening worksheets (Payne, Scorecard Valuation Methodology, rev. 2019), and coachability is a valid signal to investors (Ciuchta et al. 2018), but no outcome study was found. Triggered only by the founder's own stated position, from a call or the materials, never inferred; until someone has asked, it is not triggered and its evidence says \"not asked\"."
     }
   ],
   "knockout_recommendation": "pass"
