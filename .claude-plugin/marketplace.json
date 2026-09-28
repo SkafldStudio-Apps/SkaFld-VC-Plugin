@@ -4,8 +4,8 @@
     "name": "SkaFld Studio"
   },
   "metadata": {
-    "description": "SkaFld VC: venture capital agents and skills for Claude Code and Cowork. Start with SkaFld VC; add SkaFld VC Platform only if your firm runs a SkaFld VC platform.",
-    "version": "1.1.1"
+    "description": "SkaFld VC: venture capital agents and skills for Claude Code and Cowork. Start with SkaFld VC; add SkaFld VC Connectors for more data and work tools, and SkaFld VC Platform only if your firm runs a SkaFld VC platform.",
+    "version": "1.2.0"
   },
   "plugins": [
     {
@@ -32,6 +32,18 @@
         "venture capital",
         "skafld platform",
         "connector"
+      ]
+    },
+    {
+      "name": "skafld-vc-connectors",
+      "displayName": "SkaFld VC Connectors (optional)",
+      "source": "./skafld-vc-connectors",
+      "description": "Optional: more connectors the SkaFld VC agents can read, for people who use them. Paid company data (Crunchbase, PitchBook, CB Insights, Tracxn), more CRMs and note-takers, data rooms, portfolio and finance metrics, public comparables and contracts. Each signs in with your own account.",
+      "category": "productivity",
+      "tags": [
+        "venture capital",
+        "connectors",
+        "data"
       ]
     }
   ]

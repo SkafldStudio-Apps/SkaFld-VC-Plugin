@@ -18,4 +18,4 @@ jobs:
         run: |
           npm install -g @anthropic-ai/claude-code
           claude plugin validate .
-          for dir in skafld-vc skafld-vc-platform; do claude plugin validate "$dir"; done
+          for dir in skafld-vc skafld-vc-connectors skafld-vc-platform; do claude plugin validate "$dir"; done

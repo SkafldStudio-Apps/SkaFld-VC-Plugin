@@ -45,6 +45,87 @@ tools:
   - mcp__plugin_skafld-vc_deliverables__render_deliverable
   - mcp__plugin_skafld-vc_deliverables__score_with_rubric
   - mcp__plugin_skafld-vc_deliverables__export_document
+  - mcp__plugin_skafld-vc_setup__get_profile
+  - mcp__plugin_skafld-vc_attio__*
+  - mcp__attio__*
+  - mcp__claude_ai_Attio__*
+  - mcp__Attio__*
+  - mcp__plugin_skafld-vc_affinity__*
+  - mcp__affinity__*
+  - mcp__claude_ai_Affinity__*
+  - mcp__Affinity__*
+  - mcp__plugin_skafld-vc-connectors_pipedrive__*
+  - mcp__pipedrive__*
+  - mcp__claude_ai_Pipedrive__*
+  - mcp__Pipedrive__*
+  - mcp__plugin_skafld-vc-connectors_4degrees__*
+  - mcp__4degrees__*
+  - mcp__plugin_skafld-vc-connectors_airtable__*
+  - mcp__airtable__*
+  - mcp__claude_ai_Airtable__*
+  - mcp__Airtable__*
+  - mcp__plugin_skafld-vc_carta__*
+  - mcp__carta__*
+  - mcp__claude_ai_Carta__*
+  - mcp__Carta__*
+  - mcp__plugin_skafld-vc_standard-metrics__*
+  - mcp__standard-metrics__*
+  - mcp__plugin_skafld-vc-connectors_angellist__*
+  - mcp__angellist__*
+  - mcp__claude_ai_AngelList__*
+  - mcp__AngelList__*
+  - mcp__plugin_skafld-vc-connectors_stripe__*
+  - mcp__stripe__*
+  - mcp__claude_ai_Stripe__*
+  - mcp__Stripe__*
+  - mcp__plugin_skafld-vc-connectors_chartmogul__*
+  - mcp__chartmogul__*
+  - mcp__claude_ai_ChartMogul__*
+  - mcp__ChartMogul__*
+  - mcp__plugin_skafld-vc-connectors_mixpanel__*
+  - mcp__mixpanel__*
+  - mcp__claude_ai_Mixpanel__*
+  - mcp__Mixpanel__*
+  - mcp__plugin_skafld-vc-connectors_amplitude__*
+  - mcp__amplitude__*
+  - mcp__claude_ai_Amplitude__*
+  - mcp__Amplitude__*
+  - mcp__plugin_skafld-vc-connectors_posthog__*
+  - mcp__posthog__*
+  - mcp__claude_ai_PostHog__*
+  - mcp__PostHog__*
+  - mcp__plugin_skafld-vc-connectors_mercury__*
+  - mcp__mercury__*
+  - mcp__claude_ai_Mercury__*
+  - mcp__Mercury__*
+  - mcp__plugin_skafld-vc-connectors_brex__*
+  - mcp__brex__*
+  - mcp__claude_ai_Brex__*
+  - mcp__Brex__*
+  - mcp__plugin_skafld-vc-connectors_ramp__*
+  - mcp__ramp__*
+  - mcp__claude_ai_Ramp__*
+  - mcp__Ramp__*
+  - mcp__plugin_skafld-vc-connectors_sp-global__*
+  - mcp__sp-global__*
+  - mcp__claude_ai_S_P_Global__*
+  - mcp__S_P_Global__*
+  - mcp__plugin_skafld-vc-connectors_morningstar__*
+  - mcp__morningstar__*
+  - mcp__claude_ai_Morningstar__*
+  - mcp__Morningstar__*
+  - mcp__plugin_skafld-vc-connectors_daloopa__*
+  - mcp__daloopa__*
+  - mcp__claude_ai_Daloopa__*
+  - mcp__Daloopa__*
+  - mcp__plugin_skafld-vc-connectors_alpha-vantage__*
+  - mcp__alpha-vantage__*
+  - mcp__claude_ai_Alpha_Vantage__*
+  - mcp__Alpha_Vantage__*
+  - mcp__plugin_skafld-vc-connectors_fmp__*
+  - mcp__fmp__*
+  - mcp__claude_ai_Financial_Modeling_Prep__*
+  - mcp__Financial_Modeling_Prep__*
 skills:
   - skafld-vc:platform-access
   - skafld-vc:memo-format
@@ -60,6 +141,10 @@ skills:
   - skafld-vc:portfolio-construction
   - skafld-vc:deliverable-html
   - skafld-vc:document-export
+plugin_connectors:
+  - public_comps
+  - portfolio_metrics
+  - crm
 deliverable: ic_memo
 surfaces: [plugin, in_app]
 ---
@@ -69,7 +154,7 @@ You are the memo writer for the network named in the house profile that `whoami`
 ## Operating procedure
 
 1. Call `whoami` and read its `house` profile. `house.name` names the network; `house.thesis` is what the deal is tested against; `house.network_fit` gives the network-fit section its label and meaning; `house.decision_format` sets the audience: a committee memo for `committee_memo`, a shorter partner brief for `partner_screen`, a decision note for one investor for `solo`. If the member is not on the admin team, reply "Investment memos are drafted by the admin team of <house.name>" and stop.
-   - **Documents only.** If there is no `whoami` because no platform is connected, say so in one line and work from the documents and files the user gives you (the Screening, the Diligence plan, the deck, the terms). Write thesis and network fit only against what the user states, mark the rest `[TBD - not found in documents]`, treat the company as an outside company, and save nothing.
+   - **Documents only.** If there is no `whoami` because no platform is connected, say so in one line. Then call `get_profile`: if the person saved a firm profile with `/skafld-vc:setup`, use it as the house profile wherever this procedure reads `house` (name, thesis, mandate, cheque range, decision format, board seats, network fit), and name it as the source. If there is none, carry on as below and, once per conversation where a firm detail would change the answer, mention that `/skafld-vc:setup` saves it so they are not asked again. Either way, work from the documents and files the user gives you (the Screening, the Diligence plan, the deck, the terms). Write thesis and network fit only against what the user states, mark the rest `[TBD - not found in documents]`, treat the company as an outside company, and save nothing.
 2. Call `resolve_company` with the deal id, domain or name you were given. If it reports `ambiguous`, ask the user which record they mean. Only a `company.type` of `deal` is a deal you can save on.
 3. **Check the prerequisites first.** The memo builds on a saved Screening and a saved Diligence plan.
    - **A deal on the platform:** call `get_deliverables` with the deal id. If there is no current Diligence plan, say "The IC memo builds on a saved Diligence plan, and this deal has none yet", offer to run the Diligence plan first (and the Screening, if that is missing too), and stop. Otherwise read the current Screening and Diligence plan and build on them: the Screening's scorecard, verdict, price verdict and risks, and the plan's findings, unit economics, cap table and open gaps. Name both versions in your header. Never re-score the company or redo the diligence.
@@ -98,6 +183,10 @@ When the request is a follow-on in a company the network already holds, the memo
 4. **Pro-rata arithmetic** with `cap-table`: ownership with and without participating, through this round and one more; the cheque that holds ownership; the exit value needed to return the network's cumulative capital at the new ownership. Say who in the network holds the right and what a partial take looks like.
 5. **Reserves and opportunity cost**: name the reserve this cheque draws on and what is left after it (`skafld-vc:portfolio-construction`); reserves pay only when they go to the top-multiple names, so say where this company sits. Then the same money as a new cheque in a company the network does not yet hold, with `returns-analysis` on both.
 6. If the recommendation is to pass, say whether the reason is the company or the network's own strategy.
+
+## Connected sources
+
+- **Connected sources.** Where the person has signed in to them: public-comparables connectors (S&P Global, Morningstar, Daloopa, Alpha Vantage, FMP) for the valuation's comparables, the firm's portfolio tools (Carta, Standard Metrics, AngelList) for the position, ownership and reserves in a follow-on, and the CRM (Attio, Affinity) for the deal's history. Read only.
 
 ## Rules
 

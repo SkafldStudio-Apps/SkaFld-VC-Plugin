@@ -1,8 +1,12 @@
 #!/usr/bin/env node
-// The skafld-vc plugin's brand server: sets up the brand the exports
-// (Word, PDF, PowerPoint, Excel) use. A stdio MCP server, used by
-// /skafld-vc:brand in the main conversation; no agent lists it.
+// The skafld-vc plugin's setup server: the person's firm profile (optional)
+// and the brand the exports (Word, PDF, PowerPoint, Excel) use. A stdio MCP
+// server, used by /skafld-vc:setup in the main conversation; every agent
+// reads the profile with get_profile when no platform is connected.
 //
+//   setup_status       what is set up (brand and firm profile) and what can be changed
+//   get_profile        the firm profile, in the platform house profile's shape
+//   save_profile       save or change parts of the firm profile
 //   brand_status       which brand exports use now, and whether one was chosen
 //   use_default_brand  keep the SkaFld VC default (and stop asking)
 //   inspect_website    read a website: name, colours, fonts, logo candidates
@@ -12,7 +16,9 @@
 // This is the plugin's only local server with network access: it fetches
 // the website the person names, and fonts from Google Fonts. It saves to the
 // plugin's data folder (CLAUDE_PLUGIN_DATA, kept across updates) or, for a
-// project brand, <project>/brand/. Newline-delimited JSON-RPC 2.0 on stdio.
+// project brand, <project>/brand/; the profile to <data>/profile.json, or
+// <project>/skafld-vc/profile.json on a host with no plugin data folder.
+// Newline-delimited JSON-RPC 2.0 on stdio.
 import {
   existsSync,
   mkdirSync,
@@ -39,7 +45,7 @@ import {
 
 const here = dirname(fileURLToPath(import.meta.url))
 const ASSETS = resolve(here, "..", "..", "document-export", "assets")
-const SERVER = { name: "skafld-vc-brand", version: "1.0.0" }
+const SERVER = { name: "skafld-vc-setup", version: "1.1.0" }
 const FALLBACK_PROTOCOL = "2025-06-18"
 
 const PROJECT_DIR = {
@@ -60,6 +66,133 @@ const FONT = {
 }
 
 const TOOLS = [
+  {
+    name: "setup_status",
+    title: "What is set up",
+    description:
+      "What /skafld-vc:setup has saved for this person: the brand the exports use and the firm profile (if any), with the list of parts that can be changed. Call it first in setup: if something is saved, show it and offer the parts to change; if nothing is, run the first-time setup.",
+    inputSchema: {
+      type: "object",
+      properties: { project_dir: PROJECT_DIR },
+    },
+    annotations: {
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: false,
+    },
+  },
+  {
+    name: "get_profile",
+    title: "Firm profile",
+    description:
+      "The person's firm profile from /skafld-vc:setup, in the same shape as a platform's whoami house profile (name, short_name, description, thesis, network_fit, decision_format, board_seats, check_range_usd, mandate, thesis_detail). Read it when no platform is connected; profile is null when none was saved, and then you carry on without it (ask for what you need, or work from the documents).",
+    inputSchema: {
+      type: "object",
+      properties: { project_dir: PROJECT_DIR },
+    },
+    annotations: {
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: false,
+    },
+  },
+  {
+    name: "save_profile",
+    title: "Save the firm profile",
+    description:
+      "Save or change parts of the firm profile (only the fields given change; list fields in clear to remove them, or reset: true to delete the whole profile). Call only after the person confirmed the values.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        project_dir: PROJECT_DIR,
+        name: { type: "string", description: "The firm's full name." },
+        short_name: {
+          type: "string",
+          description: 'Short form for labels ("Northwind").',
+        },
+        description: {
+          type: "string",
+          description:
+            "One or two sentences on who the firm is and what it backs.",
+        },
+        thesis: {
+          type: "string",
+          description:
+            "The investment thesis in the firm's words: sectors, stages, geographies, cheque, why now.",
+        },
+        network_fit: {
+          type: "object",
+          properties: {
+            label: { type: "string" },
+            description: { type: "string" },
+          },
+          required: ["label", "description"],
+          description:
+            "What the firm brings founders beyond capital, for memos and the network-fit criterion.",
+        },
+        decision_format: {
+          type: "string",
+          enum: ["committee_memo", "partner_screen", "solo"],
+          description:
+            "committee_memo (an investment committee decides on a memo), partner_screen (a partner decides on the Screening), or solo (one investor).",
+        },
+        board_seats: {
+          type: "boolean",
+          description: "Whether the firm takes board seats after investing.",
+        },
+        check_range_usd: {
+          type: "object",
+          properties: {
+            min: { type: "integer", minimum: 1 },
+            max: { type: "integer", minimum: 1 },
+          },
+          required: ["min", "max"],
+          description: "Typical cheque per deal, whole dollars.",
+        },
+        mandate: {
+          type: "object",
+          properties: {
+            sectors: { type: "array", items: { type: "string" } },
+            stages: { type: "array", items: { type: "string" } },
+            geographies: { type: "array", items: { type: "string" } },
+            super_priority: {
+              type: "array",
+              items: { type: "string" },
+              description: "Two or three must-have criteria.",
+            },
+          },
+        },
+        thesis_detail: {
+          type: "object",
+          description:
+            "Optional: the fuller thesis in the thesis-fit skill's thesis.json shape (title, version, whyNow, pillars, taxonomy, criteria). A project's own thesis.json overrides it.",
+        },
+        fund_size_usd: {
+          type: "integer",
+          minimum: 1,
+          description:
+            "Optional: the fund or annual allocation, for the fund-returner line.",
+        },
+        clear: {
+          type: "array",
+          items: { type: "string" },
+          description: "Fields to remove.",
+        },
+        reset: {
+          type: "boolean",
+          description: "Delete the whole profile.",
+        },
+      },
+    },
+    annotations: {
+      readOnlyHint: false,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: false,
+    },
+  },
   {
     name: "brand_status",
     title: "Which brand exports use",
@@ -411,6 +544,187 @@ async function preview(args, env) {
 }
 
 // ---------------------------------------------------------------------------
+// The firm profile
+
+const PROFILE_FIELDS = [
+  "name",
+  "short_name",
+  "description",
+  "thesis",
+  "network_fit",
+  "decision_format",
+  "board_seats",
+  "check_range_usd",
+  "mandate",
+  "thesis_detail",
+  "fund_size_usd",
+]
+const DECISION_FORMATS = ["committee_memo", "partner_screen", "solo"]
+
+/** Where the profile lives: the plugin's data folder, else the project. */
+export function profileFile(env, project) {
+  return env.CLAUDE_PLUGIN_DATA
+    ? join(resolve(env.CLAUDE_PLUGIN_DATA), "profile.json")
+    : join(project, "skafld-vc", "profile.json")
+}
+
+export function readProfile(env, project) {
+  const file = profileFile(env, project)
+  if (!existsSync(file)) return null
+  try {
+    return JSON.parse(readFileSync(file, "utf8"))
+  } catch {
+    return null
+  }
+}
+
+const text = (v) => typeof v === "string" && v.trim().length > 0
+const strings = (v) => Array.isArray(v) && v.every(text)
+
+/** Refuse a value the agents could not use; the message says which field. */
+function checkProfileField(key, value) {
+  switch (key) {
+    case "name":
+    case "short_name":
+    case "description":
+    case "thesis":
+      if (!text(value)) return `${key} must be non-empty text`
+      return null
+    case "network_fit":
+      if (!value || !text(value.label) || !text(value.description))
+        return "network_fit needs a label and a description"
+      return null
+    case "decision_format":
+      if (!DECISION_FORMATS.includes(value))
+        return `decision_format must be one of ${DECISION_FORMATS.join(", ")}`
+      return null
+    case "board_seats":
+      if (typeof value !== "boolean") return "board_seats must be true or false"
+      return null
+    case "check_range_usd":
+      if (
+        !value ||
+        !Number.isInteger(value.min) ||
+        !Number.isInteger(value.max) ||
+        value.min < 1 ||
+        value.max < value.min
+      )
+        return "check_range_usd needs whole-dollar min and max, with max at least min"
+      return null
+    case "mandate":
+      if (!value || typeof value !== "object")
+        return "mandate must be an object"
+      for (const k of ["sectors", "stages", "geographies", "super_priority"]) {
+        if (value[k] !== undefined && !strings(value[k]))
+          return `mandate.${k} must be a list of text`
+      }
+      return null
+    case "thesis_detail":
+      if (!value || typeof value !== "object" || Array.isArray(value))
+        return "thesis_detail must be an object"
+      return null
+    case "fund_size_usd":
+      if (!Number.isInteger(value) || value < 1)
+        return "fund_size_usd must be a whole number of dollars"
+      return null
+    default:
+      return `${key} is not a profile field`
+  }
+}
+
+function saveProfile(args, env) {
+  const project = projectDir(env, args.project_dir)
+  const file = profileFile(env, project)
+  if (args.reset === true) {
+    rmSync(file, { force: true })
+    return { ok: true, profile: null, note: "The firm profile was deleted." }
+  }
+  const current = readProfile(env, project) ?? {}
+  const next = { ...current }
+  const errors = []
+  for (const key of PROFILE_FIELDS) {
+    if (args[key] === undefined) continue
+    const problem = checkProfileField(key, args[key])
+    if (problem) errors.push(problem)
+    else next[key] = args[key]
+  }
+  for (const key of Array.isArray(args.clear) ? args.clear : []) {
+    if (!PROFILE_FIELDS.includes(key))
+      errors.push(`${key} is not a profile field`)
+    else delete next[key]
+  }
+  if (errors.length) throw new RenderError("the profile was not saved", errors)
+  if (!next.short_name && next.name) next.short_name = next.name
+  next.updated_at = new Date().toISOString()
+  mkdirSync(dirname(file), { recursive: true })
+  writeFileSync(file, `${JSON.stringify(next, null, 2)}\n`)
+  return {
+    ok: true,
+    saved_to: env.CLAUDE_PLUGIN_DATA
+      ? "the plugin's data folder (every project)"
+      : relative(project, file),
+    profile: next,
+  }
+}
+
+function getProfile(args, env) {
+  const project = projectDir(env, args.project_dir)
+  const profile = readProfile(env, project)
+  return profile
+    ? { profile, source: "setup" }
+    : {
+        profile: null,
+        note: "No firm profile is saved. Carry on without it: ask for what you need or work from the documents. The person can save one with /skafld-vc:setup.",
+      }
+}
+
+/** The parts of setup a person can change, in the order setup offers them. */
+const CHANGEABLE = [
+  {
+    key: "brand",
+    label: "Brand: start again from a website, logo or description",
+  },
+  { key: "brand.colors", label: "Brand: colours (accent and text)" },
+  { key: "brand.fonts", label: "Brand: fonts" },
+  { key: "brand.logo", label: "Brand: logo" },
+  { key: "brand.footer", label: "Brand: footer and disclaimer" },
+  { key: "brand.default", label: "Brand: go back to the SkaFld VC default" },
+  { key: "profile.firm", label: "Firm: name and description" },
+  {
+    key: "profile.thesis",
+    label:
+      "Firm: thesis and mandate (sectors, stages, geographies, must-haves)",
+  },
+  { key: "profile.check_range_usd", label: "Firm: cheque range and fund size" },
+  { key: "profile.decision_format", label: "Firm: how decisions are made" },
+  { key: "profile.board_seats", label: "Firm: board seats" },
+  { key: "profile.network_fit", label: "Firm: what you bring founders" },
+  { key: "profile.reset", label: "Firm: delete the profile" },
+]
+
+async function setupStatus(args, env) {
+  const project = projectDir(env, args.project_dir)
+  const brand = await status(args, env)
+  const profile = readProfile(env, project)
+  const missing = profile
+    ? [
+        "thesis",
+        "check_range_usd",
+        "decision_format",
+        "network_fit",
+        "board_seats",
+      ].filter((k) => profile[k] === undefined)
+    : null
+  return {
+    first_run: !profile && brand.chosen === null,
+    brand,
+    profile,
+    profile_missing: missing,
+    can_change: CHANGEABLE,
+  }
+}
+
+// ---------------------------------------------------------------------------
 
 function send(message) {
   process.stdout.write(`${JSON.stringify(message)}\n`)
@@ -422,6 +736,9 @@ async function callTool(name, args = {}) {
     content: [{ type: "text", text: JSON.stringify(value, null, 2) }],
   })
   try {
+    if (name === "setup_status") return ok(await setupStatus(args, env))
+    if (name === "get_profile") return ok(getProfile(args, env))
+    if (name === "save_profile") return ok(saveProfile(args, env))
     if (name === "brand_status") return ok(await status(args, env))
     if (name === "use_default_brand") return ok(await keepDefault(args, env))
     if (name === "inspect_website") return ok(await inspect(args, env))

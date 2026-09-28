@@ -2,37 +2,126 @@
 
 SkaFld VC works on your documents alone. It declares four MCP servers: two local ones it runs itself, and the two research services it recommends.
 
-| Server         | What it is                                                                                                                                                                                                  | Sign-in                                                   |
-| -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
-| `deliverables` | Writes deliverables as HTML, and any deliverable or answer as Word, PDF, a PowerPoint or PDF deck, or (a Diligence plan) Excel, into `./skafld-vc/`; scores against a rubric without a platform. No network | None                                                      |
-| `brand`        | Sets up the brand those files use (`/skafld-vc:brand`): reads the website you name for colours, fonts and logo, and fetches fonts from Google Fonts. Saves to the plugin's data folder                      | None                                                      |
-| `exa`          | Exa web search and page reads, for market, competitor and customer claims (Sourcing, Screening, Diligence, Portfolio)                                                                                       | None; free with rate limits. Add your key for more, below |
-| `apollo`       | Apollo company and people lookups, for founders, headcount, founding year and funding (Sourcing, Screening, Diligence)                                                                                      | Your own Apollo account                                   |
+| Server         | What it is                                                                                                                                                                                                                                                                                                                | Sign-in                                                   |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| `deliverables` | Writes deliverables as HTML, and any deliverable or answer as Word, PDF, a PowerPoint or PDF deck, or (a Diligence plan) Excel, into `./skafld-vc/`; scores against a rubric without a platform. No network                                                                                                               | None                                                      |
+| `setup`        | `/skafld-vc:setup`: the brand your files use (reads the website you name for colours, fonts and logo, and fetches fonts from Google Fonts) and, optionally, your firm profile (thesis, mandate, cheque range, decision format) that the agents read instead of asking. Saves to the plugin's data folder, on your machine | None                                                      |
+| `exa`          | Exa web search and page reads, for market, competitor and customer claims (Sourcing, Screening, Diligence, Portfolio)                                                                                                                                                                                                     | None; free with rate limits. Add your key for more, below |
+| `apollo`       | Apollo company and people lookups, for founders, headcount, founding year and funding (Sourcing, Screening, Diligence)                                                                                                                                                                                                    | Your own Apollo account                                   |
 
 - **Research: Exa and Apollo.** Recommended, and declared by the plugin so they show up as its connectors; they run on your own account, never the platform's. Without them the agents still run from your documents and mark what needed outside research "not checked". Apollo lookups spend your Apollo credits; the agents name the lookups and the credits and ask before the first one, and they use only Apollo's search and lookup tools.
 - **Your firm's SkaFld VC platform.** Only if your firm runs one: install the SkaFld VC Platform add-on (`skafld-vc-platform`), which asks for your platform's address. See its README. Without a platform, nothing else is needed.
 
 ## More connectors, by what they unlock
 
-Beyond Exa and Apollo, these are the sources the research behind SkaFld VC recommends, in priority order. Connect the ones your firm already uses from the Claude connector directory (Settings, Connectors) or as your own MCP server. None is required: where a source is missing, the agents say what they could not check. "Agents read it" means the named agents have it in their tool lists and use it read-only when you have connected it (each call still asks you unless you allowed it); for the rest, attach or paste what you have.
+Beyond Exa and Apollo, these are the connectors a venture firm or angel is likely to use, each verified on 2026-09-28 as the vendor's own MCP server. They come three ways:
 
-| Priority | Connector                                                                                     | What it unlocks                                                                                                                                   | Status                                                         |
-| -------- | --------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------- |
-| 1        | Google Drive                                                                                  | Data rooms and decks founders share there, and board packs                                                                                        | Agents read it: Diligence (data room), Portfolio (board packs) |
-| 1        | Gmail                                                                                         | Founder updates as they arrive                                                                                                                    | Agents read it: Portfolio (search and read only; never sends)  |
-| 2        | One funding-data source: Harmonic, Specter, Dealroom or Crunchbase (PitchBook where licensed) | Who raised, when and from whom: Sourcing, the anti-portfolio outcome checks, co-investor quality and comparables. Exa cannot answer this reliably | Recommended; not yet in the agents' tool lists                 |
-| 3        | SEC EDGAR (Form D, and 10-K/XBRL for public comparables)                                      | US raises before they reach the press; market size, growth and margin benchmarks from public companies                                            | Free community servers; not yet in tool lists                  |
-| 3        | USPTO, and WHOIS for domains                                                                  | Patents and trademarks in deep-tech screens and IP diligence; domain ownership                                                                    | Free community servers; not yet in tool lists                  |
-| 4        | Apollo job postings                                                                           | Headcount growth as a traction proxy                                                                                                              | Screening uses it with Apollo connected                        |
-| 5        | Call transcripts: Fireflies, Gong or Apollo Conversations                                     | Screening-call and reference-call notes turned into findings                                                                                      | Agents read it: Diligence (Fireflies, Gong); paste others      |
-| 6        | GitHub                                                                                        | Code ownership, access and activity for developer tools, only when the company shared the repository                                              | Agents read it: Diligence                                      |
-| 6        | SimilarWeb or Semrush; app store data                                                         | Web traffic and app traction signals by company type                                                                                              | Recommended; not yet in tool lists                             |
-| 6        | Product analytics, read-only: Mixpanel, PostHog or Amplitude                                  | The company's own usage and retention, where the founder grants access                                                                            | Optional; founder-granted                                      |
-| 6        | DocSend                                                                                       | Deck analytics and data-room views                                                                                                                | Optional                                                       |
-| 7        | Cap tables: Pulley or AngelList (Carta's API is limited)                                      | Ownership and follow-on modelling; until then `cap-table` works on a spreadsheet                                                                  | Later                                                          |
-| 7        | Clay                                                                                          | An enrichment waterfall above Apollo when Apollo misses a person                                                                                  | Later                                                          |
-| 7        | Accounting and bank read access                                                               | Ledger and bank statements; at seed a document request, not a connector                                                                           | Later                                                          |
-| 7        | Affinity                                                                                      | The CRM many funds already use, for firms that will not move their pipeline                                                                       | Later                                                          |
+- **Declared by SkaFld VC**: they appear in the plugin's connectors (Claude Desktop) and in `/mcp` (Claude Code). Sign in to the ones you use; the rest stay idle.
+- **Declared by the optional SkaFld VC Connectors add-on** (`skafld-vc-connectors`): paid data, more CRMs and note-takers, data rooms, portfolio and finance metrics, public comparables and contracts. Install it from the same marketplace if you use some of these.
+- **Added from the Claude connector directory** (Settings, Connectors): Google's and others that need their own app registration or an admin. The agents find them there under their directory names.
+
+Each signs in with your own account (in Claude Code run `/mcp`, pick the server and choose Authenticate); nothing in the plugins carries a key, and paid ones need your own plan. The agents use connectors read-only: they never send, create, update, sign or delete anything in them, and Claude asks you before any such call. A server you add yourself under the same name (for example with an API key) wins over the plugin's.
+
+<!-- connectors:start (generated by pnpm agents:sync from lib/ai/agents/connectors.ts) -->
+
+### Company, funding and people data (read by Diligence, Screening, Sourcing)
+
+| Connector | Where it comes from | What the agents use it for | What you need |
+| --- | --- | --- | --- |
+| Harmonic | SkaFld VC | Company and founder search, funding, headcount and saved searches for sourcing | Harmonic account; free tier without deal data |
+| Specter | SkaFld VC | Company, people and investor signals for sourcing and screening | Specter account; 100 free calls a day |
+| Dealroom | SkaFld VC | Company, funding round and investor data, read-only | Dealroom subscription |
+| Clay | SkaFld VC | Enrichment waterfall when Apollo misses a person or company | Clay account; free credits to start |
+| Crunchbase | SkaFld VC Connectors | Funding rounds, investors and acquisitions; anti-portfolio outcome checks | Crunchbase plan with an MCP seat |
+| PitchBook | SkaFld VC Connectors | Deals, valuations and comparables, read-only | PitchBook enterprise licence |
+| CB Insights | SkaFld VC Connectors | Company, market and funding intelligence, read-only | CB Insights enterprise package |
+| Tracxn | SkaFld VC Connectors | Company and sector coverage for sourcing and market maps, read-only | Tracxn subscription with MCP enabled |
+| Coresignal | SkaFld VC Connectors | Headcount and hiring history from public professional data | Coresignal credits |
+| Ramp Data | SkaFld VC Connectors | Vendor adoption and spend benchmarks for market sizing | Free, no sign-in |
+
+### CRM and pipeline (read by IC memo, Orchestrator, Portfolio, Sourcing)
+
+| Connector | Where it comes from | What the agents use it for | What you need |
+| --- | --- | --- | --- |
+| Attio | SkaFld VC | The firm's pipeline, passes and relationship history | Attio workspace, any plan |
+| Affinity | SkaFld VC | The firm's pipeline, relationship strength and warm paths | Affinity Scale plan or higher |
+| Pipedrive | SkaFld VC Connectors | Pipeline and deal notes for firms that track deals there | Pipedrive account (beta) |
+| 4Degrees | SkaFld VC Connectors | VC relationship CRM: pipeline and warm introductions | 4Degrees account |
+| Airtable | SkaFld VC Connectors | Deal trackers and lists kept in Airtable bases | Airtable account, all plans |
+
+### Notes and call transcripts (read by Diligence, Orchestrator, Portfolio, Screening, Sourcing)
+
+| Connector | Where it comes from | What the agents use it for | What you need |
+| --- | --- | --- | --- |
+| Notion | SkaFld VC | Deal notes, theses and IC notes kept in Notion | Notion workspace |
+| Granola | SkaFld VC | Founder, reference and customer call notes | Granola; transcripts on paid plans |
+| Fireflies | SkaFld VC | Screening, reference and customer call transcripts | Fireflies account |
+| Otter | SkaFld VC Connectors | Call transcripts, read-only | Otter account |
+| Fathom | SkaFld VC Connectors | Call recordings and summaries | Fathom account |
+| Gong | Claude connector directory | Call transcripts where the firm records on Gong | Gong seat; an admin creates the integration |
+
+### Documents and data rooms (read by Diligence, Orchestrator, Portfolio, Screening)
+
+| Connector | Where it comes from | What the agents use it for | What you need |
+| --- | --- | --- | --- |
+| Google Drive | Claude connector directory | Data rooms and board packs shared on Drive | Add from the Claude connector directory |
+| Dropbox | SkaFld VC Connectors | Data rooms and files shared on Dropbox | Dropbox account (beta) |
+| DocSend | SkaFld VC Connectors | Decks and data rooms shared through DocSend | DocSend Advanced Data Rooms plan (beta) |
+
+### Mail (read by Portfolio)
+
+| Connector | Where it comes from | What the agents use it for | What you need |
+| --- | --- | --- | --- |
+| Gmail | Claude connector directory | Founder updates as they arrive, search and read only | Add from the Claude connector directory |
+
+### Code (read by Diligence)
+
+| Connector | Where it comes from | What the agents use it for | What you need |
+| --- | --- | --- | --- |
+| GitHub | Claude connector directory | A repository the company shared, for the technical review | Add from the Claude connector directory or the GitHub plugin |
+
+### Portfolio, fund and company metrics (read by IC memo, Portfolio)
+
+| Connector | Where it comes from | What the agents use it for | What you need |
+| --- | --- | --- | --- |
+| Carta | SkaFld VC | Holdings, cap tables and investor data for follow-on and portfolio views | Carta account |
+| Standard Metrics | SkaFld VC | Portfolio company financials and KPIs collected from founders | Standard Metrics account |
+| AngelList | SkaFld VC Connectors | Fund and SPV holdings, read-only (for GPs) | AngelList GP account |
+| Stripe | SkaFld VC Connectors | Revenue metrics where a founder grants access | Stripe account |
+| ChartMogul | SkaFld VC Connectors | Subscription metrics (MRR, churn, cohorts) | ChartMogul account |
+| Mixpanel | SkaFld VC Connectors | Product usage and retention where a founder grants access | Mixpanel project access |
+| Amplitude | SkaFld VC Connectors | Product usage and retention where a founder grants access | Amplitude project access |
+| PostHog | SkaFld VC Connectors | Product analytics where a founder grants access | PostHog project access |
+| Mercury | SkaFld VC Connectors | Cash and burn from bank data | Mercury account |
+| Brex | SkaFld VC Connectors | Spend and burn | Brex customer |
+| Ramp | SkaFld VC Connectors | Spend and vendors, read-only | Ramp customer |
+
+### Public comparables and valuation (read by IC memo, Screening)
+
+| Connector | Where it comes from | What the agents use it for | What you need |
+| --- | --- | --- | --- |
+| S&P Global (Kensho) | SkaFld VC Connectors | Public company financials, capitalization and competitors | S&P Capital IQ entitlement |
+| Morningstar | SkaFld VC Connectors | Public market data and valuations | Morningstar entitlement |
+| Daloopa | SkaFld VC Connectors | Public company fundamentals from filings | Daloopa subscription |
+| Alpha Vantage | SkaFld VC Connectors | Public market prices and fundamentals | Alpha Vantage account; free tier |
+| Financial Modeling Prep | SkaFld VC Connectors | Public company financials and multiples | FMP account; free tier |
+
+### Contracts and closing (read by Diligence)
+
+| Connector | Where it comes from | What the agents use it for | What you need |
+| --- | --- | --- | --- |
+| PandaDoc | SkaFld VC Connectors | Closing documents and their status | PandaDoc account |
+| Ironclad | SkaFld VC Connectors | The firm's contract repository (US region; EU customers use mcp.eu1.ironcladapp.com) | Ironclad customer |
+
+<!-- connectors:end -->
+
+### Useful, but connected outside the plugins
+
+These have official servers that need your own app registration or an admin's approval, so no plugin can declare them. Connect them from the Claude connector directory where they are listed, and ask your admin where approval is needed: Google Calendar, Slack, HubSpot, Salesforce, Box, Zoom, Microsoft 365 (Outlook, SharePoint, OneDrive, Teams), Xero, Docusign and Google Analytics. The agents do not read these yet; paste or attach what you need from them.
+
+### No official server yet
+
+SEC EDGAR, USPTO and patents, Companies House, OpenCorporates, WHOIS and Product Hunt have only community servers, which we do not recommend without review; LinkedIn has no legitimate one (use a licensed data provider above instead). Visible.vc, Pulley, Ledgy, Cake Equity and Juniper Square had announced servers without a public endpoint on 2026-09-28.
 
 Not recommended at angel and seed stage: paid private-company databases for target lists (they rely on self-reported numbers), background-check and psychological-testing firms, quality-of-earnings work and auditors' papers, expert marketplaces, and deep technical audits. Reference calls and the founder's own documents cover these at this stage.
 

@@ -29,6 +29,7 @@ A person at the house asks for it, and a person uses it; nothing is sent by an a
 5. **Write the suggestions.** Three to five, each under one area, each something the founder can act on, phrased as what would make the case stronger for any investor. Turn internal findings into neutral, useful advice: "the deck's retention figure is hard to reconcile with the financials" becomes "show retention by monthly cohort, from the same data as the financials".
 6. **Write the questions.** Three to five open questions, taken from the Screening's ranked questions where they exist, each under its area; a `not_discussed` area gets a question, never a criticism. Add one hypothetical to see how the founders reason, of the kind the pitch guide suggests (a customer's bad experience, a serious bug found just after launch, a competitor launching a rival product; GoingVC, What to Look for in a Founder Pitch, undated).
 7. **Run the disclosure check** on every founder-facing line (each area's strengths, suggestions and questions, the note and the next step) before building the deliverable; every line must pass:
+
    - no pass, decline, "not accepted", "not a fit" or any outcome, and no hint of one ("unfortunately", "at this time we");
    - no promise of investment, amount or timeline;
    - no score, band, composite, rubric, vote, committee view, internal note or member name;
@@ -37,6 +38,7 @@ A person at the house asks for it, and a person uses it; nothing is sent by an a
    - no figure the materials do not support.
 
    Remove or rewrite a line that fails, and record what was taken out. The check has passed only when every remaining line passes.
+
 8. **Build the `founder_feedback` deliverable** in the `skafld-vc:deliverable-html` format: the envelope with `type: "founder_feedback"`, the company, `preparedBy` with the person it is for, and every document it rests on in `sources`; and this body:
    - internal fields (never in the founder copy): `basedOn` (the Screening version or documents), `stageBar`, `brief` (the call brief in Markdown: what to cover, in what order, and what to leave alone), `leaveAlone` (areas that would reveal the decision or internal findings), and in each area `status`, `evidence`, `say` and `doNotSay`;
    - `areas`: all seven, each once, in the guide's order (`story`, `business_model`, `competition`, `metrics`, `team`, `product`, `valuation`), with the founder-facing `strengths`, `suggestions` and `questions` for that area, and `sourceIds`;

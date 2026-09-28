@@ -125,7 +125,7 @@ export function exportReply(r) {
   for (const w of r.warnings) lines.push(`Note: ${w}`)
   if (r.needsBrandChoice) {
     lines.push(
-      'No brand has been chosen yet, so this used the SkaFld VC default. Ask the person once whether to keep the SkaFld default or set up their own brand (/skafld-vc:brand); record "keep the default" with the brand server\'s use_default_brand.'
+      'No brand has been chosen yet, so this used the SkaFld VC default. Ask the person once whether to keep the SkaFld default or set up their own brand (/skafld-vc:setup); record "keep the default" with the setup server\'s use_default_brand.'
     )
   }
   return lines.join("\n")

@@ -11,7 +11,7 @@ Why it matters: sourcing explains more of experienced VCs' results than picking.
 
 ## Before starting
 
-- **The thesis, in this order.** (1) With the platform connected, call `whoami` and read `house.thesis`, `house.network_fit` and `house.check_range_usd`. (2) Otherwise a `thesis.json` or `thesis.md` in the working folder; the fields are described in `references/thesis-json.md`. (3) Otherwise ask the person for it. Never invent a thesis, and never add a sector, stage or geography the source does not name. Say which source you used in the first line of the output.
+- **The thesis, in this order.** (1) With the platform connected, call `whoami` and read `house.thesis`, `house.network_fit` and `house.check_range_usd`. (2) Otherwise a `thesis.json` or `thesis.md` in the working folder; the fields are described in `references/thesis-json.md`. (3) Otherwise the firm profile saved with `/skafld-vc:setup` (`get_profile`): its `thesis_detail` in the same thesis.json shape where there is one, else its `thesis`, `mandate` and `check_range_usd`. (4) Otherwise ask the person for it, and mention once that `/skafld-vc:setup` saves it. Never invent a thesis, and never add a sector, stage or geography the source does not name. Say which source you used in the first line of the output.
 - **Owners.** Record the one or two people who own the thesis and their domain depth. The specialisation effect sits with individual investors, not the firm: a generalist firm whose people specialise has a 1.7-2.7 point higher annual success rate than one whose people do not (Gompers, Kovner and Lerner 2009); partner human capital explains 2-5 times more of performance than the firm's (Ewens and Rhodes-Kropf 2015); angels with industry expertise earn more (Wiltbank and Boeker 2007). No owner named: write "owner: not named" and add it to `nextActions`.
 - **Why now, vintage and a review date.** The thesis must state why this is the moment (Sequoia's pitch template makes "why now" a required slide), the funding climate it assumes (startups first funded in hot markets fail more often but have fatter tails; Nanda and Rhodes-Kropf 2013) and when it will be reviewed, because firms do not persist in choosing the right sectors and times (Nanda, Samila and Sorenson 2020). Missing any of the three: `thesis.decision` is `draft` and the gap is the first next action. A review date in the past is flagged, not silently extended.
 
@@ -45,7 +45,7 @@ Only when the person asks for one. Draft `thesis.md` with `decision: draft` in t
 ## Output
 
 ```
-## Thesis fit — <thesis title> v<version> (<source: house profile | thesis.json | thesis.md | given by the person>)
+## Thesis fit — <thesis title> v<version> (<source: house profile | thesis.json | thesis.md | saved profile | given by the person>)
 Decision: go | no_go | draft · Owners: <names | not named> · Why now: <one line> · Review by: <date>
 <Company> — <status> · <oneLine> · Pillars: <names> · Gates: mandate ✓/✗, super-priority ✓/✗/n.a.
   Fit: <criteria met / not met / not checked, weighted result if scored> · Warm path: <who | none>
@@ -56,7 +56,7 @@ Next: 1. ... 2. ...
 
 ## Rules
 
-- No thesis, no run: ask. The house profile or the person's file is the only mandate.
+- No thesis, no run: ask. The house profile, the person's file or their saved profile is the only mandate.
 - Status is a proposal; a human sets it. No automated thesis-fit method has published accuracy: the data-driven sourcing systems describe their pipelines but not their hit rates (Moonfire 2023; EQT Ventures' Motherbrain reports 7 of 50 investments, self-reported), so every card says what it rests on.
 - Never contact founders or anyone else. A cold approach, if the person wants one, is drafted by `skafld-vc:founder-outreach` and sent by them.
 - Research-backed fields you could not check (no Exa, no Apollo, no platform) are "not checked", never guessed.

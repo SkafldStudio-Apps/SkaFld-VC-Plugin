@@ -32,9 +32,9 @@ Always pass `project_dir`: the absolute path of the folder you are working in.
 
 ## Brand
 
-Leave `brand` out and the file uses, in order: a `brand/` folder in the project, the brand the person saved with `/skafld-vc:brand`, or the SkaFld VC default. With a platform connected, pass `whoami`'s `house.brand` as `brand` for the firm's own documents. Pass `house` as `house.short_name` so reports say "<house> company".
+Leave `brand` out and the file uses, in order: a `brand/` folder in the project, the brand the person saved with `/skafld-vc:setup`, or the SkaFld VC default. With a platform connected, pass `whoami`'s `house.brand` as `brand` for the firm's own documents. Pass `house` as `house.short_name` so reports say "<house> company".
 
-The first time a file comes out in the default brand, the tool says no brand has been chosen. Ask the person once, in one line: keep the SkaFld look, or set up their firm's brand (it takes a minute, starting from their website). Setting it up is `/skafld-vc:brand`. If they keep the default, call `use_default_brand` so nobody asks again. If you are a subagent and cannot ask, put that one line at the end of your final message.
+The first time a file comes out in the default brand, the tool says no brand has been chosen. Ask the person once, in one line: keep the SkaFld look, or set up their firm's brand (it takes a minute, starting from their website). Setting it up is `/skafld-vc:setup`. If they keep the default, call `use_default_brand` so nobody asks again. If you are a subagent and cannot ask, put that one line at the end of your final message.
 
 ## Then
 

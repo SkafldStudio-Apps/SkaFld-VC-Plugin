@@ -13,7 +13,7 @@ The formulas, the checks and a worked fixture are in `references/conversion-form
 - Every SAFE: investor, amount, valuation cap, discount, MFN, and whether it is a pre-money or post-money SAFE.
 - Every convertible note: principal, interest rate, days outstanding, valuation cap, discount, maturity date.
 - The proposed round: amount, pre- or post-money valuation, option pool target and how it is stated (a share of post-money, of pre-money, or a dollar amount), lead and pro rata allocations.
-- The allocation under consideration: the check the network in the house profile from `whoami` is considering (its `check_range_usd` gives the usual range), or, without a platform, the check the user names.
+- The allocation under consideration: the check the network in the house profile from `whoami` is considering (its `check_range_usd` gives the usual range), or, without a platform, the check the user names, or the saved firm profile's `check_range_usd` (`get_profile`).
 
 ## Procedure
 

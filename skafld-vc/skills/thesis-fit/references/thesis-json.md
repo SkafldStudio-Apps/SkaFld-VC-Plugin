@@ -1,6 +1,6 @@
 # thesis.json and thesis.md
 
-A thesis in the working folder, for when no platform is connected (with a platform, `whoami`'s house profile is the thesis and this file is not read). The shape follows the practitioner convention of pillars, a target taxonomy and explicit criteria, with the Stanford primer's criteria table and optional anchored scoring (Stanford GSB Search Fund Primer 2021, Part IV and Exhibit 13; "Investment thesis: digital health and clinician burnout", 2023). Every field except `title` is optional; a missing field is reported as missing, never filled in.
+A thesis in the working folder, for when no platform is connected (with a platform, `whoami`'s house profile is the thesis and this file is not read). It overrides the thesis saved with `/skafld-vc:setup` for this project; the same shape can be saved there as `thesis_detail` so it applies everywhere. The shape follows the practitioner convention of pillars, a target taxonomy and explicit criteria, with the Stanford primer's criteria table and optional anchored scoring (Stanford GSB Search Fund Primer 2021, Part IV and Exhibit 13; "Investment thesis: digital health and clinician burnout", 2023). Every field except `title` is optional; a missing field is reported as missing, never filled in.
 
 ## thesis.json
 
