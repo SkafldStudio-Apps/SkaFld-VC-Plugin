@@ -63,6 +63,19 @@ for (const p of manifest.plugins) {
     }
   }
 }
+// The core's Python scorer and the Files add-on's scoring tool give the same
+// answer on the default rubric.
+{
+  const args = JSON.stringify({
+    criteria: { team_founders: { score: 4 }, market_opportunity: { score: 5 }, product_differentiation: { score: 4 }, traction_validation: { status: "not_assessed" }, deal_terms: { score: 3 } },
+    knockouts: [{ key: "no_sector_experience", triggered: false }],
+    document_count: 2,
+  })
+  const py = spawnSync("python3", ["skafld-vc/skills/deal-scorecard/scripts/score.py", "-"], { input: args, encoding: "utf8" })
+  const js = spawnSync("node", ["skafld-vc-files/servers/deliverable-html/scripts/run.mjs", "score_with_rubric", "-"], { input: args, encoding: "utf8" })
+  if (py.status !== 0 || js.status !== 0) problems.push("scorer did not run: " + py.stderr + js.stderr)
+  else if (JSON.stringify(JSON.parse(py.stdout)) !== JSON.stringify(JSON.parse(js.stdout))) problems.push("the Python scorer and score_with_rubric disagree")
+}
 for (const [file, plugins] of [
   [".agents/plugins/marketplace.json", read(".agents/plugins/marketplace.json").plugins],
   [".cursor-plugin/marketplace.json", read(".cursor-plugin/marketplace.json").plugins],

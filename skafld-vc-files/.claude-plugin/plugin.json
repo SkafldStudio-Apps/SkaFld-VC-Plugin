@@ -1,0 +1,14 @@
+{
+  "name": "skafld-vc-files",
+  "version": "1.0.0",
+  "description": "Optional add-on for SkaFld VC on a computer with Node.js 18 or later: SkaFld VC's own branded HTML, Word, PDF, PowerPoint and Excel files, brand setup from your website, a firm profile saved across projects, and the rubric scorer as a tool. Without it SkaFld VC makes files with Claude's own document tools and scores with its Python scorer.",
+  "author": {
+    "name": "SkaFld Studio"
+  },
+  "dependencies": [
+    "skafld-vc"
+  ],
+  "homepage": "https://skafldstudio.com",
+  "repository": "https://github.com/skafldstudio-apps/skafld-vc-plugin",
+  "license": "MIT"
+}

@@ -1,0 +1,19 @@
+{
+  "name": "skafld-vc-files",
+  "displayName": "SkaFld VC Files",
+  "description": "Optional add-on for SkaFld VC on a computer with Node.js 18 or later: SkaFld VC's own branded HTML, Word, PDF, PowerPoint and Excel files, brand setup from your website, a firm profile saved across projects, and the rubric scorer as a tool. Without it SkaFld VC makes files with Claude's own document tools and scores with its Python scorer.",
+  "version": "1.0.0",
+  "author": {
+    "name": "SkaFld Studio",
+    "email": "hello@skafldstudio.com"
+  },
+  "homepage": "https://skafldstudio.com",
+  "repository": "https://github.com/skafldstudio-apps/skafld-vc-plugin",
+  "license": "MIT",
+  "keywords": [
+    "venture capital",
+    "angel investing",
+    "due diligence"
+  ],
+  "mcpServers": "./.cursor-plugin/mcp.json"
+}

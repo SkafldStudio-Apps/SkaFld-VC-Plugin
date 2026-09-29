@@ -1,6 +1,6 @@
 ---
 name: setup
-description: Sets up SkaFld VC for a person, with the brand used on exported files and, optionally, the firm profile the agents read (name, thesis, mandate, cheque range, decision format). Use when someone asks to set up SkaFld VC, change the look, logo, colours or fonts of the files, set or change their thesis, cheque size or firm details, or when an agent says nothing is set up yet.
+description: Sets up SkaFld VC for a person, with the firm profile the agents read (name, thesis, mandate, cheque range, decision format) and, with the Files add-on, the brand used on exported files. Use when someone asks to set up SkaFld VC, change the look, logo, colours or fonts of the files, set or change their thesis, cheque size or firm details, or when an agent says nothing is set up yet.
 argument-hint: "[website, or what to change]"
 ---
 
@@ -14,10 +14,15 @@ If the request names a website, use it for the brand (and to suggest the firm's 
 
 ## 0. Can setup run here?
 
-Setup's tools (`setup:setup_status` and the rest) run on the person's computer, in Claude Code (including Claude Desktop's Code tab) and in Cowork on the desktop, and need Node.js 18 or later installed. They do not run in Claude's Chat or on claude.ai in the browser.
+Setup's tools (`setup:setup_status` and the rest) come with the optional SkaFld VC Files add-on, which runs on the person's computer (Claude Code, Claude Desktop's Code tab, Cowork) with Node.js 18 or later. Everything else in SkaFld VC works without it.
 
 - **You have `setup:setup_status`:** go on to section 1.
-- **You do not, or it fails to start:** say so in one line, without technical detail: "The brand and file exports need Claude Code or Cowork on your computer with Node.js installed (nodejs.org); here I can still save your firm's details for the agents." Then do only section 3, collecting the profile in the conversation, and end by giving the person the profile as the Markdown block below, to paste into their Claude Project's instructions (or add as a project file) so every conversation in that project reads it. Save nothing else and do not attempt the brand.
+- **You do not, or it fails to start:** there is no SkaFld brand to set: files are made with Claude's own document tools and look however this Claude is set up. Do only section 3, collecting the profile in the conversation, then keep it where the agents will find it:
+
+  - **Where you can write files** (Claude Code, Cowork): save it as `skafld-vc/firm-profile.md` in the folder the person works in, in the Markdown shape below, and say that each project folder can have its own.
+  - **Where you cannot** (Claude's Chat): give the person the Markdown block below to paste into their Claude Project's instructions (or add as a project file), so every conversation in that project reads it.
+
+  Mention once, in one line, that the Files add-on adds branded Word, PDF, decks and Excel if they want them. Save nothing else.
 
 ## 1. Where things stand
 
@@ -54,7 +59,7 @@ If they go ahead, collect it in at most three short messages, suggesting values 
 2. **The thesis and mandate**: `thesis` in their words; `mandate` with `sectors`, `stages`, `geographies` and two or three `super_priority` must-haves; `check_range_usd` (whole dollars, min and max) and, if they know it, `fund_size_usd` (for the fund-returner line). A fuller thesis with a why-now, pillars and a review date can go in `thesis_detail`, in the `skafld-vc:thesis-fit` skill's thesis.json shape; offer it only if they want Sourcing to use it.
 3. **What the firm brings founders**: `network_fit` as a short label and a description (for example "Operator bench: partners who ran B2B sales teams, who take the first customer calls").
 
-Show the values once, ask them to confirm or correct, then call `setup:save_profile` with only the confirmed fields. It returns `portable`: the same profile as a short Markdown block. Offer it once: "If you also use SkaFld VC in Claude's Chat or on claude.ai, paste this into your Claude Project's instructions so the agents there know your firm too." Where setup has no tools (section 0), write that block yourself in this shape:
+Show the values once, ask them to confirm or correct, then call `setup:save_profile` with only the confirmed fields. It returns `portable`: the same profile as a short Markdown block. Offer it once: "If you also use SkaFld VC in Claude's Chat or on claude.ai, paste this into your Claude Project's instructions so the agents there know your firm too." Where setup has no tools (section 0), write that block yourself in this shape, and for a change edit the saved file (or give the updated block):
 
 ````
 ## SkaFld VC firm profile

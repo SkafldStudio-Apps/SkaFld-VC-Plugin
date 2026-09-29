@@ -1,6 +1,6 @@
 {
   "name": "skafld-vc",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "Venture capital agents and skills across the deal lifecycle: sourcing against your thesis, screening, diligence, investment committee memos and portfolio reviews of founder updates, with returns, market sizing, unit economics, cap tables, valuation and term sheets, working from your documents alone. Scores against a research-based default rubric or your own, researches with Exa and Apollo when you connect them, and exports branded HTML, Word, PDF, slide decks and Excel. No platform needed; firms with a SkaFld VC platform add the SkaFld VC Platform connector.",
   "keywords": [
     "venture capital",

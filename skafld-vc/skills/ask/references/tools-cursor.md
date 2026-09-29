@@ -9,7 +9,7 @@ The skills and agent procedures are written for Claude Code. In Cursor, read the
 | `deliverables:<tool>`, `setup:<tool>`, `exa:<tool>`, `apollo:<tool>` and the other connectors | The tool of that name on the MCP server of that name                                                                                              |
 | `skafld-vc:<tool>` (the platform)                                                             | The tool of that name on the `skafld-vc` server, which the SkaFld VC Platform plugin adds with the platform address as its `PLATFORM_URL` setting |
 | `${CLAUDE_SKILL_DIR}`                                                                         | The folder of the skill you are following, inside the installed plugin                                                                            |
-| Run `node <script>`                                                                           | The `Shell` tool, always as `node <script>`                                                                                                       |
+| Run `python3 <script>`                                                                        | The `Shell` tool, always as `python3 <script>`                                                                                                    |
 | Ask the person                                                                                | `AskQuestion`                                                                                                                                     |
 
-Remote connectors sign in the first time they are used. The deliverables and setup servers need Node.js 18 or later on the PATH.
+Remote connectors sign in the first time they are used. The deliverables and setup servers come with the optional SkaFld VC Files plugin and need Node.js 18 or later on the PATH; without them, follow the skills' "without the Files add-on" steps.

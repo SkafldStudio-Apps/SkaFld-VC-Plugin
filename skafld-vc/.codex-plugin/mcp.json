@@ -1,19 +1,5 @@
 {
   "mcpServers": {
-    "deliverables": {
-      "command": "node",
-      "args": [
-        "./skills/deliverable-html/scripts/mcp-server.mjs"
-      ],
-      "cwd": "."
-    },
-    "setup": {
-      "command": "node",
-      "args": [
-        "./skills/setup/scripts/setup-server.mjs"
-      ],
-      "cwd": "."
-    },
     "exa": {
       "url": "https://mcp.exa.ai/mcp"
     },

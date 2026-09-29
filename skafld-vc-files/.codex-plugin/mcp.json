@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "deliverables": {
+      "command": "node",
+      "args": [
+        "./servers/deliverable-html/scripts/mcp-server.mjs"
+      ],
+      "cwd": "."
+    },
+    "setup": {
+      "command": "node",
+      "args": [
+        "./servers/setup/scripts/setup-server.mjs"
+      ],
+      "cwd": "."
+    }
+  }
+}

@@ -11,9 +11,9 @@ The agent and skill files are written for two kinds of reader: people using the 
 | Who the agents work for                              | Your firm profile from `/skafld-vc:setup` (optional), or what you tell them | The firm's house profile on the platform                                                                |
 | Where the company comes from                         | Your documents, files and connectors                                        | Also the firm's pipeline: deals, applications and data rooms                                            |
 | Rubric                                               | The default rubric, or your `rubric.json`                                   | The firm's current rubric, with the platform doing the arithmetic                                       |
-| Scoring tool                                         | `score_with_rubric` (local)                                                 | `score_company` (on the platform)                                                                       |
+| Scoring tool                                         | The Python scorer, or `score_with_rubric` with the Files add-on             | `score_company` (on the platform)                                                                       |
 | Earlier work (a Screening before a Diligence plan)   | The files you hand the agent                                                | The saved versions on the deal                                                                          |
-| Results                                              | HTML, Word, PDF, decks and Excel files in `./skafld-vc/`                    | The same files; Screening reports, Diligence plans and IC memos are also saved on the deal for the team |
+| Results                                              | Reports and Word, PDF, deck and Excel files in `./skafld-vc/`               | The same files; Screening reports, Diligence plans and IC memos are also saved on the deal for the team |
 | Checks against the firm's portfolio and passed deals | Not run                                                                     | Run by the Sourcing and Diligence agents                                                                |
 
 Without a platform, no platform call is made and nothing is sent anywhere: the agents skip those steps without asking you about them.
@@ -25,7 +25,7 @@ Each agent's first step decides which case it is in, with two branches:
 - **Documents only**: the normal case. The agent reads your firm profile with `get_profile` and works from what you give it.
 - **Platform**: only when `whoami` answers. Everything that follows under **Platform**, **A deal on the platform** or **With a platform** applies only there.
 
-Tools are written with their server, as Anthropic's skill guide recommends: `deliverables:render_deliverable` and `setup:get_profile` are the plugin's own local tools, `exa:` and `apollo:` the research connectors, and `skafld-vc:` the platform's tools, which exist only with a platform.
+Tools are written with their server, as Anthropic's skill guide recommends: `deliverables:render_deliverable` and `setup:get_profile` are the local tools of the optional Files add-on, `exa:` and `apollo:` the research connectors, and `skafld-vc:` the platform's tools, which exist only with a platform.
 
 Terms that only mean something with a platform:
 

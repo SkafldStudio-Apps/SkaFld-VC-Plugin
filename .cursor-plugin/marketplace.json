@@ -14,6 +14,11 @@
       "description": "Venture capital agents and skills across the deal lifecycle: sourcing against your thesis, screening, diligence, investment committee memos and portfolio reviews of founder updates, with returns, market sizing, unit economics, cap tables, valuation and term sheets, working from your documents alone. Scores against a research-based default rubric or your own, researches with Exa and Apollo when you connect them, and exports branded HTML, Word, PDF, slide decks and Excel. No platform needed; firms with a SkaFld VC platform add the SkaFld VC Platform connector."
     },
     {
+      "name": "skafld-vc-files",
+      "source": "./skafld-vc-files",
+      "description": "Optional add-on for SkaFld VC on a computer with Node.js 18 or later: SkaFld VC's own branded HTML, Word, PDF, PowerPoint and Excel files, brand setup from your website, a firm profile saved across projects, and the rubric scorer as a tool. Without it SkaFld VC makes files with Claude's own document tools and scores with its Python scorer."
+    },
+    {
       "name": "skafld-vc-connectors",
       "source": "./skafld-vc-connectors",
       "description": "Optional connectors for SkaFld VC: paid company data (Crunchbase, PitchBook, CB Insights, Tracxn, Coresignal), more CRMs and note-takers, data rooms, portfolio and finance metrics (AngelList, Stripe, ChartMogul, Mixpanel, Amplitude, PostHog, Mercury, Brex, Ramp), public comparables (S&P Global, Morningstar, Daloopa, Alpha Vantage, FMP) and contracts (PandaDoc, Ironclad). Each signs in with your own account; install only if you use these tools."

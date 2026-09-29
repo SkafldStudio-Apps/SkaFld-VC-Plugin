@@ -1,11 +1,14 @@
 # Connectors
 
-SkaFld VC works on your documents alone. It declares four MCP servers: two local ones it runs itself, and the two research services it recommends.
+SkaFld VC works on your documents alone and runs no server of its own. It declares the research services it recommends, below; the optional **SkaFld VC Files** add-on (`skafld-vc-files`, needs Node.js 18 or later) adds two local servers:
+
+- `deliverables`: writes deliverables as designed HTML, and any deliverable or answer as Word, PDF, a PowerPoint or PDF deck, or (a Diligence plan) Excel, into `./skafld-vc/`, in your brand; scores against a rubric as a tool. No network.
+- `setup`: `/skafld-vc:setup`'s brand (reads the website you name for colours, fonts and logo, and fetches fonts from Google Fonts) and a firm profile saved in the plugin's data folder, on your machine.
+
+Without the add-on, the agents write reports as Markdown, make files with Claude's own document tools, score with the core's Python scorer, and keep your firm profile in `skafld-vc/firm-profile.md`.
 
 | Server         | What it is                                                                                                                                                                                                                                                                                                                | Sign-in                                                   |
 | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
-| `deliverables` | Writes deliverables as HTML, and any deliverable or answer as Word, PDF, a PowerPoint or PDF deck, or (a Diligence plan) Excel, into `./skafld-vc/`; scores against a rubric without a platform. No network                                                                                                               | None                                                      |
-| `setup`        | `/skafld-vc:setup`: the brand your files use (reads the website you name for colours, fonts and logo, and fetches fonts from Google Fonts) and, optionally, your firm profile (thesis, mandate, cheque range, decision format) that the agents read instead of asking. Saves to the plugin's data folder, on your machine | None                                                      |
 | `exa`          | Exa web search and page reads, for market, competitor and customer claims (Sourcing, Screening, Diligence, Portfolio)                                                                                                                                                                                                     | None; free with rate limits. Add your key for more, below |
 | `apollo`       | Apollo company and people lookups, for founders, headcount, founding year and funding (Sourcing, Screening, Diligence)                                                                                                                                                                                                    | Your own Apollo account                                   |
 
@@ -146,7 +149,7 @@ If you already use Exa or Apollo through another plugin or the claude.ai directo
 ## Claude Desktop and Cowork
 
 1. Settings, Plugins, Add plugin: paste the marketplace repository URL and pick SkaFld VC.
-2. The `deliverables` and `brand` servers run locally in Claude Desktop, so exports and brand setup work there as in Claude Code. On claude.ai in the browser, where no local server can run, agents give you the Markdown document instead of the file.
+2. SkaFld VC needs nothing installed there: reports come as Markdown and files from Claude's own document tools. If the computer has Node.js 18 or later, add **SkaFld VC Files** too for designed, branded files and brand setup; its servers run locally in Claude Desktop as in Claude Code. On claude.ai in the browser, where no local server can run, the agents use Claude's own tools.
 3. Exa and Apollo appear under the plugin's connectors. Sign in to Apollo there when asked. If you have already added Exa or Apollo from the claude.ai connector directory, the agents use those too (they appear as `mcp__claude_ai_Exa__*` and `mcp__claude_ai_Apollo_io__*`, or `mcp__Exa__*` and `mcp__Apollo_io__*`).
 
 ## How the names are built

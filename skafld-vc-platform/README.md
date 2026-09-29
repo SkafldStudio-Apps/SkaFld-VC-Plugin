@@ -2,7 +2,7 @@
 
 **Only for firms that run a SkaFld VC platform.** This add-on connects the SkaFld VC agents to your firm's platform: its deal pipeline, applications, documents, rubric, house profile and saved deliverables, at the access your login has. It installs SkaFld VC with it.
 
-**No platform? You do not need this.** Install SkaFld VC on its own: every agent and skill works from your documents, scores against the default rubric or your own `rubric.json`, and exports branded files.
+**No platform? You do not need this.** Install SkaFld VC on its own: every agent and skill works from your documents, scores against the default rubric or your own `rubric.json`, and exports files (in your brand with the optional SkaFld VC Files add-on).
 
 ## Install
 

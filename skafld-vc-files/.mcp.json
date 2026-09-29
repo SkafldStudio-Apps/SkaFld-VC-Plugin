@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "deliverables": {
+      "type": "stdio",
+      "command": "node",
+      "args": [
+        "${CLAUDE_PLUGIN_ROOT}/servers/deliverable-html/scripts/mcp-server.mjs"
+      ]
+    },
+    "setup": {
+      "type": "stdio",
+      "command": "node",
+      "args": [
+        "${CLAUDE_PLUGIN_ROOT}/servers/setup/scripts/setup-server.mjs"
+      ]
+    }
+  }
+}

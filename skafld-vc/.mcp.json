@@ -1,19 +1,5 @@
 {
   "mcpServers": {
-    "deliverables": {
-      "type": "stdio",
-      "command": "node",
-      "args": [
-        "${CLAUDE_PLUGIN_ROOT}/skills/deliverable-html/scripts/mcp-server.mjs"
-      ]
-    },
-    "setup": {
-      "type": "stdio",
-      "command": "node",
-      "args": [
-        "${CLAUDE_PLUGIN_ROOT}/skills/setup/scripts/setup-server.mjs"
-      ]
-    },
     "exa": {
       "type": "http",
       "url": "https://mcp.exa.ai/mcp"
