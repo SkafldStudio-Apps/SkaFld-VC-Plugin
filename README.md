@@ -2,7 +2,7 @@
 
 Venture capital agents and skills for Claude Code and Claude Desktop, across the deal lifecycle: sourcing against your thesis, screening, diligence plans, investment committee memos and portfolio reviews, with returns, valuation, term sheets, market sizing, unit economics and cap tables. They work from your own documents, with nothing else to set up, research with Exa and Apollo on your own account, and export branded HTML, Word, PDF, PowerPoint and Excel files.
 
-> This repository is generated from the SkaFld VC source on each release (version 1.4.1). Changes made here are overwritten; open issues rather than pull requests.
+> This repository is generated from the SkaFld VC source on each release (version 1.5.0). Changes made here are overwritten; open issues rather than pull requests.
 
 ## Install
 
@@ -28,6 +28,20 @@ Everything below works with the plugin alone: no account, no platform, nothing s
 - **Files:** every deliverable as self-contained HTML in `./skafld-vc/`, and on request as Word, PDF, a PowerPoint deck or a PDF deck. A Diligence plan's request list comes out as an Excel file ready to send to the company.
 - **Setup:** run `/skafld-vc:setup` first: keep the SkaFld look or use your firm's brand (from your website, a logo or a description), and optionally save your firm's details and thesis so the agents stop asking. Run it again any time to change one part.
 - **Connectors:** the plugin declares the ones most angels and funds use: Exa (free, no key), Apollo, Harmonic, Specter, Dealroom, Clay, Notion, Granola, Fireflies, Attio, Affinity, Carta and Standard Metrics. Sign in to the ones you use with your own account. The optional **SkaFld VC Connectors** plugin adds paid data (Crunchbase, PitchBook, CB Insights, Tracxn), more CRMs and note-takers, data rooms, portfolio and finance metrics, public comparables and contracts. The agents read them read-only; without them they mark research they could not do as not checked. See `skafld-vc/CONNECTORS.md`.
+
+## Other tools: Codex, Cursor and Muse
+
+The same skills work in OpenAI Codex, Cursor and Meta's Muse Code; each plugin ships a manifest for them beside the Claude one. What differs is agents and sign-in:
+
+| | Codex | Cursor | Muse Code |
+| --- | --- | --- | --- |
+| Install | `codex plugin marketplace add skafldstudio-apps/skafld-vc-plugin`, then `codex plugin add skafld-vc@skafld-vc` | Add this repository as a plugin marketplace (team marketplaces import it from GitHub), then install **SkaFld VC** | `muse plugins marketplace add skafld-vc skafldstudio-apps/skafld-vc-plugin`, `muse plugins install skafld-vc@skafld-vc`, then `muse plugins approve skafld-vc` |
+| Agents | Run through `$skafld-vc:ask`, which follows each agent's procedure (or hands it to a Codex subagent where multi-agent is on) | Run as Cursor subagents | Run through `/skafld-vc:ask`, which follows each agent's procedure |
+| Local files and exports | Yes (Node.js 18 or later) | Yes (Node.js 18 or later) | Yes (Node.js 18 or later), after `muse plugins approve` |
+| Connectors | Exa is on; turn on others in `~/.codex/config.toml` and sign in with `codex mcp login` | All declared; each signs in on first use | Exa is on; add others to your Muse settings and sign in with `muse mcp login` |
+| SkaFld VC Platform | Add the platform to `~/.codex/config.toml` as `[mcp_servers.skafld-vc]` and run `codex mcp login skafld-vc` | Install **SkaFld VC Platform** and enter the platform address | Add the platform to your Muse settings and run `muse mcp login` |
+
+`skafld-vc/skills/ask/references/tools-codex.md`, `tools-cursor.md` and `tools-muse.md` tell each tool which of its own names to use for what the skills call the Skill tool, the Agent tool and `server:tool`. These packages follow each tool's published plugin format; report anything that does not work as an issue.
 
 ## Tested
 

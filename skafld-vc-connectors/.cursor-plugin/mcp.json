@@ -1,0 +1,120 @@
+{
+  "mcpServers": {
+    "crunchbase": {
+      "type": "http",
+      "url": "https://mcp.crunchbase.com"
+    },
+    "pitchbook": {
+      "type": "http",
+      "url": "https://premium.mcp.pitchbook.com/mcp"
+    },
+    "cb-insights": {
+      "type": "http",
+      "url": "https://mcp.cbinsights.com/"
+    },
+    "tracxn": {
+      "type": "http",
+      "url": "https://platform.tracxn.com/mcp"
+    },
+    "coresignal": {
+      "type": "http",
+      "url": "https://mcp.coresignal.com/mcp/v2"
+    },
+    "ramp-data": {
+      "type": "http",
+      "url": "https://mcp.ramp.com/ramp-data/anthropic/mcp"
+    },
+    "pipedrive": {
+      "type": "http",
+      "url": "https://mcp.pipedrive.ai/mcp"
+    },
+    "4degrees": {
+      "type": "http",
+      "url": "https://mcp.4degrees.ai/mcp"
+    },
+    "airtable": {
+      "type": "http",
+      "url": "https://mcp.airtable.com/mcp"
+    },
+    "otter": {
+      "type": "http",
+      "url": "https://mcp.otter.ai/mcp"
+    },
+    "fathom": {
+      "type": "http",
+      "url": "https://api.fathom.ai/mcp"
+    },
+    "dropbox": {
+      "type": "http",
+      "url": "https://mcp.dropbox.com/mcp"
+    },
+    "docsend": {
+      "type": "http",
+      "url": "https://docsend.com/mcp"
+    },
+    "angellist": {
+      "type": "http",
+      "url": "https://mcp.angellist.com/mcp"
+    },
+    "stripe": {
+      "type": "http",
+      "url": "https://mcp.stripe.com/"
+    },
+    "chartmogul": {
+      "type": "http",
+      "url": "https://mcp.chartmogul.com/"
+    },
+    "mixpanel": {
+      "type": "http",
+      "url": "https://mcp.mixpanel.com/mcp"
+    },
+    "amplitude": {
+      "type": "http",
+      "url": "https://mcp.amplitude.com/mcp"
+    },
+    "posthog": {
+      "type": "http",
+      "url": "https://mcp.posthog.com/mcp"
+    },
+    "mercury": {
+      "type": "http",
+      "url": "https://mcp.mercury.com/mcp"
+    },
+    "brex": {
+      "type": "http",
+      "url": "https://api.brex.com/mcp"
+    },
+    "ramp": {
+      "type": "http",
+      "url": "https://ramp-mcp-remote.ramp.com/mcp"
+    },
+    "sp-global": {
+      "type": "http",
+      "url": "https://kfinance.kensho.com/integrations/mcp"
+    },
+    "morningstar": {
+      "type": "http",
+      "url": "https://mcp.morningstar.com/mcp"
+    },
+    "daloopa": {
+      "type": "http",
+      "url": "https://mcp.daloopa.com/server/mcp"
+    },
+    "alpha-vantage": {
+      "type": "http",
+      "url": "https://mcp.alphavantage.co/mcp"
+    },
+    "fmp": {
+      "type": "http",
+      "url": "https://financialmodelingprep.com/mcp"
+    },
+    "pandadoc": {
+      "type": "http",
+      "url": "https://mcp.pandadoc.com/v1/mcp"
+    },
+    "ironclad": {
+      "type": "http",
+      "url": "https://mcp.na1.ironcladapp.com/mcp"
+    }
+  }
+}

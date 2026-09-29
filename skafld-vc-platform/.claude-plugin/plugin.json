@@ -1,6 +1,6 @@
 {
   "name": "skafld-vc-platform",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Only for firms that run a SkaFld VC platform: connects the SkaFld VC agents to your firm's pipeline, documents, rubric and house profile. Asks for your platform's address when installed and installs SkaFld VC with it. No platform? Install SkaFld VC on its own; to get a platform, contact hello@skafldstudio.com.",
   "author": {
     "name": "SkaFld Studio"

@@ -1,0 +1,27 @@
+{
+  "name": "skafld-vc",
+  "owner": {
+    "name": "SkaFld Studio",
+    "email": "hello@skafldstudio.com"
+  },
+  "metadata": {
+    "description": "SkaFld VC: venture capital agents and skills, with optional connectors and a platform add-on."
+  },
+  "plugins": [
+    {
+      "name": "skafld-vc",
+      "source": "./skafld-vc",
+      "description": "Venture capital agents and skills across the deal lifecycle: sourcing against your thesis, screening, diligence, investment committee memos and portfolio reviews of founder updates, with returns, market sizing, unit economics, cap tables, valuation and term sheets, working from your documents alone. Scores against a research-based default rubric or your own, researches with Exa and Apollo when you connect them, and exports branded HTML, Word, PDF, slide decks and Excel. No platform needed; firms with a SkaFld VC platform add the SkaFld VC Platform connector."
+    },
+    {
+      "name": "skafld-vc-connectors",
+      "source": "./skafld-vc-connectors",
+      "description": "Optional connectors for SkaFld VC: paid company data (Crunchbase, PitchBook, CB Insights, Tracxn, Coresignal), more CRMs and note-takers, data rooms, portfolio and finance metrics (AngelList, Stripe, ChartMogul, Mixpanel, Amplitude, PostHog, Mercury, Brex, Ramp), public comparables (S&P Global, Morningstar, Daloopa, Alpha Vantage, FMP) and contracts (PandaDoc, Ironclad). Each signs in with your own account; install only if you use these tools."
+    },
+    {
+      "name": "skafld-vc-platform",
+      "source": "./skafld-vc-platform",
+      "description": "Only for firms that run a SkaFld VC platform: connects the SkaFld VC agents to your firm's pipeline, documents, rubric and house profile. Asks for your platform's address when installed and installs SkaFld VC with it. No platform? Install SkaFld VC on its own; to get a platform, contact hello@skafldstudio.com."
+    }
+  ]
+}

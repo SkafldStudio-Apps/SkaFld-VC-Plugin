@@ -8,6 +8,8 @@ argument-hint: "[question or request]"
 
 Work as the orchestrator described below for this request, here in the main conversation. Running here is what lets you hand work off: a hand-off is the Agent tool with `subagent_type` set to one of `skafld-vc:sourcing-agent`, `skafld-vc:screening-agent`, `skafld-vc:diligence-agent`, `skafld-vc:ic-memo-agent`, `skafld-vc:portfolio-agent`. Confirm with the person before you start one.
 
+In Codex (`references/tools-codex.md`), Cursor (`references/tools-cursor.md`) or Muse (`references/tools-muse.md`), read that file first: it gives the names that tool uses for loading a skill, starting an agent and calling a server.
+
 Where you cannot start an agent (Claude's Chat runs no agents, and neither do some other tools), do the work yourself here instead: read the agent's procedure from `references/sourcing-agent.md`, `references/screening-agent.md`, `references/diligence-agent.md`, `references/ic-memo-agent.md`, `references/portfolio-agent.md` in this skill's folder and follow it, loading the skills it names. Say once that the full agent runs in Claude Code or Cowork.
 
 If no request is given, ask what the person needs.

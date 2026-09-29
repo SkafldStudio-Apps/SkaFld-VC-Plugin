@@ -1,0 +1,120 @@
+{
+  "mcpServers": {
+    "crunchbase": {
+      "url": "https://mcp.crunchbase.com",
+      "enabled": false
+    },
+    "pitchbook": {
+      "url": "https://premium.mcp.pitchbook.com/mcp",
+      "enabled": false
+    },
+    "cb-insights": {
+      "url": "https://mcp.cbinsights.com/",
+      "enabled": false
+    },
+    "tracxn": {
+      "url": "https://platform.tracxn.com/mcp",
+      "enabled": false
+    },
+    "coresignal": {
+      "url": "https://mcp.coresignal.com/mcp/v2",
+      "enabled": false
+    },
+    "ramp-data": {
+      "url": "https://mcp.ramp.com/ramp-data/anthropic/mcp",
+      "enabled": false
+    },
+    "pipedrive": {
+      "url": "https://mcp.pipedrive.ai/mcp",
+      "enabled": false
+    },
+    "4degrees": {
+      "url": "https://mcp.4degrees.ai/mcp",
+      "enabled": false
+    },
+    "airtable": {
+      "url": "https://mcp.airtable.com/mcp",
+      "enabled": false
+    },
+    "otter": {
+      "url": "https://mcp.otter.ai/mcp",
+      "enabled": false
+    },
+    "fathom": {
+      "url": "https://api.fathom.ai/mcp",
+      "enabled": false
+    },
+    "dropbox": {
+      "url": "https://mcp.dropbox.com/mcp",
+      "enabled": false
+    },
+    "docsend": {
+      "url": "https://docsend.com/mcp",
+      "enabled": false
+    },
+    "angellist": {
+      "url": "https://mcp.angellist.com/mcp",
+      "enabled": false
+    },
+    "stripe": {
+      "url": "https://mcp.stripe.com/",
+      "enabled": false
+    },
+    "chartmogul": {
+      "url": "https://mcp.chartmogul.com/",
+      "enabled": false
+    },
+    "mixpanel": {
+      "url": "https://mcp.mixpanel.com/mcp",
+      "enabled": false
+    },
+    "amplitude": {
+      "url": "https://mcp.amplitude.com/mcp",
+      "enabled": false
+    },
+    "posthog": {
+      "url": "https://mcp.posthog.com/mcp",
+      "enabled": false
+    },
+    "mercury": {
+      "url": "https://mcp.mercury.com/mcp",
+      "enabled": false
+    },
+    "brex": {
+      "url": "https://api.brex.com/mcp",
+      "enabled": false
+    },
+    "ramp": {
+      "url": "https://ramp-mcp-remote.ramp.com/mcp",
+      "enabled": false
+    },
+    "sp-global": {
+      "url": "https://kfinance.kensho.com/integrations/mcp",
+      "enabled": false
+    },
+    "morningstar": {
+      "url": "https://mcp.morningstar.com/mcp",
+      "enabled": false
+    },
+    "daloopa": {
+      "url": "https://mcp.daloopa.com/server/mcp",
+      "enabled": false
+    },
+    "alpha-vantage": {
+      "url": "https://mcp.alphavantage.co/mcp",
+      "enabled": false
+    },
+    "fmp": {
+      "url": "https://financialmodelingprep.com/mcp",
+      "enabled": false
+    },
+    "pandadoc": {
+      "url": "https://mcp.pandadoc.com/v1/mcp",
+      "enabled": false
+    },
+    "ironclad": {
+      "url": "https://mcp.na1.ironcladapp.com/mcp",
+      "enabled": false
+    }
+  }
+}

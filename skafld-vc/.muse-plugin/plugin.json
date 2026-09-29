@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 1,
+  "name": "skafld-vc",
+  "displayName": "SkaFld VC",
+  "version": "1.5.0",
+  "description": "Venture capital agents and skills across the deal lifecycle: sourcing against your thesis, screening, diligence, investment committee memos and portfolio reviews of founder updates, with returns, market sizing, unit economics, cap tables, valuation and term sheets, working from your documents alone. Scores against a research-based default rubric or your own, researches with Exa and Apollo when you connect them, and exports branded HTML, Word, PDF, slide decks and Excel. No platform needed; firms with a SkaFld VC platform add the SkaFld VC Platform connector.",
+  "compat": {
+    "source": "native",
+    "manifestDir": ".muse-plugin"
+  },
+  "capabilities": {
+    "skills": [
+      {
+        "id": "anti-portfolio",
+        "path": "skills/anti-portfolio/SKILL.md"
+      },
+      {
+        "id": "ask",
+        "path": "skills/ask/SKILL.md"
+      },
+      {
+        "id": "cap-table",
+        "path": "skills/cap-table/SKILL.md"
+      },
+      {
+        "id": "competitive-landscape",
+        "path": "skills/competitive-landscape/SKILL.md"
+      },
+      {
+        "id": "deal-comparables",
+        "path": "skills/deal-comparables/SKILL.md"
+      },
+      {
+        "id": "deal-scorecard",
+        "path": "skills/deal-scorecard/SKILL.md"
+      },
+      {
+        "id": "deck-audit",
+        "path": "skills/deck-audit/SKILL.md"
+      },
+      {
+        "id": "deliverable-html",
+        "path": "skills/deliverable-html/SKILL.md"
+      },
+      {
+        "id": "diligence-requests",
+        "path": "skills/diligence-requests/SKILL.md"
+      },
+      {
+        "id": "document-export",
+        "path": "skills/document-export/SKILL.md"
+      },
+      {
+        "id": "founder-feedback",
+        "path": "skills/founder-feedback/SKILL.md"
+      },
+      {
+        "id": "founder-outreach",
+        "path": "skills/founder-outreach/SKILL.md"
+      },
+      {
+        "id": "founder-research",
+        "path": "skills/founder-research/SKILL.md"
+      },
+      {
+        "id": "founder-update",
+        "path": "skills/founder-update/SKILL.md"
+      },
+      {
+        "id": "inbound-triage",
+        "path": "skills/inbound-triage/SKILL.md"
+      },
+      {
+        "id": "kpi-variance",
+        "path": "skills/kpi-variance/SKILL.md"
+      },
+      {
+        "id": "market-sizing",
+        "path": "skills/market-sizing/SKILL.md"
+      },
+      {
+        "id": "member-insights",
+        "path": "skills/member-insights/SKILL.md"
+      },
+      {
+        "id": "memo-format",
+        "path": "skills/memo-format/SKILL.md"
+      },
+      {
+        "id": "platform-access",
+        "path": "skills/platform-access/SKILL.md"
+      },
+      {
+        "id": "portfolio-construction",
+        "path": "skills/portfolio-construction/SKILL.md"
+      },
+      {
+        "id": "returns-analysis",
+        "path": "skills/returns-analysis/SKILL.md"
+      },
+      {
+        "id": "setup",
+        "path": "skills/setup/SKILL.md"
+      },
+      {
+        "id": "stage-calibration",
+        "path": "skills/stage-calibration/SKILL.md"
+      },
+      {
+        "id": "technical-diligence",
+        "path": "skills/technical-diligence/SKILL.md"
+      },
+      {
+        "id": "term-sheet",
+        "path": "skills/term-sheet/SKILL.md"
+      },
+      {
+        "id": "thesis-fit",
+        "path": "skills/thesis-fit/SKILL.md"
+      },
+      {
+        "id": "unit-economics",
+        "path": "skills/unit-economics/SKILL.md"
+      },
+      {
+        "id": "valuation-triangulation",
+        "path": "skills/valuation-triangulation/SKILL.md"
+      }
+    ],
+    "commands": [],
+    "hooks": [],
+    "mcpServers": [
+      {
+        "id": "deliverables",
+        "transport": "stdio",
+        "command": [
+          "node",
+          "skills/deliverable-html/scripts/mcp-server.mjs"
+        ]
+      },
+      {
+        "id": "setup",
+        "transport": "stdio",
+        "command": [
+          "node",
+          "skills/setup/scripts/setup-server.mjs"
+        ]
+      },
+      {
+        "id": "exa",
+        "transport": "http",
+        "url": "https://mcp.exa.ai/mcp"
+      }
+    ],
+    "reminders": []
+  }
+}

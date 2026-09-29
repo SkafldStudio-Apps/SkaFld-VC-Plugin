@@ -30,6 +30,49 @@ for (const p of manifest.plugins) {
     if (!/"tools"/.test(r.stdout)) problems.push(p.name + ": server " + server + " did not list its tools: " + r.stderr.slice(0, 300))
   }
 }
+// Codex, Cursor and Muse: each manifest names its plugin, and every path it
+// points to exists.
+const read = (f) => JSON.parse(readFileSync(f, "utf8"))
+for (const p of manifest.plugins) {
+  for (const dir of [".codex-plugin", ".cursor-plugin", ".muse-plugin"]) {
+    const file = join(p.source, dir, "plugin.json")
+    if (!existsSync(file)) continue
+    const m = read(file)
+    if (m.name !== p.name) problems.push(file + ": name " + m.name)
+    const paths = [m.skills, m.agents, typeof m.mcpServers === "string" ? m.mcpServers : null]
+      .concat((m.capabilities?.skills ?? []).map((s) => s.path))
+      .filter((x) => typeof x === "string")
+    for (const rel of paths) {
+      if (!existsSync(join(p.source, rel))) problems.push(file + ": " + rel + " does not exist")
+    }
+    for (const s of m.capabilities?.mcpServers ?? []) {
+      if (s.command && !existsSync(join(p.source, s.command[1]))) problems.push(file + ": " + s.command[1] + " does not exist")
+    }
+  }
+  const codexMcp = join(p.source, ".codex-plugin", "mcp.json")
+  if (existsSync(codexMcp)) {
+    for (const [server, def] of Object.entries(read(codexMcp).mcpServers ?? {})) {
+      if (def.command !== "node") continue
+      const r = spawnSync("node", def.args, {
+        cwd: join(p.source, def.cwd ?? "."),
+        input: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "tools/list" }) + "\n",
+        encoding: "utf8",
+        timeout: 20000,
+      })
+      if (!/"tools"/.test(r.stdout)) problems.push(p.name + ": Codex server " + server + " did not list its tools")
+    }
+  }
+}
+for (const [file, plugins] of [
+  [".agents/plugins/marketplace.json", read(".agents/plugins/marketplace.json").plugins],
+  [".cursor-plugin/marketplace.json", read(".cursor-plugin/marketplace.json").plugins],
+]) {
+  for (const entry of plugins) {
+    const source = typeof entry.source === "string" ? entry.source : entry.source.path
+    if (!names.has(entry.name) || !existsSync(source)) problems.push(file + ": " + entry.name + " at " + source)
+  }
+}
+
 const walk = (d) => readdirSync(d).flatMap((n) => {
   const p = join(d, n)
   if (n === ".git" || n === "node_modules") return []
