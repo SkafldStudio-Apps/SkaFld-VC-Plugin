@@ -90,15 +90,15 @@ tools:
   - mcp__plugin_exa_exa__*
   - mcp__claude_ai_Exa__*
   - mcp__Exa__*
-  - mcp__plugin_skafld-vc_harmonic__*
+  - mcp__plugin_skafld-vc-connectors_harmonic__*
   - mcp__harmonic__*
   - mcp__claude_ai_Harmonic__*
   - mcp__Harmonic__*
-  - mcp__plugin_skafld-vc_specter__*
+  - mcp__plugin_skafld-vc-connectors_specter__*
   - mcp__specter__*
-  - mcp__plugin_skafld-vc_dealroom__*
+  - mcp__plugin_skafld-vc-connectors_dealroom__*
   - mcp__dealroom__*
-  - mcp__plugin_skafld-vc_clay__*
+  - mcp__plugin_skafld-vc-connectors_clay__*
   - mcp__clay__*
   - mcp__claude_ai_Clay__*
   - mcp__Clay__*
@@ -122,11 +122,11 @@ tools:
   - mcp__ramp-data__*
   - mcp__claude_ai_Ramp_Data__*
   - mcp__Ramp_Data__*
-  - mcp__plugin_skafld-vc_attio__*
+  - mcp__plugin_skafld-vc-connectors_attio__*
   - mcp__attio__*
   - mcp__claude_ai_Attio__*
   - mcp__Attio__*
-  - mcp__plugin_skafld-vc_affinity__*
+  - mcp__plugin_skafld-vc-connectors_affinity__*
   - mcp__affinity__*
   - mcp__claude_ai_Affinity__*
   - mcp__Affinity__*
@@ -140,15 +140,15 @@ tools:
   - mcp__airtable__*
   - mcp__claude_ai_Airtable__*
   - mcp__Airtable__*
-  - mcp__plugin_skafld-vc_notion__*
+  - mcp__plugin_skafld-vc-connectors_notion__*
   - mcp__notion__*
   - mcp__claude_ai_Notion__*
   - mcp__Notion__*
-  - mcp__plugin_skafld-vc_granola__*
+  - mcp__plugin_skafld-vc-connectors_granola__*
   - mcp__granola__*
   - mcp__claude_ai_Granola__*
   - mcp__Granola__*
-  - mcp__plugin_skafld-vc_fireflies__*
+  - mcp__plugin_skafld-vc-connectors_fireflies__*
   - mcp__fireflies__*
   - mcp__claude_ai_Fireflies__*
   - mcp__Fireflies__*

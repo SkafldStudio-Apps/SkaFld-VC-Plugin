@@ -19,8 +19,8 @@ Without the add-on, the agents write reports as Markdown, make files with Claude
 
 Beyond Exa and Apollo, these are the connectors a venture firm or angel is likely to use, each verified on 2026-09-28 as the vendor's own MCP server. They come three ways:
 
-- **Declared by SkaFld VC**: they appear in the plugin's connectors (Claude Desktop) and in `/mcp` (Claude Code). Sign in to the ones you use; the rest stay idle.
-- **Declared by the optional SkaFld VC Connectors add-on** (`skafld-vc-connectors`): paid data, more CRMs and note-takers, data rooms, portfolio and finance metrics, public comparables and contracts. Install it from the same marketplace if you use some of these.
+- **Already connected by you**: a server you added yourself (for example `claude mcp add --transport http clay https://api.clay.com/v3/mcp`) or a connector from the Claude directory. The agents read it under its usual name (`clay`, or `Clay` from the directory), with nothing else to install. SkaFld VC itself declares only Exa and Apollo, because Claude Code connects to every server a plugin declares each time it starts.
+- **Declared by the optional SkaFld VC Connectors add-on** (`skafld-vc-connectors`): every connector below that is not from the directory, so you can sign in to them from `/mcp` without adding each one by hand. Install it from the same marketplace if you use some of these; the ones you never sign in to still show in `/mcp` as needing sign-in.
 - **Added from the Claude connector directory** (Settings, Connectors): Google's and others that need their own app registration or an admin. The agents find them there under their directory names.
 
 Each signs in with your own account (in Claude Code run `/mcp`, pick the server and choose Authenticate); nothing in the plugins carries a key, and paid ones need your own plan. The agents use connectors read-only: they never send, create, update, sign or delete anything in them, and Claude asks you before any such call. A server you add yourself under the same name (for example with an API key) wins over the plugin's.
@@ -31,10 +31,10 @@ Each signs in with your own account (in Claude Code run `/mcp`, pick the server 
 
 | Connector | Where it comes from | What the agents use it for | What you need |
 | --- | --- | --- | --- |
-| Harmonic | SkaFld VC | Company and founder search, funding, headcount and saved searches for sourcing | Harmonic account; free tier without deal data |
-| Specter | SkaFld VC | Company, people and investor signals for sourcing and screening | Specter account; 100 free calls a day |
-| Dealroom | SkaFld VC | Company, funding round and investor data, read-only | Dealroom subscription |
-| Clay | SkaFld VC | Enrichment waterfall when Apollo misses a person or company | Clay account; free credits to start |
+| Harmonic | SkaFld VC Connectors | Company and founder search, funding, headcount and saved searches for sourcing | Harmonic account; free tier without deal data |
+| Specter | SkaFld VC Connectors | Company, people and investor signals for sourcing and screening | Specter account; 100 free calls a day |
+| Dealroom | SkaFld VC Connectors | Company, funding round and investor data, read-only | Dealroom subscription |
+| Clay | SkaFld VC Connectors | Enrichment waterfall when Apollo misses a person or company | Clay account; free credits to start |
 | Crunchbase | SkaFld VC Connectors | Funding rounds, investors and acquisitions; anti-portfolio outcome checks | Crunchbase plan with an MCP seat |
 | PitchBook | SkaFld VC Connectors | Deals, valuations and comparables, read-only | PitchBook enterprise licence |
 | CB Insights | SkaFld VC Connectors | Company, market and funding intelligence, read-only | CB Insights enterprise package |
@@ -46,8 +46,8 @@ Each signs in with your own account (in Claude Code run `/mcp`, pick the server 
 
 | Connector | Where it comes from | What the agents use it for | What you need |
 | --- | --- | --- | --- |
-| Attio | SkaFld VC | The firm's pipeline, passes and relationship history | Attio workspace, any plan |
-| Affinity | SkaFld VC | The firm's pipeline, relationship strength and warm paths | Affinity Scale plan or higher |
+| Attio | SkaFld VC Connectors | The firm's pipeline, passes and relationship history | Attio workspace, any plan |
+| Affinity | SkaFld VC Connectors | The firm's pipeline, relationship strength and warm paths | Affinity Scale plan or higher |
 | Pipedrive | SkaFld VC Connectors | Pipeline and deal notes for firms that track deals there | Pipedrive account (beta) |
 | 4Degrees | SkaFld VC Connectors | VC relationship CRM: pipeline and warm introductions | 4Degrees account |
 | Airtable | SkaFld VC Connectors | Deal trackers and lists kept in Airtable bases | Airtable account, all plans |
@@ -56,9 +56,9 @@ Each signs in with your own account (in Claude Code run `/mcp`, pick the server 
 
 | Connector | Where it comes from | What the agents use it for | What you need |
 | --- | --- | --- | --- |
-| Notion | SkaFld VC | Deal notes, theses and IC notes kept in Notion | Notion workspace |
-| Granola | SkaFld VC | Founder, reference and customer call notes | Granola; transcripts on paid plans |
-| Fireflies | SkaFld VC | Screening, reference and customer call transcripts | Fireflies account |
+| Notion | SkaFld VC Connectors | Deal notes, theses and IC notes kept in Notion | Notion workspace |
+| Granola | SkaFld VC Connectors | Founder, reference and customer call notes | Granola; transcripts on paid plans |
+| Fireflies | SkaFld VC Connectors | Screening, reference and customer call transcripts | Fireflies account |
 | Otter | SkaFld VC Connectors | Call transcripts, read-only | Otter account |
 | Fathom | SkaFld VC Connectors | Call recordings and summaries | Fathom account |
 | Gong | Claude connector directory | Call transcripts where the firm records on Gong | Gong seat; an admin creates the integration |
@@ -87,8 +87,8 @@ Each signs in with your own account (in Claude Code run `/mcp`, pick the server 
 
 | Connector | Where it comes from | What the agents use it for | What you need |
 | --- | --- | --- | --- |
-| Carta | SkaFld VC | Holdings, cap tables and investor data for follow-on and portfolio views | Carta account |
-| Standard Metrics | SkaFld VC | Portfolio company financials and KPIs collected from founders | Standard Metrics account |
+| Carta | SkaFld VC Connectors | Holdings, cap tables and investor data for follow-on and portfolio views | Carta account |
+| Standard Metrics | SkaFld VC Connectors | Portfolio company financials and KPIs collected from founders | Standard Metrics account |
 | AngelList | SkaFld VC Connectors | Fund and SPV holdings, read-only (for GPs) | AngelList GP account |
 | Stripe | SkaFld VC Connectors | Revenue metrics where a founder grants access | Stripe account |
 | ChartMogul | SkaFld VC Connectors | Subscription metrics (MRR, churn, cohorts) | ChartMogul account |

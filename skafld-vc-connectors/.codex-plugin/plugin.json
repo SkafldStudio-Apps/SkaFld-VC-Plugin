@@ -1,6 +1,6 @@
 {
   "name": "skafld-vc-connectors",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Optional connectors for SkaFld VC: paid company data (Crunchbase, PitchBook, CB Insights, Tracxn, Coresignal), more CRMs and note-takers, data rooms, portfolio and finance metrics (AngelList, Stripe, ChartMogul, Mixpanel, Amplitude, PostHog, Mercury, Brex, Ramp), public comparables (S&P Global, Morningstar, Daloopa, Alpha Vantage, FMP) and contracts (PandaDoc, Ironclad). Each signs in with your own account; install only if you use these tools.",
   "keywords": [
     "venture capital",

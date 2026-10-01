@@ -90,11 +90,11 @@ tools:
   - mcp__plugin_skafld-vc-files_deliverables__render_package
   - mcp__plugin_skafld-vc-files_deliverables__export_document
   - mcp__plugin_skafld-vc-files_setup__*
-  - mcp__plugin_skafld-vc_attio__*
+  - mcp__plugin_skafld-vc-connectors_attio__*
   - mcp__attio__*
   - mcp__claude_ai_Attio__*
   - mcp__Attio__*
-  - mcp__plugin_skafld-vc_affinity__*
+  - mcp__plugin_skafld-vc-connectors_affinity__*
   - mcp__affinity__*
   - mcp__claude_ai_Affinity__*
   - mcp__Affinity__*
@@ -117,15 +117,15 @@ tools:
   - mcp__Dropbox__*
   - mcp__plugin_skafld-vc-connectors_docsend__*
   - mcp__docsend__*
-  - mcp__plugin_skafld-vc_notion__*
+  - mcp__plugin_skafld-vc-connectors_notion__*
   - mcp__notion__*
   - mcp__claude_ai_Notion__*
   - mcp__Notion__*
-  - mcp__plugin_skafld-vc_granola__*
+  - mcp__plugin_skafld-vc-connectors_granola__*
   - mcp__granola__*
   - mcp__claude_ai_Granola__*
   - mcp__Granola__*
-  - mcp__plugin_skafld-vc_fireflies__*
+  - mcp__plugin_skafld-vc-connectors_fireflies__*
   - mcp__fireflies__*
   - mcp__claude_ai_Fireflies__*
   - mcp__Fireflies__*

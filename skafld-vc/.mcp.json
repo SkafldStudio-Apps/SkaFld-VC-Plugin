@@ -7,50 +7,6 @@
     "apollo": {
       "type": "http",
       "url": "https://mcp.apollo.io/mcp"
-    },
-    "harmonic": {
-      "type": "http",
-      "url": "https://mcp.api.harmonic.ai"
-    },
-    "specter": {
-      "type": "http",
-      "url": "https://mcp.tryspecter.com/mcp"
-    },
-    "dealroom": {
-      "type": "http",
-      "url": "https://mcp.dealroom.co/mcp"
-    },
-    "clay": {
-      "type": "http",
-      "url": "https://api.clay.com/v3/mcp"
-    },
-    "attio": {
-      "type": "http",
-      "url": "https://mcp.attio.com/mcp"
-    },
-    "affinity": {
-      "type": "http",
-      "url": "https://mcp.affinity.co/mcp"
-    },
-    "notion": {
-      "type": "http",
-      "url": "https://mcp.notion.com/mcp"
-    },
-    "granola": {
-      "type": "http",
-      "url": "https://mcp.granola.ai/mcp"
-    },
-    "fireflies": {
-      "type": "http",
-      "url": "https://api.fireflies.ai/mcp"
-    },
-    "carta": {
-      "type": "http",
-      "url": "https://mcp.app.carta.com/mcp"
-    },
-    "standard-metrics": {
-      "type": "http",
-      "url": "https://mcp.standardmetrics.io/mcp"
     }
   }
 }

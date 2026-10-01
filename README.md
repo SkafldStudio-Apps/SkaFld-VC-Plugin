@@ -2,7 +2,7 @@
 
 Venture capital agents and skills for Claude Code and Claude Desktop, across the deal lifecycle: sourcing against your thesis, screening, diligence plans, investment committee memos and portfolio reviews, with returns, valuation, term sheets, market sizing, unit economics and cap tables. They work from your own documents with nothing to install, research with Exa and Apollo on your own account, and write reports, Word, PDF, PowerPoint and Excel files with Claude's own document tools, or in your firm's brand with the optional Files add-on.
 
-> This repository is generated from the SkaFld VC source on each release (version 1.6.0). Changes made here are overwritten; open issues rather than pull requests.
+> This repository is generated from the SkaFld VC source on each release (version 1.6.1). Changes made here are overwritten; open issues rather than pull requests.
 
 ## Install
 
@@ -33,7 +33,7 @@ Everything below works with the plugin alone: no account, no platform, nothing s
 - **Scoring:** a research-based default rubric (`skafld-vc/rubrics/default.json`), or your own `rubric.json` in the project folder. The arithmetic is never left to the model: a dependency-free Python scorer (`skafld-vc/skills/deal-scorecard/scripts/score.py`) runs wherever Claude can run code, including Claude's code execution in Chat, and the Files add-on runs the same arithmetic as a tool. Both are tested against each other and against the platform on every release.
 - **Files:** every deliverable as a report in `./skafld-vc/` (Markdown, or designed HTML with the Files add-on), and on request as Word, PDF, a PowerPoint deck or a PDF deck. A Diligence plan's request list comes out as an Excel file ready to send to the company. Without the Files add-on these are made with Claude's own document tools and look however your Claude is set up; with it, in SkaFld VC's design and your firm's brand.
 - **Setup:** run `/skafld-vc:setup` first to save your firm's details and thesis so the agents stop asking (in `skafld-vc/firm-profile.md` in your folder, or as a block for your Claude Project's instructions in Chat). With the Files add-on it also sets your firm's brand from your website, a logo or a description. Run it again any time to change one part.
-- **Connectors:** the plugin declares the ones most angels and funds use: Exa (free, no key), Apollo, Harmonic, Specter, Dealroom, Clay, Notion, Granola, Fireflies, Attio, Affinity, Carta and Standard Metrics. Sign in to the ones you use with your own account. The optional **SkaFld VC Connectors** plugin adds paid data (Crunchbase, PitchBook, CB Insights, Tracxn), more CRMs and note-takers, data rooms, portfolio and finance metrics, public comparables and contracts. The agents read them read-only; without them they mark research they could not do as not checked. See `skafld-vc/CONNECTORS.md`.
+- **Connectors:** the plugin declares Exa (free, no key) and Apollo (your own account). The agents also read connectors you already have under their usual names, such as Clay, Harmonic, Attio, Notion or Carta, added yourself or from the Claude directory. The optional **SkaFld VC Connectors** plugin declares all of them (company and funding data, CRMs, notes, data rooms, portfolio and finance metrics, public comparables and contracts) so you can sign in from `/mcp`. The agents read them read-only; without them they mark research they could not do as not checked. See `skafld-vc/CONNECTORS.md`.
 
 ## Other tools: Codex, Cursor and Muse
 

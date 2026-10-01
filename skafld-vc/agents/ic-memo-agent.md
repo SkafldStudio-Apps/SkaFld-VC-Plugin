@@ -66,11 +66,11 @@ tools:
   - mcp__plugin_skafld-vc-files_deliverables__score_with_rubric
   - mcp__plugin_skafld-vc-files_deliverables__export_document
   - mcp__plugin_skafld-vc-files_setup__get_profile
-  - mcp__plugin_skafld-vc_attio__*
+  - mcp__plugin_skafld-vc-connectors_attio__*
   - mcp__attio__*
   - mcp__claude_ai_Attio__*
   - mcp__Attio__*
-  - mcp__plugin_skafld-vc_affinity__*
+  - mcp__plugin_skafld-vc-connectors_affinity__*
   - mcp__affinity__*
   - mcp__claude_ai_Affinity__*
   - mcp__Affinity__*
@@ -84,11 +84,11 @@ tools:
   - mcp__airtable__*
   - mcp__claude_ai_Airtable__*
   - mcp__Airtable__*
-  - mcp__plugin_skafld-vc_carta__*
+  - mcp__plugin_skafld-vc-connectors_carta__*
   - mcp__carta__*
   - mcp__claude_ai_Carta__*
   - mcp__Carta__*
-  - mcp__plugin_skafld-vc_standard-metrics__*
+  - mcp__plugin_skafld-vc-connectors_standard-metrics__*
   - mcp__standard-metrics__*
   - mcp__plugin_skafld-vc-connectors_angellist__*
   - mcp__angellist__*

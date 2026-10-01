@@ -50,11 +50,11 @@ tools:
   - mcp__plugin_exa_exa__*
   - mcp__claude_ai_Exa__*
   - mcp__Exa__*
-  - mcp__plugin_skafld-vc_attio__*
+  - mcp__plugin_skafld-vc-connectors_attio__*
   - mcp__attio__*
   - mcp__claude_ai_Attio__*
   - mcp__Attio__*
-  - mcp__plugin_skafld-vc_affinity__*
+  - mcp__plugin_skafld-vc-connectors_affinity__*
   - mcp__affinity__*
   - mcp__claude_ai_Affinity__*
   - mcp__Affinity__*
@@ -89,15 +89,15 @@ tools:
   - mcp__Gmail__get_thread
   - mcp__Gmail__get_message
   - mcp__Gmail__list_labels
-  - mcp__plugin_skafld-vc_notion__*
+  - mcp__plugin_skafld-vc-connectors_notion__*
   - mcp__notion__*
   - mcp__claude_ai_Notion__*
   - mcp__Notion__*
-  - mcp__plugin_skafld-vc_granola__*
+  - mcp__plugin_skafld-vc-connectors_granola__*
   - mcp__granola__*
   - mcp__claude_ai_Granola__*
   - mcp__Granola__*
-  - mcp__plugin_skafld-vc_fireflies__*
+  - mcp__plugin_skafld-vc-connectors_fireflies__*
   - mcp__fireflies__*
   - mcp__claude_ai_Fireflies__*
   - mcp__Fireflies__*
@@ -112,11 +112,11 @@ tools:
   - mcp__gong__*
   - mcp__claude_ai_Gong__*
   - mcp__Gong__*
-  - mcp__plugin_skafld-vc_carta__*
+  - mcp__plugin_skafld-vc-connectors_carta__*
   - mcp__carta__*
   - mcp__claude_ai_Carta__*
   - mcp__Carta__*
-  - mcp__plugin_skafld-vc_standard-metrics__*
+  - mcp__plugin_skafld-vc-connectors_standard-metrics__*
   - mcp__standard-metrics__*
   - mcp__plugin_skafld-vc-connectors_angellist__*
   - mcp__angellist__*

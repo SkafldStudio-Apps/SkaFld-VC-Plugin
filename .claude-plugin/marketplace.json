@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "SkaFld VC: venture capital agents and skills for Claude. Start with SkaFld VC, which needs nothing installed. Add SkaFld VC Files for branded files and exact scoring on your computer (needs Node.js), SkaFld VC Connectors for more data and work tools, and SkaFld VC Platform only if your firm runs a SkaFld VC platform.",
-    "version": "1.6.0"
+    "version": "1.6.1"
   },
   "plugins": [
     {
