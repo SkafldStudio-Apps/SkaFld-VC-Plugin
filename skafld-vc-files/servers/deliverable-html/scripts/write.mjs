@@ -1,6 +1,7 @@
 // Shared by render.mjs (the command line) and mcp-server.mjs (the tool the
-// agents call): validate, render with the SkaFld VC template, and write
-// the HTML, plus the JSON it came from, under <project>/skafld-vc/.
+// agents call): validate, render with the neutral template (and a
+// configured brand, when the caller passes one; unbranded otherwise), and
+// write the HTML, plus the JSON it came from, under <project>/skafld-vc/.
 // Nothing here touches the network, and nothing is written anywhere else.
 import {
   existsSync,
@@ -96,11 +97,14 @@ function writePair(project, htmlName, html, doc) {
 }
 
 /** Render one deliverable (or a whole package document) and write it. */
-export function writeDeliverable(doc, { project = projectDir() } = {}) {
+export function writeDeliverable(
+  doc,
+  { project = projectDir(), brand = null } = {}
+) {
   if (doc && typeof doc === "object" && doc.format === PACKAGE_FORMAT) {
     const checked = validatePackage(doc)
     if (!checked.ok) throw new RenderError("invalid package", checked.errors)
-    const html = renderPackage(checked.value, { css: templateCss() })
+    const html = renderPackage(checked.value, { css: templateCss(), brand })
     return writePair(
       project,
       packageFileName(checked.value),
@@ -110,7 +114,7 @@ export function writeDeliverable(doc, { project = projectDir() } = {}) {
   }
   const checked = validateDeliverable(doc)
   if (!checked.ok) throw new RenderError("invalid deliverable", checked.errors)
-  const html = renderDeliverable(checked.value, { css: templateCss() })
+  const html = renderDeliverable(checked.value, { css: templateCss(), brand })
   return writePair(
     project,
     deliverableFileName(checked.value),
@@ -147,7 +151,7 @@ export function readWritten(names, { project = projectDir() } = {}) {
  */
 export function writePackage(
   { deliverables = [], files = [], person, agent = "orchestrator" },
-  { project = projectDir() } = {}
+  { project = projectDir(), brand = null } = {}
 ) {
   const docs = [...deliverables, ...readWritten(files, { project })]
   let pkg
@@ -166,6 +170,6 @@ export function writePackage(
     }
     throw new RenderError(err.message)
   }
-  const html = renderPackage(pkg, { css: templateCss() })
+  const html = renderPackage(pkg, { css: templateCss(), brand })
   return writePair(project, packageFileName(pkg), html, pkg)
 }

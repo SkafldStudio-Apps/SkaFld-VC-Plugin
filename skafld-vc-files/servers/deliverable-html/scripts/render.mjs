@@ -8,6 +8,10 @@
 //
 // Options:
 //   --person "<name>"   who ran it, shown on a package cover
+//   --brand <folder|url> a brand folder in the project, or the platform's
+//                       brand URL; without it, the project's brand/ folder or
+//                       the saved brand applies, and with neither the file
+//                       is unbranded
 //
 // Writes ./skafld-vc/<company>-<type>-<date>.html (or
 // <company>-package-<date>.html) and the JSON beside it, under the current
@@ -20,7 +24,13 @@
 // written by the release build; do not edit them here.
 import { readFileSync } from "node:fs"
 
-import { RenderError, writeDeliverable, writePackage } from "./write.mjs"
+import { htmlBrandFor } from "./export.mjs"
+import {
+  projectDir,
+  RenderError,
+  writeDeliverable,
+  writePackage,
+} from "./write.mjs"
 
 function fail(message, errors = []) {
   process.stderr.write(`render: ${message}\n`)
@@ -43,12 +53,18 @@ function readJson(arg) {
   }
 }
 
-const args = { packageMode: false, person: undefined, inputs: [] }
+const args = {
+  packageMode: false,
+  person: undefined,
+  brand: undefined,
+  inputs: [],
+}
 const argv = process.argv.slice(2)
 for (let i = 0; i < argv.length; i++) {
   const a = argv[i]
   if (a === "--package") args.packageMode = true
   else if (a === "--person") args.person = argv[++i]
+  else if (a === "--brand") args.brand = argv[++i]
   else if (a === "-h" || a === "--help") {
     process.stdout.write(
       "usage: render.mjs <deliverable.json> | --package <a.json> <b.json> ... | -\n"
@@ -60,10 +76,14 @@ if (args.inputs.length === 0) fail("give a JSON file, or - for stdin")
 
 try {
   const docs = args.inputs.map(readJson)
+  const project = projectDir()
+  const b = await htmlBrandFor({ brand: args.brand }, process.env, project)
+  for (const w of b.warnings) process.stderr.write(`render: note: ${w}\n`)
+  const where = { project, brand: b.brand }
   const written =
     docs.length === 1 && !args.packageMode
-      ? writeDeliverable(docs[0])
-      : writePackage({ deliverables: docs, person: args.person })
+      ? writeDeliverable(docs[0], where)
+      : writePackage({ deliverables: docs, person: args.person }, where)
   process.stdout.write(`${written.html}\n`)
 } catch (err) {
   if (err instanceof RenderError) fail(err.message, err.errors)

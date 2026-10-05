@@ -2,16 +2,20 @@
 // The skafld-vc plugin's local deliverables server: a stdio MCP server
 // with two tools that write HTML deliverables under
 // <project>/skafld-vc/ and nowhere else. It opens no network connection,
-// except one: export_document downloads a platform's brand when its brand
-// argument is the platform's brand URL (whoami's brand.url), and keeps it in
-// the person's setup folder. The agents get these tools instead of Bash or
+// except one: a tool given the platform's brand URL (whoami's brand.url) as
+// its brand argument downloads that brand, and keeps it in the person's
+// setup folder. The agents get these tools instead of Bash or
 // Write.
 //
-//   render_deliverable  { deliverable }                    one Sourcing longlist, Screening report, Diligence plan, IC memo or Portfolio review
-//   render_package      { files?, deliverables?, person? } one Package combining several for one company
+//   render_deliverable  { deliverable, brand? }                    one Sourcing longlist, Screening report, Diligence plan, IC memo or Portfolio review
+//   render_package      { files?, deliverables?, person?, brand? } one Package combining several for one company
 //   score_with_rubric   { criteria, ... }                  documents-only scoring against a rubric
 //   export_document     { format, file? | deliverable? | markdown?, ... }
-//                       Word, PDF, PowerPoint, a PDF deck or Excel, in the brand
+//                       Word, PDF, PowerPoint, a PDF deck or Excel
+//
+// Every file is unbranded (no logo, no firm name, neutral greys) unless a
+// brand is configured: the platform's (its brand URL), a brand folder
+// named, the project's brand/ folder, or the brand saved with setup.
 //
 // Every tool takes an optional project_dir: the absolute folder the agent is
 // working in, used when the host does not pass CLAUDE_PROJECT_DIR.
@@ -22,7 +26,7 @@ import { createInterface } from "node:readline"
 
 import { runTool } from "./tools.mjs"
 
-const SERVER = { name: "skafld-vc-deliverables", version: "1.3.0" }
+const SERVER = { name: "skafld-vc-deliverables", version: "1.4.0" }
 
 const PROJECT_DIR = {
   type: "string",
@@ -34,11 +38,20 @@ const FALLBACK_PROTOCOL = "2025-06-18"
 const FORMAT_HINT =
   "Load the skafld-vc:deliverable-html skill for the format (skafld-vc.deliverable/v1)."
 
+const BRAND = {
+  type: "string",
+  description:
+    "The platform's brand URL from whoami.brand.url, or a brand folder inside the project; leave out for the project's brand/ folder or the saved brand. With no brand configured anywhere the file is unbranded.",
+}
+
+const BRAND_ORDER =
+  "Unbranded unless a brand is configured: the platform's (its brand URL) or the one named, else the project's brand/ folder, else the person's saved brand."
+
 const TOOLS = [
   {
     name: "render_deliverable",
     title: "Write an HTML deliverable",
-    description: `Validate one deliverable (a Sourcing longlist, Screening report, Founder feedback, Diligence plan, IC memo or Portfolio review) and write it as a self-contained HTML file in ./skafld-vc/, with its JSON beside it. Returns the paths, or the validation errors to fix. ${FORMAT_HINT}`,
+    description: `Validate one deliverable (a Sourcing longlist, Screening report, Founder feedback, Diligence plan, IC memo or Portfolio review) and write it as a self-contained HTML file in ./skafld-vc/, with its JSON beside it. Returns the paths, or the validation errors to fix. ${BRAND_ORDER} ${FORMAT_HINT}`,
     inputSchema: {
       type: "object",
       properties: {
@@ -47,6 +60,7 @@ const TOOLS = [
           description:
             "A skafld-vc.deliverable/v1 document: format, type, status, company, generatedAt, preparedBy, sources, openItems and body.",
         },
+        brand: BRAND,
         project_dir: PROJECT_DIR,
       },
       required: ["deliverable"],
@@ -56,13 +70,14 @@ const TOOLS = [
       readOnlyHint: false,
       destructiveHint: false,
       idempotentHint: true,
-      openWorldHint: false,
+      // It downloads the platform's brand when given its URL.
+      openWorldHint: true,
     },
   },
   {
     name: "render_package",
     title: "Write an HTML package",
-    description: `Combine several deliverables about one company into one Package (cover, contents, each deliverable, combined open items) and write it as HTML in ./skafld-vc/. Name deliverables written earlier by their file names in \`files\` (for example "harbor-robotics-screening-2026-09-26.json"), or pass documents in \`deliverables\`. ${FORMAT_HINT}`,
+    description: `Combine several deliverables about one company into one Package (cover, contents, each deliverable, combined open items) and write it as HTML in ./skafld-vc/. Name deliverables written earlier by their file names in \`files\` (for example "harbor-robotics-screening-2026-09-26.json"), or pass documents in \`deliverables\`. ${BRAND_ORDER} ${FORMAT_HINT}`,
     inputSchema: {
       type: "object",
       properties: {
@@ -81,6 +96,7 @@ const TOOLS = [
           type: "string",
           description: "Who the package was prepared for or by, for the cover.",
         },
+        brand: BRAND,
         project_dir: PROJECT_DIR,
       },
       additionalProperties: false,
@@ -89,7 +105,8 @@ const TOOLS = [
       readOnlyHint: false,
       destructiveHint: false,
       idempotentHint: true,
-      openWorldHint: false,
+      // It downloads the platform's brand when given its URL.
+      openWorldHint: true,
     },
   },
   {
@@ -139,7 +156,7 @@ TOOLS.push({
   name: "export_document",
   title: "Export as Word, PDF, PowerPoint or Excel",
   description:
-    'Write a branded file in ./skafld-vc/: docx (Word report), pdf (PDF report), pptx (PowerPoint deck), deck_pdf (the deck as PDF) or xlsx (a Diligence plan only: audience "founder" is the request list to send to the company, built from body.requests and nothing else; "team" is the internal tracker). A Founder feedback exports as docx or pdf; audience "founder" is the copy to send, without anything internal. The source is a deliverable or package written earlier (file), a deliverable object, or Markdown (any answer: # title, ## sections, lists, tables). The brand is the platform\'s (its brand URL) or the one named, else the project\'s brand/ folder, else the person\'s saved brand, else the SkaFld VC default. Load the skafld-vc:document-export skill first.',
+    'Write a file in ./skafld-vc/: docx (Word report), pdf (PDF report), pptx (PowerPoint deck), deck_pdf (the deck as PDF) or xlsx (a Diligence plan only: audience "founder" is the request list to send to the company, built from body.requests and nothing else; "team" is the internal tracker). A Founder feedback exports as docx or pdf; audience "founder" is the copy to send, without anything internal. The source is a deliverable or package written earlier (file), a deliverable object, or Markdown (any answer: # title, ## sections, lists, tables). Unbranded unless a brand is configured: the platform\'s (its brand URL) or the one named, else the project\'s brand/ folder, else the person\'s saved brand. Load the skafld-vc:document-export skill first.',
   inputSchema: {
     type: "object",
     properties: {
@@ -181,11 +198,7 @@ TOOLS.push({
         description:
           "xlsx founder list: the firm sending it, when the brand's name is not it.",
       },
-      brand: {
-        type: "string",
-        description:
-          "The platform's brand URL from whoami.brand.url, a brand id the plugin ships (skafld-vc), or a brand folder inside the project; leave out for the project's brand, the saved brand or the default.",
-      },
+      brand: BRAND,
       house: {
         type: "string",
         description:

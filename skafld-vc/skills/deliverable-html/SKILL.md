@@ -6,7 +6,7 @@ user-invocable: false
 
 # Deliverable HTML
 
-Turns the output of a run into a deliverable: always the structured JSON, and a readable report for the person. With the SkaFld VC Files add-on installed, the report is one self-contained HTML file in the SkaFld VC design system (inline styles, no scripts, no external requests, print styles, light and dark themes), the same renderer the platform uses for its stored Screenings. Without it, you write the report with Claude's own tools, and it looks however this Claude is set up to write documents.
+Turns the output of a run into a deliverable: always the structured JSON, and a readable report for the person. With the SkaFld VC Files add-on installed, the report is one self-contained HTML file (inline styles, no scripts, no external requests, print styles, light and dark themes), the same renderer the platform uses for its stored Screenings. It is unbranded (no logo, no firm or product name, neutral greys, system fonts) unless a brand is configured. Without it, you write the report with Claude's own tools, and it looks however this Claude is set up to write documents.
 
 ## When to use
 
@@ -24,7 +24,9 @@ The JSON is what a platform saves (`skafld-vc:save_deliverable`), what a Package
 1. Call `deliverables:render_deliverable` with `{ "deliverable": <the JSON> }`. It validates, writes `./skafld-vc/<company>-<type>-<date>.html` and the JSON beside it, and returns both paths. If it returns validation errors, fix exactly those fields and call it again.
 2. For a Package, call `deliverables:render_package` with the `files` the earlier calls returned (for example `["harbor-robotics-screening-2026-09-26.json", "harbor-robotics-diligence-plan-2026-09-26.json"]`) and `person` set to who asked. It writes `./skafld-vc/<company>-package-<date>.html` with a cover, a contents list, each deliverable as a section and one combined open-items list.
 3. Tell the person the path of the HTML file, and that it is a draft for staff review.
-4. For Word, PDF, a deck or Excel, follow `skafld-vc:document-export`. With a platform connected, pass `skafld-vc:whoami`'s `brand.url` as `brand` to `deliverables:export_document`, so the files are in the platform's brand. The HTML file takes no brand.
+4. For Word, PDF, a deck or Excel, follow `skafld-vc:document-export`.
+
+**Brand.** The HTML and the exports follow the same order: the platform's brand (with a platform connected, pass `skafld-vc:whoami`'s `brand.url` as `brand` to `deliverables:render_deliverable`, `deliverables:render_package` and `deliverables:export_document`; leave it out when `brand` is null), a brand folder you name as `brand`, the project's `brand/` folder, then the brand saved with `/skafld-vc:setup`. With none of these the file is unbranded. A configured brand adds its logo (or name), accent and text colours and font names; it never changes the content.
 
 ## 3. Without the Files add-on
 
@@ -34,7 +36,7 @@ In a platform run (the request says it is one), your final message is the delive
 2. **Where it goes.** Where you can write files (Claude Code, Cowork), save it as `./skafld-vc/<company>-<type>-<date>.md` with the JSON beside it as `.json`, the same names the Files add-on uses, and give both paths. Where you cannot (Claude's Chat, or an agent with no file tool), show it as a document or artifact if you have one; otherwise put it in your reply, and as an agent end your final message with the deliverable JSON in a `json` block, so the conversation that started you can save both.
 3. **A file in a format.** When the person asked for Word, PDF, a deck or Excel, follow `skafld-vc:document-export`; it says how to make them with Claude's own document tools.
 4. **A Package** is the same: one Markdown document with a cover line, a contents list, each deliverable as a section and one combined open-items list.
-5. Say once per conversation, in one line, that the optional SkaFld VC Files add-on writes these as designed HTML, Word, PDF, decks and Excel in the firm's brand. Do not repeat it, and do not try other ways of running the add-on's code.
+5. Say once per conversation, in one line, that the optional SkaFld VC Files add-on writes these as designed HTML, Word, PDF, decks and Excel, in the firm's brand once one is set up. Do not repeat it, and do not try other ways of running the add-on's code.
 
 ## Rules
 

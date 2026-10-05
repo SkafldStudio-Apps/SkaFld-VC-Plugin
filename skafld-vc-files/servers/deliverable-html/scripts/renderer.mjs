@@ -1,4 +1,4 @@
-// SkaFld VC deliverable renderer (format skafld-vc.deliverable/v1; the
+// Deliverable renderer (format skafld-vc.deliverable/v1; the
 // anchor-angels.deliverable/v1 name from before the rename is still read).
 //
 // One renderer for both runtimes. The platform imports it from
@@ -11,6 +11,13 @@
 // first and only then adds the tags it knows. Raw HTML is never passed
 // through, links are limited to http(s), mailto and root-relative paths, and
 // the page carries a CSP that blocks every request and every script.
+//
+// Brand: unbranded by default. The stylesheet passed in is the neutral
+// theme; a brand (options.brand, built with htmlBrand from a configured
+// brand.json) adds its accent and ink colours, names its fonts first in the
+// font stacks and puts its logo, or its name, above the title. Brand values
+// are checked again here (#rrggbb colours, plain font family names, a PNG or
+// JPEG logo as base64 checked by its signature) and anything else is dropped.
 //
 // Dates: file names, covers and "Prepared" lines show the calendar day in
 // the deal team's time zone, America/Chicago unless a caller passes
@@ -3548,9 +3555,114 @@ ${terms ? `<p class="doc-meta">${terms}</p>` : ""}
 <p class="doc-status">${badge("neutral", "Draft for staff review")}${memoDraft}</p>`
 }
 
+const HEX6 = /^#[0-9a-fA-F]{6}$/
+const FONT_FAMILY = /^[A-Za-z0-9][A-Za-z0-9 ._-]{0,63}$/
+const BASE64 = /^[A-Za-z0-9+/]+={0,2}$/
+/** How a PNG and a JPEG start once base64 encoded. */
+const LOGO_SIGNATURES = { png: "iVBORw0KGgo", jpg: "/9j/" }
+/** Largest logo accepted, as base64 characters (about 1.5 MB decoded). */
+export const MAX_LOGO_BASE64 = 2_000_000
+const SANS_STACK =
+  'ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif'
+
+function cleanHtmlBrand(b) {
+  if (!b || typeof b !== "object") return null
+  const out = {}
+  if (typeof b.name === "string" && b.name.trim()) {
+    out.name = b.name.trim().slice(0, 120)
+  }
+  const colors = {}
+  for (const key of ["accent", "accent_light", "ink"]) {
+    const v = b.colors?.[key]
+    if (typeof v === "string" && HEX6.test(v)) colors[key] = v
+  }
+  if (Object.keys(colors).length > 0) out.colors = colors
+  const fonts = {}
+  for (const key of ["display", "body"]) {
+    const v = b.fonts?.[key]
+    if (typeof v === "string" && FONT_FAMILY.test(v.trim()))
+      fonts[key] = v.trim()
+  }
+  if (Object.keys(fonts).length > 0) out.fonts = fonts
+  const logo = b.logo
+  const type = logo?.type === "jpeg" ? "jpg" : logo?.type
+  if (
+    (type === "png" || type === "jpg") &&
+    typeof logo.base64 === "string" &&
+    logo.base64.length <= MAX_LOGO_BASE64 &&
+    logo.base64.length % 4 === 0 &&
+    BASE64.test(logo.base64) &&
+    logo.base64.startsWith(LOGO_SIGNATURES[type])
+  ) {
+    out.logo = { type, base64: logo.base64 }
+  }
+  return Object.keys(out).length > 0 ? out : null
+}
+
+/**
+ * A brand for the renderer from a configured brand.json object
+ * (skafld-vc.brand/v1) and, optionally, its primary logo as
+ * { type: "png" | "jpg", base64 }. Only checked values are kept: the name,
+ * the accent, accent_light and ink colours, the display (or heading) and
+ * body font families, and a logo whose bytes really are a PNG or JPEG.
+ * Returns null when nothing usable remains, which renders unbranded.
+ */
+export function htmlBrand(brandJson, logo) {
+  if (!brandJson || typeof brandJson !== "object") return null
+  return cleanHtmlBrand({
+    name: brandJson.name,
+    colors: brandJson.colors,
+    fonts: {
+      display:
+        brandJson.fonts?.display?.family ?? brandJson.fonts?.heading?.family,
+      body: brandJson.fonts?.body?.family,
+    },
+    logo,
+  })
+}
+
+/** The brand's overrides of the neutral theme, after the stylesheet. */
+function brandCss(b) {
+  if (!b) return ""
+  const root = []
+  if (b.colors?.accent) root.push(`--accent: ${b.colors.accent};`)
+  if (b.fonts?.body) {
+    root.push(`--dl-font-sans: "${b.fonts.body}", ${SANS_STACK};`)
+  }
+  if (b.fonts?.display) {
+    root.push(`--dl-font-display: "${b.fonts.display}", ${SANS_STACK};`)
+  }
+  const out = []
+  if (root.length > 0) out.push(`:root { ${root.join(" ")} }`)
+  // Brand colours are made for a light page: ink only there and in print,
+  // and the lighter accent (when there is one) on a dark page.
+  if (b.colors?.ink) {
+    out.push(
+      `@media (prefers-color-scheme: light), print { :root { --foreground: ${b.colors.ink}; } }`
+    )
+  }
+  if (b.colors?.accent_light && b.colors?.accent) {
+    out.push(
+      `@media (prefers-color-scheme: dark) { :root { --accent: ${b.colors.accent_light}; } }`,
+      `@media print { :root { --accent: ${b.colors.accent}; } }`
+    )
+  }
+  return out.length > 0 ? `\n/* Brand */\n${out.join("\n")}\n` : ""
+}
+
+/** The brand's logo, or its name, above the title; nothing when unbranded. */
+function brandMark(b) {
+  if (!b) return ""
+  if (b.logo) {
+    const mime = b.logo.type === "jpg" ? "image/jpeg" : "image/png"
+    return `<p class="doc-brand"><img class="doc-logo" src="data:${mime};base64,${b.logo.base64}" alt="${escapeHtml(b.name ?? "Logo")}"></p>\n`
+  }
+  return b.name ? `<p class="doc-brand">${escapeHtml(b.name)}</p>\n` : ""
+}
+
 // The stylesheet is ours, but `<` is still CSS-escaped so nothing in it can
 // close the <style> element; valid CSS never needs a raw `<`.
-function page(title, css, body) {
+function page(title, css, body, brand) {
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -3559,9 +3671,8 @@ function page(title, css, body) {
 <meta name="color-scheme" content="light dark">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
-<meta name="generator" content="SkaFld VC deliverable renderer (${DELIVERABLE_FORMAT})">
 <title>${escapeHtml(title)}</title>
-<style>${String(css ?? "").replace(/</g, "\\3c ")}</style>
+<style>${`${String(css ?? "")}${brandCss(brand)}`.replace(/</g, "\\3c ")}</style>
 </head>
 <body>
 ${body}
@@ -3585,16 +3696,18 @@ const DISCLAIMER =
  */
 export function renderDeliverable(deliverable, options = {}) {
   const d = requireValid(validateDeliverable(deliverable))
+  const brand = cleanHtmlBrand(options.brand)
   return page(
     `${d.company.name}: ${own(TYPE_LABELS, d.type, "Deliverable")} (draft)`,
     options.css,
     `<main class="doc doc-${d.type.replace("_", "-")}">
 <header class="doc-header">
-${headerBlock(d, 1, options.timeZone, options.house)}
+${brandMark(brand)}${headerBlock(d, 1, options.timeZone, options.house)}
 </header>
 ${renderParts(d, "", 2)}
 <footer class="doc-footer"><p>${escapeHtml(DISCLAIMER)}</p></footer>
-</main>`
+</main>`,
+    brand
   )
 }
 
@@ -3606,6 +3719,7 @@ ${renderParts(d, "", 2)}
  */
 export function renderPackage(pkg, options = {}) {
   const p = requireValid(validatePackage(pkg))
+  const brand = cleanHtmlBrand(options.brand)
   const parts = p.deliverables.map((d, i) => ({
     d,
     id: `part-${i + 1}-${own(TYPE_SLUGS, d.type, "deliverable")}`,
@@ -3622,7 +3736,7 @@ export function renderPackage(pkg, options = {}) {
     (d) => d.type === "thesis_longlist" && d.body.thesis?.title
   )?.body.thesis
   const cover = `<header class="doc-header cover">
-<p class="doc-type">Deal package</p>
+${brandMark(brand)}<p class="doc-type">Deal package</p>
 <h1 class="doc-title">${escapeHtml(p.company.name)}</h1>
 <p class="doc-meta">${companyLine(p.company, p.house ?? options.house)}</p>
 <dl class="facts-grid">
@@ -3665,6 +3779,7 @@ ${toc}
 ${body}
 ${combined}
 <footer class="doc-footer"><p>${escapeHtml(DISCLAIMER)}</p></footer>
-</main>`
+</main>`,
+    brand
   )
 }

@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "name": "skafld-vc-files",
   "displayName": "SkaFld VC Files",
-  "version": "1.1.0",
-  "description": "Optional add-on for SkaFld VC on a computer with Node.js 18 or later: SkaFld VC's own branded HTML, Word, PDF, PowerPoint and Excel files, brand setup from your website, a firm profile saved across projects, and the rubric scorer as a tool. Without it SkaFld VC makes files with Claude's own document tools and scores with its Python scorer.",
+  "version": "1.2.0",
+  "description": "Optional add-on for SkaFld VC on a computer with Node.js 18 or later: SkaFld VC's own HTML, Word, PDF, PowerPoint and Excel files (unbranded unless you set up a brand), brand setup from your website, a firm profile saved across projects, and the rubric scorer as a tool. Without it SkaFld VC makes files with Claude's own document tools and scores with its Python scorer.",
   "compat": {
     "source": "native",
     "manifestDir": ".muse-plugin"

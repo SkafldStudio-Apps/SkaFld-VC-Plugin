@@ -17,7 +17,7 @@ If the request names a website, use it for the brand (and to suggest the firm's 
 Setup's tools (`setup:setup_status` and the rest) come with the optional SkaFld VC Files add-on, which runs on the person's computer (Claude Code, Claude Desktop's Code tab, Cowork) with Node.js 18 or later. Everything else in SkaFld VC works without it.
 
 - **You have `setup:setup_status`:** go on to section 1.
-- **You do not, or it fails to start:** there is no SkaFld brand to set: files are made with Claude's own document tools and look however this Claude is set up. Do only section 3, collecting the profile in the conversation, then keep it where the agents will find it:
+- **You do not, or it fails to start:** there is no brand to set: files are made with Claude's own document tools and look however this Claude is set up. Do only section 3, collecting the profile in the conversation, then keep it where the agents will find it:
 
   - **Where you can write files** (Claude Code, Cowork): save it as `skafld-vc/firm-profile.md` in the folder the person works in, in the Markdown shape below, and say that each project folder can have its own.
   - **Where you cannot** (Claude's Chat): give the person the Markdown block below to paste into their Claude Project's instructions (or add as a project file), so every conversation in that project reads it.
@@ -28,14 +28,16 @@ Setup's tools (`setup:setup_status` and the rest) come with the optional SkaFld 
 
 Call `setup:setup_status`. It says where setup saves (`saves_to`); if `persistent` is false, tell the person once that their setup is kept in this project only.
 
-- **`first_run` is true** (nothing saved): say in one line what setup does (the look of their files, then optionally their firm's details so the agents stop asking), and go to section 2.
-- **Something is saved**: show a short summary (brand name and colours; the firm name, thesis in one line, cheque range and decision format if a profile exists, or "no firm profile"). Then list what they can change, from `can_change`, as numbered options (use the question tool if you have one, with multiple selection), and do only the parts they pick: the brand parts with section 2's steps, the firm parts with section 3's. Nothing else changes.
+- **`first_run` is true** (nothing saved): say in one line what setup does (their brand on the files, which are unbranded until then, then optionally their firm's details so the agents stop asking), and go to section 2.
+- **Something is saved**: show a short summary (brand name and colours, or "unbranded"; the firm name, thesis in one line, cheque range and decision format if a profile exists, or "no firm profile"). Then list what they can change, from `can_change`, as numbered options (use the question tool if you have one, with multiple selection), and do only the parts they pick: the brand parts with section 2's steps, the firm parts with section 3's. Nothing else changes.
 
 ## 2. The brand
 
-1. **Where things stand.** `setup:setup_status` already shows the current brand; on a first run go straight to the choice.
-2. **One choice.** Ask one question: keep the SkaFld VC look, or use their firm's brand? Use the question tool if you have one, with two options: "Keep the SkaFld default" and "Use my firm's brand (recommended if you send files outside)".
-   - **Default:** call `setup:use_default_brand`, say in one line that they can run `/skafld-vc:setup` again any time to change it, and on a first run go on to section 3.
+Files are unbranded until a brand is configured: no logo, no firm or product name, neutral greys and one neutral font. A configured brand applies in this order: the platform's (on a platform, the platform's brand is the firm's to set, not the person's), a brand folder named for one export, the project's `brand/` folder (scope `project`), then the brand saved here (scope `user`).
+
+1. **Where things stand.** `setup:setup_status` already shows the current brand (`active.unbranded` is true when there is none); on a first run go straight to the choice.
+2. **One choice.** Ask one question: keep files unbranded, or use their firm's brand? Use the question tool if you have one, with two options: "Keep files unbranded" and "Use my firm's brand (recommended if you send files outside)".
+   - **Unbranded:** call `setup:use_default_brand`, say in one line that they can run `/skafld-vc:setup` again any time to add a brand, and on a first run go on to section 3.
 3. **Their brand, the easiest way first.** Ask for the firm's website. Say that a logo file or brand guide works too, and so does describing it. Take whatever they give; combine them if they give more than one.
    - **Website:** call `setup:inspect_website`. Open each logo file it returns (they are PNGs) and pick the one that is the firm's logo, not a partner's or a product shot. If none is right, ask for a logo file.
    - **Files:** a logo (PNG, JPEG or SVG; SVG is best) is passed to `setup:save_brand` by path. For a brand guide (PDF or image), read it yourself for the hex colours, font names and logo rules.

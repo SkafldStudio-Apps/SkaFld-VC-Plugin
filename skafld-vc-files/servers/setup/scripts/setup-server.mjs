@@ -8,7 +8,7 @@
 //   get_profile        the firm profile, in the platform house profile's shape
 //   save_profile       save or change parts of the firm profile
 //   brand_status       which brand exports use now, and whether one was chosen
-//   use_default_brand  keep the SkaFld VC default (and stop asking)
+//   use_default_brand  keep exports unbranded (and stop asking)
 //   inspect_website    read a website: name, colours, fonts, logo candidates
 //   save_brand         save a brand for this person (every project) or this project
 //   preview_brand      write a sample report, deck and request list in the brand
@@ -199,7 +199,7 @@ const TOOLS = [
     name: "brand_status",
     title: "Which brand exports use",
     description:
-      "The brand the exports use now (the platform's brand when its URL is given, else the project's brand/ folder, the saved brand, or the SkaFld VC default), its colours, fonts and logo file, and whether the person has chosen yet. With platform_brand_url it also says whether the platform's brand is cached here or can be downloaded, and its name.",
+      "The brand the exports use now (the platform's brand when its URL is given, else the project's brand/ folder, else the saved brand; with none of these, exports are unbranded), its colours, fonts and logo file, and whether the person has chosen yet. With platform_brand_url it also says whether the platform's brand is cached here or can be downloaded, and its name.",
     inputSchema: {
       type: "object",
       properties: {
@@ -221,9 +221,9 @@ const TOOLS = [
   },
   {
     name: "use_default_brand",
-    title: "Keep the SkaFld VC default",
+    title: "Keep exports unbranded",
     description:
-      "Record that the person keeps the SkaFld VC default brand, so exports stop asking. A brand saved earlier stops being used (it is kept as brand.previous) unless remove_saved is false.",
+      "Record that the person keeps exports unbranded (no logo, no firm name, neutral greys), so exports stop asking. A brand saved earlier stops being used (it is kept as brand.previous) unless remove_saved is false.",
     inputSchema: {
       type: "object",
       properties: {
@@ -405,11 +405,7 @@ async function status(args, env) {
         ? join(project, "brand", brand.logo?.primary ?? "")
         : origin === "saved"
           ? join(home.brandDir, brand.logo?.primary ?? "")
-          : join(
-              exportAssets.packsRoot,
-              brand.id ?? "skafld-vc",
-              brand.logo?.primary ?? ""
-            )
+          : null
   return {
     ...(url
       ? {
@@ -424,7 +420,9 @@ async function status(args, env) {
         }
       : {}),
     active: {
-      name: brand.name,
+      // Unbranded (origin "none"): no name and no logo.
+      name: brand.name || null,
+      unbranded: origin === "none",
       origin,
       source: brand.source,
       colors: { accent: brand.colors.accent, ink: brand.colors.ink },
@@ -434,7 +432,7 @@ async function status(args, env) {
           brand.fonts[r].family,
         ])
       ),
-      logo: brand.logo?.primary ? logoPath : null,
+      logo: brand.logo?.primary && logoPath ? logoPath : null,
     },
     chosen: choice ? choice.choice : null,
     saves_to: home.brandDir
@@ -521,8 +519,8 @@ async function keepDefault(args, env) {
   return {
     ok: true,
     note: projectBrand
-      ? "Recorded. This project still has its own brand/ folder, which exports use here; remove it to use the default in this project."
-      : "Recorded: exports use the SkaFld VC default.",
+      ? "Recorded. This project still has its own brand/ folder, which exports use here; remove it for unbranded files in this project."
+      : "Recorded: exports are unbranded.",
   }
 }
 
@@ -564,7 +562,7 @@ async function preview(args, env) {
       ...exportAssets,
       ...extra,
     })
-    brandName = out.brand.name
+    brandName = out.brand.name || "unbranded"
     const { file: folder } = inOutDir(project, "brand-preview")
     mkdirSync(folder, { recursive: true })
     const path = join(
@@ -774,7 +772,7 @@ const CHANGEABLE = [
   { key: "brand.fonts", label: "Brand: fonts" },
   { key: "brand.logo", label: "Brand: logo" },
   { key: "brand.footer", label: "Brand: footer and disclaimer" },
-  { key: "brand.default", label: "Brand: go back to the SkaFld VC default" },
+  { key: "brand.default", label: "Brand: go back to unbranded files" },
   { key: "profile.firm", label: "Firm: name and description" },
   {
     key: "profile.thesis",

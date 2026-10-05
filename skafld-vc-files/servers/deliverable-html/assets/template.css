@@ -2,15 +2,15 @@
 
 :root {
   color-scheme: light dark;
+  --accent: #3f3f46;
   --background: #fafafa;
   --border: #e4e4e7;
-  --brand-cream: #faf8f3;
   --card: #ffffff;
-  --foreground: #0a0a0a;
-  --gold-signal: #a67c1a;
+  --foreground: #18181b;
   --muted: #f4f4f5;
   --muted-foreground: #71717a;
   --radius: 0rem;
+  --surface: #f4f4f5;
   --text-body: 0.875rem;
   --text-body--line-height: 1.6;
   --text-caption: 0.6875rem;
@@ -44,14 +44,14 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
+    --accent: #d4d4d8;
     --background: #111214;
     --border: rgb(255 255 255 / 8%);
-    --brand-cream: #1a1a1a;
     --card: #17191c;
     --foreground: #ededed;
-    --gold-signal: #c9a24a;
     --muted: #1d2024;
     --muted-foreground: #8a8f98;
+    --surface: #1a1a1a;
     --tone-danger-edge: oklch(0.65 0.22 25 / 30%);
     --tone-danger-soft: oklch(0.65 0.22 25 / 15%);
     --tone-danger-strong: oklch(0.78 0.16 22);
@@ -74,14 +74,14 @@
 @media print {
   :root {
     color-scheme: light;
+    --accent: #3f3f46;
     --background: #fafafa;
     --border: #e4e4e7;
-    --brand-cream: #faf8f3;
     --card: #ffffff;
-    --foreground: #0a0a0a;
-    --gold-signal: #a67c1a;
+    --foreground: #18181b;
     --muted: #f4f4f5;
     --muted-foreground: #71717a;
+    --surface: #f4f4f5;
     --tone-danger-edge: oklch(0.88 0.08 20);
     --tone-danger-soft: oklch(0.96 0.03 20);
     --tone-danger-strong: oklch(0.52 0.2 25);
@@ -103,28 +103,25 @@
 /*
  * Deliverable template: the static half of the stylesheet. It uses only the
  * custom properties below (the --dl-* ones defined here) and the tokens that
- * the theme build copies from the platform's stylesheet, so a design
- * change flows through when the theme is regenerated.
+ * the theme build copies from the neutral theme.
  *
- * Design rules: square corners (--radius),
- * hairline borders, gold only for the verdict, cream and neutral surfaces,
- * tones for status, the six-step type ramp, no gradients, sentence case.
+ * Unbranded by default: square corners (--radius), hairline borders, greys
+ * and near-black, one neutral accent for the verdict, tones for status, the
+ * six-step type ramp, no gradients, sentence case. A configured brand
+ * overrides --accent, --foreground and the font stacks after this sheet
+ * (render.mjs), and adds its logo or name above the title.
  *
- * Fonts: the app loads DM Sans, Instrument Serif and Geist Mono through
- * next/font/google at build time; the repo holds no font files, and a
- * deliverable may make no request, so they are not embedded. The stacks name
- * the brand font first (used when installed) and fall back to close system
- * faces.
+ * Fonts: system stacks only. A deliverable makes no request, so no font is
+ * downloaded or embedded; a brand's fonts are named first in its stacks and
+ * used when the reader has them installed.
  */
 
 :root {
   --dl-font-sans:
-    "DM Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica,
-    Arial, sans-serif;
-  --dl-font-display:
-    "Instrument Serif", ui-serif, Georgia, "Times New Roman", serif;
-  --dl-font-mono:
-    "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial,
+    sans-serif;
+  --dl-font-display: var(--dl-font-sans);
+  --dl-font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --dl-hairline: 1px solid var(--border);
   --dl-measure: 52rem;
 }
@@ -163,6 +160,23 @@ body {
   border-bottom: var(--dl-hairline);
 }
 
+/* Only with a configured brand: its logo, or its name when it has none */
+.doc-brand {
+  margin: 0 0 1rem;
+  color: var(--foreground);
+  font-family: var(--dl-font-display);
+  font-size: var(--text-heading);
+  line-height: var(--text-heading--line-height);
+  font-weight: 600;
+}
+
+.doc-logo {
+  display: block;
+  height: 2rem;
+  width: auto;
+  max-width: 14rem;
+}
+
 .doc-type {
   margin: 0 0 0.25rem;
   color: var(--muted-foreground);
@@ -174,7 +188,7 @@ body {
 .doc-title {
   margin: 0 0 0.5rem;
   font-family: var(--dl-font-display);
-  font-weight: 400;
+  font-weight: 600;
   font-size: var(--text-display);
   line-height: var(--text-display--line-height);
   letter-spacing: var(--text-display--letter-spacing);
@@ -241,7 +255,7 @@ h6 {
 .part-title {
   margin: 0 0 0.25rem;
   font-family: var(--dl-font-display);
-  font-weight: 400;
+  font-weight: 600;
   font-size: var(--text-title);
   line-height: var(--text-title--line-height);
   letter-spacing: var(--text-title--letter-spacing);
@@ -335,7 +349,7 @@ q {
 
 .notice {
   padding: 0.5rem 0.75rem;
-  background: var(--brand-cream);
+  background: var(--surface);
   border: var(--dl-hairline);
 }
 
@@ -461,19 +475,19 @@ td ul:last-child {
   border-color: var(--tone-info-edge);
 }
 
-/* The verdict: the one gold element on the page */
+/* The verdict: the one accent element on the page */
 
 .verdict {
   padding: 0.75rem 1rem;
   margin: 0 0 1rem;
   background: var(--card);
   border: var(--dl-hairline);
-  border-left: 2px solid var(--gold-signal);
+  border-left: 2px solid var(--accent);
 }
 
 .verdict-decision {
   margin: 0 0 0.25rem;
-  color: var(--gold-signal);
+  color: var(--accent);
   font-size: var(--text-heading);
   line-height: var(--text-heading--line-height);
   font-weight: 600;

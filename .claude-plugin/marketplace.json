@@ -4,8 +4,8 @@
     "name": "SkaFld Studio"
   },
   "metadata": {
-    "description": "SkaFld VC: venture capital agents and skills for Claude. Start with SkaFld VC, which needs nothing installed. Add SkaFld VC Files for branded files and exact scoring on your computer (needs Node.js), SkaFld VC Connectors for more data and work tools, and SkaFld VC Platform only if your firm runs a SkaFld VC platform.",
-    "version": "1.7.0"
+    "description": "SkaFld VC: venture capital agents and skills for Claude. Start with SkaFld VC, which needs nothing installed. Add SkaFld VC Files for designed files (in your brand once you set one up) and exact scoring on your computer (needs Node.js), SkaFld VC Connectors for more data and work tools, and SkaFld VC Platform only if your firm runs a SkaFld VC platform.",
+    "version": "1.7.1"
   },
   "plugins": [
     {
@@ -26,7 +26,7 @@
       "name": "skafld-vc-files",
       "displayName": "SkaFld VC Files (optional, needs Node.js)",
       "source": "./skafld-vc-files",
-      "description": "Optional, for Claude Code and computers with Node.js 18 or later: SkaFld VC's own branded HTML, Word, PDF, deck and Excel files, brand setup from your website, a firm profile saved across projects, and the rubric scorer as a tool. Installs SkaFld VC with it.",
+      "description": "Optional, for Claude Code and computers with Node.js 18 or later: SkaFld VC's own HTML, Word, PDF, deck and Excel files (unbranded unless you set up a brand), brand setup from your website, a firm profile saved across projects, and the rubric scorer as a tool. Installs SkaFld VC with it.",
       "category": "productivity",
       "tags": [
         "venture capital",

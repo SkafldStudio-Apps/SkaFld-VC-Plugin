@@ -1,6 +1,6 @@
 // The deliverables tools, shared by the local MCP server (mcp-server.mjs)
 // and the command line (run.mjs), so both do exactly the same thing.
-import { exportReply, writeExport } from "./export.mjs"
+import { exportReply, htmlBrandFor, writeExport } from "./export.mjs"
 import { scoreDocuments } from "./score.mjs"
 import {
   projectDir,
@@ -22,12 +22,24 @@ export async function runTool(name, args = {}) {
     const project = () => ({
       project: projectDir(process.env, args.project_dir),
     })
+    // The HTML tools: unbranded unless a brand is configured.
+    const branded = async () => {
+      const where = project()
+      const b = await htmlBrandFor(args, process.env, where.project)
+      return { where: { ...where, brand: b.brand }, b }
+    }
+    const wrote = (out, b) =>
+      [
+        `Wrote ${out.html} (source ${out.json}), ${b.label}.`,
+        ...b.warnings.map((w) => `Note: ${w}`),
+      ].join("\n")
     if (name === "export_document") {
       return { text: exportReply(await writeExport(args)), isError: false }
     }
     if (name === "render_deliverable") {
-      const out = writeDeliverable(args.deliverable, project())
-      return { text: `Wrote ${out.html} (source ${out.json}).`, isError: false }
+      const { where, b } = await branded()
+      const out = writeDeliverable(args.deliverable, where)
+      return { text: wrote(out, b), isError: false }
     }
     if (name === "score_with_rubric") {
       return {
@@ -36,6 +48,7 @@ export async function runTool(name, args = {}) {
       }
     }
     if (name === "render_package") {
+      const { where, b } = await branded()
       const out = writePackage(
         {
           files: Array.isArray(args.files) ? args.files : [],
@@ -44,9 +57,9 @@ export async function runTool(name, args = {}) {
             : [],
           person: typeof args.person === "string" ? args.person : undefined,
         },
-        project()
+        where
       )
-      return { text: `Wrote ${out.html} (source ${out.json}).`, isError: false }
+      return { text: wrote(out, b), isError: false }
     }
     return { text: `Unknown tool ${name}`, isError: true }
   } catch (err) {
