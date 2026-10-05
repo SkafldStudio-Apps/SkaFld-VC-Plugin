@@ -1,8 +1,11 @@
 #!/usr/bin/env node
 // The skafld-vc plugin's local deliverables server: a stdio MCP server
 // with two tools that write HTML deliverables under
-// <project>/skafld-vc/ and nowhere else. It opens no network
-// connection; the agents get these two tools instead of Bash or Write.
+// <project>/skafld-vc/ and nowhere else. It opens no network connection,
+// except one: export_document downloads a platform's brand when its brand
+// argument is the platform's brand URL (whoami's brand.url), and keeps it in
+// the person's setup folder. The agents get these tools instead of Bash or
+// Write.
 //
 //   render_deliverable  { deliverable }                    one Sourcing longlist, Screening report, Diligence plan, IC memo or Portfolio review
 //   render_package      { files?, deliverables?, person? } one Package combining several for one company
@@ -19,7 +22,7 @@ import { createInterface } from "node:readline"
 
 import { runTool } from "./tools.mjs"
 
-const SERVER = { name: "skafld-vc-deliverables", version: "1.2.0" }
+const SERVER = { name: "skafld-vc-deliverables", version: "1.3.0" }
 
 const PROJECT_DIR = {
   type: "string",
@@ -136,7 +139,7 @@ TOOLS.push({
   name: "export_document",
   title: "Export as Word, PDF, PowerPoint or Excel",
   description:
-    'Write a branded file in ./skafld-vc/: docx (Word report), pdf (PDF report), pptx (PowerPoint deck), deck_pdf (the deck as PDF) or xlsx (a Diligence plan only: audience "founder" is the request list to send to the company, built from body.requests and nothing else; "team" is the internal tracker). A Founder feedback exports as docx or pdf; audience "founder" is the copy to send, without anything internal. The source is a deliverable or package written earlier (file), a deliverable object, or Markdown (any answer: # title, ## sections, lists, tables). The brand is the one named, else the project\'s brand/ folder, else the person\'s saved brand, else the SkaFld VC default. Load the skafld-vc:document-export skill first.',
+    'Write a branded file in ./skafld-vc/: docx (Word report), pdf (PDF report), pptx (PowerPoint deck), deck_pdf (the deck as PDF) or xlsx (a Diligence plan only: audience "founder" is the request list to send to the company, built from body.requests and nothing else; "team" is the internal tracker). A Founder feedback exports as docx or pdf; audience "founder" is the copy to send, without anything internal. The source is a deliverable or package written earlier (file), a deliverable object, or Markdown (any answer: # title, ## sections, lists, tables). The brand is the platform\'s (its brand URL) or the one named, else the project\'s brand/ folder, else the person\'s saved brand, else the SkaFld VC default. Load the skafld-vc:document-export skill first.',
   inputSchema: {
     type: "object",
     properties: {
@@ -181,7 +184,7 @@ TOOLS.push({
       brand: {
         type: "string",
         description:
-          "A brand id the plugin ships (the platform's whoami house.brand), or a brand folder inside the project. Leave out to use the saved brand.",
+          "The platform's brand URL from whoami.brand.url, a brand id the plugin ships (skafld-vc), or a brand folder inside the project; leave out for the project's brand, the saved brand or the default.",
       },
       house: {
         type: "string",
@@ -197,7 +200,8 @@ TOOLS.push({
     readOnlyHint: false,
     destructiveHint: false,
     idempotentHint: true,
-    openWorldHint: false,
+    // It downloads the platform's brand when given its URL.
+    openWorldHint: true,
   },
 })
 

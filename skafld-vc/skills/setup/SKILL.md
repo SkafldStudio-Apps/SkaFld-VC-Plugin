@@ -61,7 +61,7 @@ If they go ahead, collect it in at most three short messages, suggesting values 
 
 Show the values once, ask them to confirm or correct, then call `setup:save_profile` with only the confirmed fields. It returns `portable`: the same profile as a short Markdown block. Offer it once: "If you also use SkaFld VC in Claude's Chat or on claude.ai, paste this into your Claude Project's instructions so the agents there know your firm too." Where setup has no tools (section 0), write that block yourself in this shape, and for a change edit the saved file (or give the updated block):
 
-````
+```
 ## SkaFld VC firm profile
 
 - **Firm:** <name>
@@ -72,16 +72,18 @@ Show the values once, ask them to confirm or correct, then call `setup:save_prof
 - **Decisions:** <an investment committee decides on a memo | a partner decides on the Screening | one investor decides>
 - **Board seats:** <yes | no>
 - **<what you bring founders, label>:** <description>
-``` For a change, pass only the fields being changed; `clear` removes fields and `reset: true` deletes the profile.
+```
+
+For a change, pass only the fields being changed; `clear` removes fields and `reset: true` deletes the profile.
+
+How the agents choose between the platform's house profile, this profile, a project thesis file and what the person says is set out once, in `references/house-profile.md`.
 
 ## Rules
 
 - Save nothing until the person confirms.
 - Only read the website they named. Never guess a site from a firm's name without asking.
-- With a platform connected, the firm's platform brand is used for its own documents automatically. This setup is for the person's own files.
+- With a platform connected, the firm's own documents use the platform's brand: the agents pass `skafld-vc:whoami`'s `brand.url` to `deliverables:export_document`, and that brand comes before the project's `brand/` folder and the saved brand. `setup:brand_status` with `platform_brand_url` says whether it is downloaded and its name. This setup is for the person's own files.
 - Keep every message short: one question at a time, values as a small list.
-- Save nothing until the person confirms.
 - The profile is the person's own and stays on their machine (the plugin's data folder); it is never sent anywhere. With a platform connected, the platform's house profile from `skafld-vc:whoami` wins, and this profile is not read.
 - A project's own `thesis.json` or `thesis.md` overrides the profile's thesis for that project, so someone running several theses keeps one per folder.
 - Never invent profile values: a field the person does not give stays out, and the agents treat it as not set.
-````

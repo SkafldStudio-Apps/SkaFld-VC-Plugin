@@ -1,7 +1,7 @@
-// Documents-only scoring for the skafld-vc plugin (ADR 0006): find the rubric,
+// Documents-only scoring for the skafld-vc plugin: find the rubric,
 // check its shape, and run the platform's own arithmetic (scoring-core.mjs,
-// a verbatim copy of lib/ai/rubric/scoring-core.mjs written by
-// `pnpm agents:sync`). Reads files only; no network, no writes.
+// a verbatim copy of the platform's scoring-core.mjs written by
+// the release build). Reads files only; no network, no writes.
 import { existsSync, readFileSync } from "node:fs"
 import { dirname, join, relative, resolve } from "node:path"
 import { fileURLToPath } from "node:url"

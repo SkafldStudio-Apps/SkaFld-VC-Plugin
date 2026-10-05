@@ -7,7 +7,7 @@ description: Compares a portfolio company's KPIs with its history, budget, the I
 
 Four comparisons for every metric, in this order: against the company's own history (the prior period), against its budget, against the plan the IC memo recorded at investment, and against an outside benchmark band. The first three follow board-package practice, which reports results against history, budget and the projections made at the deal (Stanford Search Fund Primer, 2021), and angel-group guidance, which reports metrics against expectations and the business plan (Hudson, Angel Capital Education Foundation, c. 2008). The benchmark is added because the plan can be wrong and the external band is not the founder's own number.
 
-This skill fills `kpis` and `cash` in a `portfolio_review`. The metric set is in `references/kpi-set.md`; the formulas and benchmark tables are those of `skafld-vc:unit-economics`. Read both before computing.
+This skill fills `kpis` and `cash` in a `portfolio_review`. The metric set is in `references/kpi-set.md`; the formulas and benchmark tables are those of `skafld-vc:unit-economics` (its `references/kpi-definitions.md` and `references/benchmarks.md`). Read both before computing.
 
 ## How
 

@@ -1,6 +1,6 @@
 ---
 name: portfolio-construction
-description: Gives the portfolio-level view of a network's or investor's positions, with diversification against power-law evidence, concentration, outcomes against base rates, reserves, and each position's line. Use for a portfolio review or report, or when someone asks how diversified a portfolio is, how much to reserve, or how the investments are doing.
+description: Computes the portfolio-level numbers for a set of positions, with position count against power-law evidence, concentration, outcomes against base rates, reserves and each position's line. Use when someone asks how diversified a portfolio is, how concentrated it is, or how much to reserve. For a full portfolio review from founder updates, use the Portfolio agent (skafld-vc:portfolio-agent).
 ---
 
 # Portfolio construction
@@ -17,7 +17,7 @@ It fills `position` for the company under review and `portfolioView` (`positions
 
    - `invested`: first cheque plus follow-ons, with dates.
    - `ownership`: fully diluted, after every round since entry (`skafld-vc:cap-table`).
-   - `mark`: the value implied by the last priced round at the current ownership, labelled "last-round implied" with the round's date. It is not the company's value: the headline post-money is the price of the last preferred share, and preferred is worth on average 56% more than common (Gornall and Strebulaev, 2020 and 2021). A SAFE or note is not a priced round; without one, the mark is cost.
+   - `mark`: the value implied by the last priced round at the current ownership, labelled "last-round implied" with the round's date. It is not the company's value: the headline post-money is the price of the last preferred share (the dated evidence is in the `references/market-data.md` of `skafld-vc:valuation-triangulation`). A SAFE or note is not a priced round; without one, the mark is cost.
    - `outcome`: one bucket, on the multiple of invested capital realised or implied: `loser` (about 0x), `breakeven` (about 1x), `decent` (about 5x at seed, 3x at Series A), `good` (about 15x and 10x), `big` (about 50x and 30x), the vocabulary and multiples of the GoingVC Fund Model (n.d.), or `too_early`. Use `too_early` until there is an exit, a write-off, or a priced round after entry; a markup only moves a company out of `too_early` when an outside investor led the round. Seed deals not marked up within about three years seem unlikely ever to be (AngelList, 2023), so say when a company is past that point with no markup.
    - `followOn`: whether a pro-rata right exists, the cheque that holds ownership through the next round (Wilson, 2014: 1% at a $3M round on $12M post needs $30k), the reserve it would draw on by name, and what that reserve holds before and after the cheque. The decision is made in the IC memo's follow-on variant (`skafld-vc:memo-format`), not here.
 
@@ -83,7 +83,6 @@ Watch: 1. ... 2. ... 3.
 - Evans, B., "In praise of failure" (Horsley Bridge data, 7,000+ investments), 2016. https://www.ben-evans.com/benedictevans/2016/4/28/winning-and-losing
 - Levine, S., "Venture outcomes are even more skewed than you think" (Correlation Ventures, 21,640 financings 2004-2013), 2014. https://sethlevine.com/archives/2014/08/venture-outcomes-are-even-more-skewed-than-you-think.html
 - Cambridge Associates, "US Venture Capital Index and Selected Benchmark Statistics", Q4 2025, published 2026. https://www.cambridgeassociates.com/wp-content/uploads/2026/06/2025-Q4-USVC-Benchmark-Book.pdf
-- Gornall, W. and Strebulaev, I., "Squaring Venture Capital Valuations with Reality", Journal of Financial Economics 135(1), 2020; and "A Valuation Model of VC-Backed Companies with Multiple Financing Rounds", 2021. https://www.nber.org/system/files/working_papers/w23895/w23895.pdf
 - Wilson, F. (USV), "The Pro-Rata Participation Right", 2014, and "Reserves", 2017. https://avc.com/2014/03/the-pro-rata-participation-right/ ; https://avc.com/2017/01/reserves/
 - Suster, M. (Upfront), "The Authoritative Guide to Pro-rata Rights", 2014. https://www.inc.com/mark-suster/the-authoritative-guide-to-prorata-rights.html
 - Thompson, B. (Sapphire Partners), "Dirty Secret: Venture Reserves are Not Always a Good Thing", 2022. https://sapphireventures.com/blog/dirty-secret-venture-reserves-are-not-always-a-good-thing/

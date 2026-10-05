@@ -1,6 +1,6 @@
 ---
 name: diligence-requests
-description: Writes the document and information request list a company receives during diligence and exports it as a ready-to-send Excel file. Use when a Diligence plan is built, or when someone asks for a request list, a DD checklist or what to ask the founders for.
+description: Writes the document and information request list a company receives during diligence and exports it as a ready-to-send Excel file. Use when someone asks for a DD request list, a diligence checklist or what to ask the founders for, or when a Diligence plan is built. For the full diligence plan (workstreams, findings, gaps), use the Diligence agent (skafld-vc:diligence-agent).
 ---
 
 # Diligence requests

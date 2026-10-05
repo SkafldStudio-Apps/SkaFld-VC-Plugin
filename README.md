@@ -2,7 +2,7 @@
 
 Venture capital agents and skills for Claude Code and Claude Desktop, across the deal lifecycle: sourcing against your thesis, screening, diligence plans, investment committee memos and portfolio reviews, with returns, valuation, term sheets, market sizing, unit economics and cap tables. They work from your own documents with nothing to install, research with Exa and Apollo on your own account, and write reports, Word, PDF, PowerPoint and Excel files with Claude's own document tools, or in your firm's brand with the optional Files add-on.
 
-> This repository is generated from the SkaFld VC source on each release (version 1.6.1). Changes made here are overwritten; open issues rather than pull requests.
+> This repository is generated from the SkaFld VC source on each release (version 1.7.0). Changes made here are overwritten; open issues rather than pull requests.
 
 ## Install
 

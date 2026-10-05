@@ -1,6 +1,6 @@
 ---
 name: inbound-triage
-description: Gives a first-pass PASS, SCREEN or REFER verdict on an inbound application or deck against the firm's thesis and cheque range, with a coded pass reason and the questions for a screening call. Use when a new application or deck arrives, or for a quick consistent read across many deals.
+description: Gives a one-page PASS, SCREEN or REFER verdict on an inbound application against the firm's mandate and cheque range, with a coded pass reason and screening-call questions. Use for a quick go or no-go on whether an inbound deal earns a screening, or a consistent first pass across a batch of applications. For a full screening use the Screening agent (skafld-vc:screening-agent); for a slide-by-slide deck review, deck-audit.
 ---
 
 # Inbound triage
@@ -9,7 +9,7 @@ One pass, one page, consistent across every application. Triage is not a scoreca
 
 ## Before starting
 
-- **Mandate.** When the platform is connected, call `skafld-vc:whoami` and read `house.thesis` and `house.check_range_usd` (plus `decision_format` and `board_seats` for the optional screens). Without a platform, use the network's thesis and cheque range if the user gave them; if not, ask. Never apply a mandate that is not in the profile or the user's words.
+- **Mandate.** Read `house.thesis` and `house.check_range_usd` (plus `decision_format` and `board_seats` for the optional screens) from the house profile (resolved as the `references/house-profile.md` of `skafld-vc:setup` says: the platform's `skafld-vc:whoami`, else the saved firm profile from `setup:get_profile`, else the person). With no mandate from any of them, ask. Never apply a mandate that is not in the profile or the user's words.
 - **Miss-rate tolerance.** State the house's tolerance for passing on companies that later succeed, if the user or the house has set one; otherwise write "not set". Screening can be tuned to an explicit miss rate and the trade-off is steep: a live screener at one VC auto-rejected 23% of inbound founders at a 1% miss rate and 57% at a 10% miss rate (Maurer, Buz, Dremel and de Melo 2024).
 
 ## Procedure

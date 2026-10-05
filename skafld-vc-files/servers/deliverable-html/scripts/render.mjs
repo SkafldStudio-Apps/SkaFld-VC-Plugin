@@ -15,9 +15,9 @@
 // Exits 1 with the validation errors when the input is not a valid
 // skafld-vc.deliverable/v1 or skafld-vc.package/v1 document.
 //
-// renderer.mjs is a copy of lib/deliverables/render.mjs and
-// ../assets/template.css of lib/deliverables/template.generated.css,
-// written by `pnpm agents:sync`; do not edit them here.
+// renderer.mjs is a copy of the platform's renderer and
+// ../assets/template.css of the platform's generated theme,
+// written by the release build; do not edit them here.
 import { readFileSync } from "node:fs"
 
 import { RenderError, writeDeliverable, writePackage } from "./write.mjs"

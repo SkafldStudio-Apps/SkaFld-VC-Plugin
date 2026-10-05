@@ -24,6 +24,7 @@ The JSON is what a platform saves (`skafld-vc:save_deliverable`), what a Package
 1. Call `deliverables:render_deliverable` with `{ "deliverable": <the JSON> }`. It validates, writes `./skafld-vc/<company>-<type>-<date>.html` and the JSON beside it, and returns both paths. If it returns validation errors, fix exactly those fields and call it again.
 2. For a Package, call `deliverables:render_package` with the `files` the earlier calls returned (for example `["harbor-robotics-screening-2026-09-26.json", "harbor-robotics-diligence-plan-2026-09-26.json"]`) and `person` set to who asked. It writes `./skafld-vc/<company>-package-<date>.html` with a cover, a contents list, each deliverable as a section and one combined open-items list.
 3. Tell the person the path of the HTML file, and that it is a draft for staff review.
+4. For Word, PDF, a deck or Excel, follow `skafld-vc:document-export`. With a platform connected, pass `skafld-vc:whoami`'s `brand.url` as `brand` to `deliverables:export_document`, so the files are in the platform's brand. The HTML file takes no brand.
 
 ## 3. Without the Files add-on
 

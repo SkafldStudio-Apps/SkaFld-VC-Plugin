@@ -67,7 +67,7 @@ Three sources describe a pool with the same words and different arithmetic:
 - The guide keeps post-money "unchanged at $15M" and takes the pool out of the founders' percentage.
 - The angel diligence guide deducts the pool's dollar value from pre-money ("10% x $4M = $400,000. The adjusted pre-money valuation is therefore $3.6M").
 
-Term sheets state the pool as a share of post-money fully diluted shares and carve it from the pre-money: pool dollars = p x post; effective pre-money = pre - pool dollars (Nivi and Ravikant, 2007). The seed median pool is 12.1% of fully diluted shares (Carta Founder Ownership, 2026).
+Term sheets state the pool as a share of post-money fully diluted shares and carve it from the pre-money: pool dollars = p x post; effective pre-money = pre - pool dollars (Nivi and Ravikant, 2007). The default pool when none is stated is the seed median in the `references/market-data.md` of `skafld-vc:valuation-triangulation`.
 
 **Rule:** state both how the pool is sized (share of post-money, share of pre-money, or dollars) and whom it dilutes, then prove it with the new-money non-dilution check.
 

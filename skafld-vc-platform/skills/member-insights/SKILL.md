@@ -6,7 +6,7 @@ user-invocable: false
 
 # Member insights
 
-Load `skafld-vc:platform-access` first and call `skafld-vc:whoami`: every recipe below answers at the member's scope and names the network with `house.name` or `house.short_name`, never a name of your own.
+Load `skafld-vc-platform:platform-access` first and call `skafld-vc:whoami`: every recipe below answers at the member's scope and names the network with `house.name` or `house.short_name`, never a name of your own.
 
 ## What's new
 

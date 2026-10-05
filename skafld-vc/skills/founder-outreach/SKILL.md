@@ -7,7 +7,7 @@ description: Drafts founder-facing messages for a named person to send, such as 
 
 ## House profile first
 
-When the platform is connected, call `skafld-vc:whoami` for `house.name` and `house.thesis`, and use the sender the user names. Without a platform, use the network name and thesis the user gave; if none, leave `<house>` placeholders for the sender to fill.
+Take `house.name` and `house.thesis` from the house profile (resolved as the `references/house-profile.md` of `skafld-vc:setup` says: the platform's `skafld-vc:whoami`, else the saved firm profile from `setup:get_profile`, else the person), and use the sender the user names. Where none of them gives a name, leave `<house>` placeholders for the sender to fill.
 
 ## Voice
 

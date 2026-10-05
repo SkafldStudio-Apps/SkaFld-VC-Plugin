@@ -2,7 +2,7 @@
 // anchor-angels.deliverable/v1 name from before the rename is still read).
 //
 // One renderer for both runtimes. The platform imports it from
-// lib/deliverables; the base plugin carries a byte-identical copy that its
+// its own source; the base plugin carries a byte-identical copy that its
 // deliverable-html script runs with no network. So this module imports
 // nothing: pure functions over plain JSON, with the stylesheet passed in.
 //
@@ -16,7 +16,7 @@
 // the deal team's time zone, America/Chicago unless a caller passes
 // `timeZone` (an IANA name) in the options. generatedAt stays an ISO instant.
 //
-// Types: lib/deliverables/render.d.mts and lib/deliverables/types.ts.
+// Types: the platform's type declarations.
 
 export const DELIVERABLE_FORMAT = "skafld-vc.deliverable/v1"
 export const PACKAGE_FORMAT = "skafld-vc.package/v1"
@@ -307,7 +307,7 @@ function label(key) {
   return own(LABELS, key, humanize(key))
 }
 
-// Status to tone, following lib/design/colors.ts: success for good,
+// Status to tone, following the platform's design tokens: success for good,
 // warning for partial or unproven, danger for contradicted or missing,
 // neutral for "not assessed" and "not checked" (absence is not a verdict).
 const TONES = {

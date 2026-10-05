@@ -11,11 +11,11 @@ The seven areas and their order come from the GoingVC Founder Feedback Guide (Go
 
 ## Who runs it
 
-A person at the house asks for it, and a person uses it; nothing is sent by an agent. An agent whose own rules forbid founder-facing drafts (the Screening, Diligence and IC memo agents) writes only part A, the internal call brief (in its own deliverable, not a `founder_feedback` one), and leaves the note to the person who asks for it in the main conversation.
+A person at the house asks for it, and a person uses it; nothing is sent by an agent. The Screening agent builds the whole `founder_feedback` deliverable when asked, the founder-facing note included (its step 12): that note is the one founder-facing text it may draft, and it never contacts the founder. The Diligence and IC memo agents, whose rules forbid any founder-facing draft, write only part A, the internal call brief (in their own deliverable, not a `founder_feedback` one), and leave the note to the person or the main conversation.
 
 ## How
 
-1. **Gather the evidence.** The Screening report (scorecard reasoning, deck audit, founder table, research, ranked questions) where one exists; otherwise the deck, application and documents the user gives. With the platform, `skafld-vc:get_deliverables` for the deal's current Screening. Read `house.name` from `skafld-vc:whoami`, or use the name the user gives. Feedback rests only on what those materials show.
+1. **Gather the evidence.** The Screening report (scorecard reasoning, deck audit, founder table, research, ranked questions) where one exists; otherwise the deck, application and documents the user gives. With the platform, `skafld-vc:get_deliverables` for the deal's current Screening. Read `house.name` from the house profile (resolved as the `references/house-profile.md` of `skafld-vc:setup` says: the platform's `skafld-vc:whoami`, else the saved firm profile from `setup:get_profile`, else the person). Feedback rests only on what those materials show.
 2. **Try the product first.** The guide asks reviewers to get to know the product (a beta sign-up or a demo) before commenting on it. If no one at the house has, the Product area is "not discussed" and becomes a question.
 3. **Rate each area**, internally, as `strong`, `adequate`, `gap` or `not_discussed`, with the evidence behind it. An area the materials do not cover is `not_discussed`, never a gap. Judge against the stage bar from the Screening or `skafld-vc:stage-calibration`: an incomplete team at pre-seed is not a gap.
    - **Story**: is the problem and solution clear; is there a case for why now and for why this team.

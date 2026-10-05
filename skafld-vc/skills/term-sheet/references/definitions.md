@@ -4,14 +4,14 @@ Short working definitions for the terms `SKILL.md` extracts, in plain words, eac
 
 ## What seed terms are mostly about
 
-In 213 venture investments, cash-flow, board, voting, liquidation and control rights were allocated separately and often made contingent on later performance; founder vesting appeared in 55% of pre-revenue rounds (Kaplan and Strömberg, Review of Economic Studies, 2003). With 1x non-participating preferred now nearly universal (Cooley, 2026), the terms that move value at seed are mostly vesting, board control and milestones, not the preference stack.
+In 213 venture investments, cash-flow, board, voting, liquidation and control rights were allocated separately and often made contingent on later performance; founder vesting appeared in 55% of pre-revenue rounds (Kaplan and Strömberg, Review of Economic Studies, 2003). With 1x non-participating preferred now nearly universal (the `references/market-data.md` of `skafld-vc:valuation-triangulation`), the terms that move value at seed are mostly vesting, board control and milestones, not the preference stack.
 
 A cap table shows who owns what before and after each round. What a holder receives at exit depends on more than the percentage: options and warrants exercised, preferences and other provisions all change the payout (GoingVC, Cap Tables 101, n.d.).
 
 ## Price and pool
 
 - **Pre-money and post-money.** Pre-money excludes the new money; post-money includes it. $250k into a $500k post-money buys 50%; into a $500k pre-money it buys 250 / 750 = 33% (GoingVC, VC interview guide, finance section, n.d.).
-- **Option pool in the pre-money versus the post-money.** A pool "in the pre-money" is created before the new money arrives, so only the existing holders are diluted by it; the new investor's percentage is untouched. Term sheets usually state the pool as a share of the post-money fully diluted shares and carve it from the pre-money: effective pre-money = headline pre-money − pool share × post-money (Nivi and Ravikant, "The Option Pool Shuffle", 2007). A pool added after the round (in the post-money) dilutes everyone, the new investor included. Pools are typically 10 to 20% (GoingVC, VC interview guide, n.d.); the seed median is 12.1% of fully diluted shares (Carta, Founder Ownership 2026). Worked example from an angel term-sheet guide: a $6M pre-money that must include a pool worth 20% leaves about $4.8M for the existing holders (McCarter & English, "Anatomy of a Term Sheet", 2016).
+- **Option pool in the pre-money versus the post-money.** A pool "in the pre-money" is created before the new money arrives, so only the existing holders are diluted by it; the new investor's percentage is untouched. Term sheets usually state the pool as a share of the post-money fully diluted shares and carve it from the pre-money: effective pre-money = headline pre-money − pool share × post-money (Nivi and Ravikant, "The Option Pool Shuffle", 2007). A pool added after the round (in the post-money) dilutes everyone, the new investor included. Pools are typically 10 to 20%; the dated seed median is in the `references/market-data.md` of `skafld-vc:valuation-triangulation`. Worked example from an angel term-sheet guide: a $6M pre-money that must include a pool worth 20% leaves about $4.8M for the existing holders (McCarter & English, "Anatomy of a Term Sheet", 2016).
 
 ## Vesting
 
@@ -43,11 +43,11 @@ Protects preferred holders when the company later sells shares at a lower price 
 
 ## Preference and payout
 
-- **Liquidation preference multiple.** On a sale or wind-down (a "deemed liquidation event"), preferred is paid this multiple of what it invested before common receives anything; 1x is the standard (NVCA; Cooley, 2026). It matters most when the company sells for less than the money invested (GoingVC, VC interview guide, n.d.).
+- **Liquidation preference multiple.** On a sale or wind-down (a "deemed liquidation event"), preferred is paid this multiple of what it invested before common receives anything; 1x is the standard (NVCA; prevalence in the `references/market-data.md` of `skafld-vc:valuation-triangulation`). It matters most when the company sells for less than the money invested (GoingVC, VC interview guide, n.d.).
 - **Participation.** Non-participating preferred takes the greater of its preference and what it would receive as common. Fully participating preferred takes its preference and then shares in the rest as if converted. Capped participation does the same up to a total cap, after which the holder converts if that pays more (GoingVC, VC interview guide, n.d.; NVCA).
 - **Seniority.** Senior preferred is paid before junior series; pari passu series share pro rata when proceeds fall short.
 - **Dividends.** Non-cumulative dividends are paid only if the board declares them; cumulative or accruing dividends build up each year and add to the preference.
-- **Redemption.** The investor may require the company to buy back its shares after a date. Rare today (Cooley, 2026).
+- **Redemption.** The investor may require the company to buy back its shares after a date. Rare today (prevalence in the `references/market-data.md` of `skafld-vc:valuation-triangulation`).
 
 ## Control
 

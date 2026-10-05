@@ -20,17 +20,17 @@ Formulas for `skafld-vc:valuation-triangulation`. Each section says where its fo
 - post = R / s; pre = post − R.
 - Pool carved from the pre-money: pool dollars = p × post; effective pre-money = pre − p × post. The investor's ownership is unchanged; existing holders absorb the pool (Nivi and Ravikant, "The Option Pool Shuffle", Venture Hacks, 2007).
 - Post-money SAFEs: ownership sold = sum of amount / post-money cap, before the priced round's new money and pool increase dilute it (Y Combinator, Post-Money SAFE User Guide, 2018 onward).
-- Default pool when none is stated: 12.1% of fully diluted shares, the seed median (Carta, Founder Ownership 2026). State it as an assumption.
+- Default pool when none is stated: the seed median in `market-data.md`. State it as an assumption.
 - The GoingVC Valuation Model workbook (undated) computes pool dollars as pool share × pre-money. Term sheets size the pool on post-money, so use p × post and say which convention the documents use.
 
-**Example (derived here).** $2M for 10%: post $20M, pre $18M. A 12.1% pool in the pre-money is $2.42M, so the effective pre-money is $15.58M.
+**Example (derived here).** $2M for 10%: post $20M, pre $18M. A 12.1% pool in the pre-money (the default in `market-data.md` as of October 2026) is $2.42M, so the effective pre-money is $15.58M.
 
 ## 2. Comparables distribution
 
 - Use the in-regime set from `skafld-vc:deal-comparables`: same stage and sector, same funding regime (quarter, AI or not, region, lead tier, instrument).
 - Quartiles by linear interpolation between ranked values. Percentile of the ask = (number of comparables below it + half of those equal to it) / n.
 - When the set is too small for quartiles to mean anything, list the values and say so; no source gives a minimum count.
-- Price identity: post-money ≈ round size / dilution (Carta, State of Private Markets, 2026: median dilution 18% at seed and Series A, software rounds, six months to July 2026). Report round size and dilution percentiles beside post-money.
+- Price identity: post-money ≈ round size / dilution (the dilution medians are in `market-data.md`). Report round size and dilution percentiles beside post-money.
 
 ## 3. Placement (design choice, unvalidated)
 
@@ -97,17 +97,7 @@ q_1  = (1 − m_N) / (m_S − m_N)           success probability for money back
 
 ## 6. Liquidation waterfall (for scenario proceeds)
 
-Pay each scenario's exit value `E` through the stack, never ownership × `E`:
-
-1. Assume every preferred class and every SAFE converts; each converting holder gets its share of the proceeds left after the non-converting classes are paid.
-2. A non-participating class takes its preference instead when that is larger than its converted share. Pay preferences in seniority order; pari passu classes share pro rata when proceeds fall short.
-3. Recompute the converted shares for the classes still converting, and repeat until no class switches.
-4. Participating preferred takes its preference and then its converted share of the rest; with a cap, it converts once its converted share exceeds the cap.
-5. A post-money SAFE in a liquidity event before it converts takes the greater of its purchase amount and its converted amount at the cap, alongside preferred and ahead of common (Y Combinator post-money SAFE form; confirm against the signed document).
-
-The headline post-money is the price of the last preferred share: across 135 unicorns it averaged 48% above fair value, and the latest preferred is worth on average 56% more than common (Gornall and Strebulaev, JFE 2020; SSRN 3725240, 2021).
-
-**Example (derived here).** Exit $10M. Seed preferred invested $4M for 20% (1x, non-participating); converted SAFEs hold 10% with a $1.5M preference, pari passu; common and pool hold 70%. All converting: seed $2.0M, SAFEs $1.0M, both below their preferences, so both take them ($5.5M). Common receives the remaining $4.5M (against $7.0M pro rata). Re-check: converting would now give the seed about $1.9M and the SAFEs $0.75M, still below their preferences, so the result stands. A $100k seed cheque receives $100k (1.0x), not 0.5% × $10M = $50k.
+Pay each scenario through the preference stack with the waterfall in `skafld-vc:returns-analysis` (its `references/waterfall.md`), never ownership × `E`. It is kept there only, so price and returns pay out the same way.
 
 ## 7. Sanity checks (practitioner, one author)
 

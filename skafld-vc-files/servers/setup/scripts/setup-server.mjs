@@ -35,6 +35,7 @@ import {
   brandHome,
   exportAssets,
   loadExporter,
+  platformBrandFor,
   readBrandChoice,
   setupHome,
 } from "../../deliverable-html/scripts/export.mjs"
@@ -198,17 +199,24 @@ const TOOLS = [
     name: "brand_status",
     title: "Which brand exports use",
     description:
-      "The brand the exports use now (the project's brand/ folder, the saved brand, or the SkaFld VC default), its colours, fonts and logo file, and whether the person has chosen yet.",
+      "The brand the exports use now (the platform's brand when its URL is given, else the project's brand/ folder, the saved brand, or the SkaFld VC default), its colours, fonts and logo file, and whether the person has chosen yet. With platform_brand_url it also says whether the platform's brand is cached here or can be downloaded, and its name.",
     inputSchema: {
       type: "object",
-      properties: { project_dir: PROJECT_DIR },
+      properties: {
+        platform_brand_url: {
+          type: "string",
+          description:
+            "The platform's brand URL from whoami.brand.url, when a platform is connected.",
+        },
+        project_dir: PROJECT_DIR,
+      },
       additionalProperties: false,
     },
     annotations: {
       readOnlyHint: true,
       destructiveHint: false,
       idempotentHint: true,
-      openWorldHint: false,
+      openWorldHint: true,
     },
   },
   {
@@ -373,23 +381,48 @@ async function status(args, env) {
   const project = projectDir(env, args.project_dir)
   const x = await loadExporter()
   const home = brandHome(env, project)
+  // The platform's brand, when its URL is given: from the cache, else
+  // downloaded and cached (the same as export_document does).
+  const url =
+    typeof args.platform_brand_url === "string" && args.platform_brand_url
+      ? args.platform_brand_url
+      : null
+  const platform = url ? await platformBrandFor(url, env) : null
   const { brand, origin } = x.resolveBrand({
+    platformBrandDir: platform?.dir ?? null,
+    platformBrandSource: platform?.dir
+      ? `the platform's brand (${platform.host})`
+      : undefined,
     project,
     userDir: home.brandDir,
     ...exportAssets,
   })
   const choice = readBrandChoice(env, project)
   const logoPath =
-    origin === "project"
-      ? join(project, "brand", brand.logo?.primary ?? "")
-      : origin === "saved"
-        ? join(home.brandDir, brand.logo?.primary ?? "")
-        : join(
-            exportAssets.packsRoot,
-            brand.id ?? "skafld-vc",
-            brand.logo?.primary ?? ""
-          )
+    origin === "platform"
+      ? join(platform.dir, brand.logo?.primary ?? "")
+      : origin === "project"
+        ? join(project, "brand", brand.logo?.primary ?? "")
+        : origin === "saved"
+          ? join(home.brandDir, brand.logo?.primary ?? "")
+          : join(
+              exportAssets.packsRoot,
+              brand.id ?? "skafld-vc",
+              brand.logo?.primary ?? ""
+            )
   return {
+    ...(url
+      ? {
+          platform: platform.dir
+            ? {
+                available: true,
+                name: platform.name,
+                version: platform.version,
+                cached: platform.cached,
+              }
+            : { available: false, problem: platform.problem },
+        }
+      : {}),
     active: {
       name: brand.name,
       origin,

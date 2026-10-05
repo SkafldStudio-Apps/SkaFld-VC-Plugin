@@ -11,7 +11,7 @@ What the evidence allows: no peer-reviewed study links technical debt or any tec
 
 ## How
 
-1. **Scale to the stage first**, from the stage bar (`skafld-vc:stage-calibration`) and the cheque (`house.check_range_usd` from `skafld-vc:whoami`, or the cheque the user names):
+1. **Scale to the stage first**, from the stage bar (`skafld-vc:stage-calibration`) and the cheque (the one the person names for this deal, else `house.check_range_usd` from the house profile (resolved as the `references/house-profile.md` of `skafld-vc:setup` says: the platform's `skafld-vc:whoami`, else the saved firm profile from `setup:get_profile`, else the person)):
    - **Pre-seed**: an assessment of the technical founder only; there is little to audit (K Fund, 2025).
    - **Seed**: a one-hour call with the technical founder plus document checks (Martinez, 2016; Doubrovkine, "How To Do Startup Technical Due Diligence", 2017).
    - **Series A**: about a day, possibly with an outside reviewer (Doubrovkine, 2017).

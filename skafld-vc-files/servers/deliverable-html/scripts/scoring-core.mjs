@@ -1,12 +1,12 @@
-// Rubric scoring arithmetic (ADR 0004), as pure functions of a Rubric
+// Rubric scoring arithmetic, as pure functions of a Rubric
 // definition. No dependencies and no imports, so both runtimes run the same
-// file: the platform imports it through lib/ai/rubric/scoring.ts, and
-// `pnpm agents:sync` copies it verbatim into the skafld-vc plugin, where the
-// local `score_with_rubric` tool scores in documents-only mode (ADR 0006).
+// file: the platform imports it through its rubric module, and
+// the release build copies it verbatim into the skafld-vc plugin, where the
+// local `score_with_rubric` tool scores in documents-only mode.
 // skills/deal-scorecard/scripts/score.py is a Python port for where Node is
-// not installed; __tests__/unit/ai/rubric-python-parity.test.ts fails when
+// not installed; a parity test fails when
 // the two ever disagree.
-// `pnpm agents:check` fails when the copy is stale.
+// A release check fails when the copy is stale.
 //
 // Every number comes from the definition passed in: weighted mean over the
 // assessed criteria, rounding, banding, the optional band conditions and

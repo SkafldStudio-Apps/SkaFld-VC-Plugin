@@ -12,7 +12,7 @@ Add SkaFld VC Files when you want, on a computer with **Node.js 18 or later**:
 ## Install
 
 ```
-/plugin install skafld-vc-files@<marketplace>
+/plugin install skafld-vc-files@skafld-vc
 ```
 
 It installs SkaFld VC with it. Node.js must be on your PATH; check with `node --version`.

@@ -1,4 +1,4 @@
-/* GENERATED from app/globals.css by scripts/deliverables/build-theme.ts; do not edit. Regenerate with: pnpm deliverables:theme */
+/* Generated file; do not edit. */
 
 :root {
   color-scheme: light dark;
@@ -103,10 +103,10 @@
 /*
  * Deliverable template: the static half of the stylesheet. It uses only the
  * custom properties below (the --dl-* ones defined here) and the tokens that
- * scripts/deliverables/build-theme.ts copies from app/globals.css, so a design
+ * the theme build copies from the platform's stylesheet, so a design
  * change flows through when the theme is regenerated.
  *
- * Rules from docs/technical/design-system.md: square corners (--radius),
+ * Design rules: square corners (--radius),
  * hairline borders, gold only for the verdict, cream and neutral surfaces,
  * tones for status, the six-step type ramp, no gradients, sentence case.
  *

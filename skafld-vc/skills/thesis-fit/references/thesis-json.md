@@ -73,19 +73,19 @@ A thesis in the working folder, for when no platform is connected (with a platfo
 
 ## Field notes
 
-| Field                   | Meaning and how the skill uses it                                                                                                                                                                             |
-| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `decision`              | `go`, `no_go` or `draft`, the primer's go / no-go final assessment. Anything missing owners, `whyNow` or `reviewBy` is read as `draft`.                                                                       |
-| `owners[].depth`        | One line on the owner's domain experience. The specialisation effect is individual (Gompers, Kovner and Lerner 2009).                                                                                         |
-| `whyNow`, `vintage`     | The timing claim and the market climate it assumes (Sequoia's "why now"; Nanda and Rhodes-Kropf 2013). `reviewBy` is when the claim is re-examined.                                                           |
-| `mandate`               | The strategic-fit screens. Only the ones listed are applied; an agnostic house leaves them out. `checkSize` is whole dollars; it becomes a string such as "$25k-$250k" in the longlist's `mandate.checkSize`. |
-| `mandate.superPriority` | Two or three criteria that eliminate a company missing any one of them (primer, Part IV).                                                                                                                     |
-| `pillars`, `taxonomy`   | Pillars are the drivers of the problem; taxonomy leaves are the kinds of company that address them. Card `pillars[]` holds pillar names; the market map has one row per leaf.                                 |
-| `criteria`              | Desirable and undesirable items are a framework, not hard limits (primer, Part IV); `gates` are hard. Each is checked with a source or marked "not checked".                                                  |
-| `scoring`               | Optional. Weights sum to 100 per axis and every criterion has an anchored description per score (primer, Exhibit 13). Without it, fit is a 1-3 per criterion (primer's sample industry scorecard).            |
-| `missRateTolerance`     | Optional. The house's stated tolerance for passing on companies that later succeed; `skafld-vc:inbound-triage` and `skafld-vc:anti-portfolio` report it, or "not set" when absent (Maurer, Buz, Dremel and de Melo 2024).                                                              |
-| `network`               | Co-investors and referral partners per pillar: the warm paths a `pursue` status needs.                                                                                                                        |
-| `sources`               | Every figure in the thesis cites one, with date and sample size where the source gives one.                                                                                                                   |
+| Field                   | Meaning and how the skill uses it                                                                                                                                                                                         |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `decision`              | `go`, `no_go` or `draft`, the primer's go / no-go final assessment. Anything missing owners, `whyNow` or `reviewBy` is read as `draft`.                                                                                   |
+| `owners[].depth`        | One line on the owner's domain experience. The specialisation effect is individual (Gompers, Kovner and Lerner 2009).                                                                                                     |
+| `whyNow`, `vintage`     | The timing claim and the market climate it assumes (Sequoia's "why now"; Nanda and Rhodes-Kropf 2013). `reviewBy` is when the claim is re-examined.                                                                       |
+| `mandate`               | The strategic-fit screens. Only the ones listed are applied; an agnostic house leaves them out. `checkSize` is whole dollars; it becomes a string such as "$25k-$250k" in the longlist's `mandate.checkSize`.             |
+| `mandate.superPriority` | Two or three criteria that eliminate a company missing any one of them (primer, Part IV).                                                                                                                                 |
+| `pillars`, `taxonomy`   | Pillars are the drivers of the problem; taxonomy leaves are the kinds of company that address them. Card `pillars[]` holds pillar names; the market map has one row per leaf.                                             |
+| `criteria`              | Desirable and undesirable items are a framework, not hard limits (primer, Part IV); `gates` are hard. Each is checked with a source or marked "not checked".                                                              |
+| `scoring`               | Optional. Weights sum to 100 per axis and every criterion has an anchored description per score (primer, Exhibit 13). Without it, fit is a 1-3 per criterion (primer's sample industry scorecard).                        |
+| `missRateTolerance`     | Optional. The house's stated tolerance for passing on companies that later succeed; `skafld-vc:inbound-triage` and `skafld-vc:anti-portfolio` report it, or "not set" when absent (Maurer, Buz, Dremel and de Melo 2024). |
+| `network`               | Co-investors and referral partners per pillar: the warm paths a `pursue` status needs.                                                                                                                                    |
+| `sources`               | Every figure in the thesis cites one, with date and sample size where the source gives one.                                                                                                                               |
 
 ## thesis.md
 

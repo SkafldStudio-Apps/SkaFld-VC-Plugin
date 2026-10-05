@@ -1,13 +1,19 @@
 // export_document for the local server: a deliverable, a package or any
 // Markdown answer to Word, PDF, PowerPoint, a PDF deck or (a Diligence plan)
 // Excel, in the person's brand, written under <project>/skafld-vc/. The
-// exporter is the bundled lib/deliverables/export (skills/document-export),
-// loaded on first use so the server starts fast. No network.
+// exporter is the bundle in servers/document-export, loaded on first use so
+// the server starts fast. No network, except to download a platform's brand
+// when `brand` is its URL (platform-brand.mjs).
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs"
 import { homedir } from "node:os"
 import { dirname, join, relative, resolve } from "node:path"
-import { fileURLToPath } from "node:url"
+import { fileURLToPath, pathToFileURL } from "node:url"
 
+import {
+  looksLikeUrl,
+  platformBrand,
+  PlatformBrandError,
+} from "./platform-brand.mjs"
 import { inOutDir, projectDir, readWritten, RenderError } from "./write.mjs"
 
 const here = dirname(fileURLToPath(import.meta.url))
@@ -76,7 +82,10 @@ export function readBrandChoice(env = process.env, project) {
 
 let exporter = null
 export async function loadExporter() {
-  exporter ??= await import(join(EXPORT_DIR, "scripts", "exporter.mjs"))
+  // A file URL, not a path: on Windows import() reads "C:\\..." as a URL scheme.
+  exporter ??= await import(
+    pathToFileURL(join(EXPORT_DIR, "scripts", "exporter.mjs")).href
+  )
   return exporter
 }
 
@@ -85,8 +94,30 @@ export const exportAssets = {
   fontsDir: join(EXPORT_DIR, "assets", "fonts"),
 }
 
-/** Export and write one file; returns what the tool reports. */
-export async function writeExport(args = {}, env = process.env) {
+/**
+ * The platform's brand for a brand URL, as a folder in the setup home
+ * (downloaded once per version). Returns { dir, name, ... } or
+ * { problem } with the reason it is not available.
+ */
+export async function platformBrandFor(url, env = process.env, deps = {}) {
+  const { brandProblems } = await loadExporter()
+  try {
+    return await platformBrand(url, {
+      home: setupHome(env)?.dir,
+      brandProblems,
+      fetch: deps.fetch,
+    })
+  } catch (err) {
+    if (err instanceof PlatformBrandError) return { problem: err.message }
+    return { problem: String(err?.message ?? err) }
+  }
+}
+
+/**
+ * Export and write one file; returns what the tool reports. deps.fetch
+ * replaces the global fetch (tests).
+ */
+export async function writeExport(args = {}, env = process.env, deps = {}) {
   const format = args.format
   if (!EXPORT_FORMATS.includes(format)) {
     throw new RenderError(`format must be one of ${EXPORT_FORMATS.join(", ")}`)
@@ -113,13 +144,25 @@ export async function writeExport(args = {}, env = process.env) {
       "Pass file (a deliverable written earlier), deliverable, or markdown."
     )
   }
-  const { exportDocument, ExportError, BrandError } = await loadExporter()
+  const { exportDocument, ExportError, BrandError, brandOriginLabel } =
+    await loadExporter()
   const home = brandHome(env, project)
+  const named =
+    typeof args.brand === "string" && args.brand ? args.brand : undefined
+  // A URL is the platform's brand, never a folder or pack id; when it cannot
+  // be used, the export goes on with the next brand in the order.
+  let platform = null
+  if (named && looksLikeUrl(named)) {
+    platform = await platformBrandFor(named, env, deps)
+  }
   let out
   try {
     out = await exportDocument(format, source, {
-      brand:
-        typeof args.brand === "string" && args.brand ? args.brand : undefined,
+      platformBrandDir: platform?.dir ?? null,
+      platformBrandSource: platform?.dir
+        ? `the platform's brand (${platform.host})`
+        : undefined,
+      brand: platform ? undefined : named,
       project,
       userDir: home.brandDir,
       ...exportAssets,
@@ -137,13 +180,23 @@ export async function writeExport(args = {}, env = process.env) {
   const { dir, file } = inOutDir(project, out.fileName)
   mkdirSync(dir, { recursive: true })
   writeFileSync(file, out.buffer)
+  const warnings = [...out.warnings]
+  if (platform?.problem) {
+    warnings.unshift(
+      `platform brand not available: ${platform.problem}; used ${brandOriginLabel(out.brand.origin)}`
+    )
+  }
+  // On a platform the brand is the platform's to choose, not the person's.
   const needsBrandChoice =
-    out.brand.origin === "default" && !readBrandChoice(env, project)
+    !platform &&
+    out.brand.origin === "default" &&
+    !readBrandChoice(env, project)
   return {
     path: relative(project, file),
     brand: out.brand,
-    warnings: out.warnings,
+    warnings,
     needsBrandChoice,
+    ...(platform?.dir ? { platformBrandCached: platform.cached } : {}),
   }
 }
 
