@@ -53,6 +53,8 @@ The platform's TypeScript types are the source of truth; this is the same format
 }
 ```
 
+`preparedBy.runtime` is exactly one of `claude_code` (Claude Code, including an agent SDK), `claude_desktop` (Cowork or Claude's Chat) or `platform` (a platform run, which says so in its prompt); any other value is refused when the deliverable is saved.
+
 - `house` is optional: the network's short name from `skafld-vc:whoami` (`house.short_name`). It labels a `deal` company as "<house> company"; without it the label is "Company on the platform". Omit it when there is no platform.
 - `kind` is `deal` for a deal or application on the platform and `outside` for anything else, including every documents-only run. `dealId` only for a `deal` company; omit it for an Outside company.
 - `sources[].id` is what `sourceIds` and `[^id]` in Markdown point at; an unknown id fails validation. `date` (for example "2025", "2026-07" or "2026-09-12") and `sample` (for example "n=431" or "885 VCs") are optional strings; fill them for every benchmark and study, and the Sources list prints "title, date, n=…".
