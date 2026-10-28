@@ -62,87 +62,66 @@ tools:
   - mcp__SkaFld_VC__get_deliverables
   - mcp__SkaFld_VC__save_deliverable
   - mcp__SkaFld_VC__get_rubric
-  - mcp__plugin_skafld-vc-files_deliverables__render_deliverable
-  - mcp__plugin_skafld-vc-files_deliverables__score_with_rubric
-  - mcp__plugin_skafld-vc-files_deliverables__export_document
-  - mcp__plugin_skafld-vc-files_setup__get_profile
-  - mcp__plugin_skafld-vc-connectors_attio__*
+  - mcp__plugin_skafld-vc_deliverables__render_deliverable
+  - mcp__plugin_skafld-vc_deliverables__score_with_rubric
+  - mcp__plugin_skafld-vc_deliverables__export_document
+  - mcp__plugin_skafld-vc_setup__get_profile
   - mcp__attio__*
   - mcp__claude_ai_Attio__*
   - mcp__Attio__*
-  - mcp__plugin_skafld-vc-connectors_affinity__*
   - mcp__affinity__*
   - mcp__claude_ai_Affinity__*
   - mcp__Affinity__*
-  - mcp__plugin_skafld-vc-connectors_pipedrive__*
   - mcp__pipedrive__*
   - mcp__claude_ai_Pipedrive__*
   - mcp__Pipedrive__*
-  - mcp__plugin_skafld-vc-connectors_4degrees__*
   - mcp__4degrees__*
-  - mcp__plugin_skafld-vc-connectors_airtable__*
   - mcp__airtable__*
   - mcp__claude_ai_Airtable__*
   - mcp__Airtable__*
-  - mcp__plugin_skafld-vc-connectors_carta__*
   - mcp__carta__*
   - mcp__claude_ai_Carta__*
   - mcp__Carta__*
-  - mcp__plugin_skafld-vc-connectors_standard-metrics__*
   - mcp__standard-metrics__*
-  - mcp__plugin_skafld-vc-connectors_angellist__*
   - mcp__angellist__*
   - mcp__claude_ai_AngelList__*
   - mcp__AngelList__*
-  - mcp__plugin_skafld-vc-connectors_stripe__*
   - mcp__stripe__*
   - mcp__claude_ai_Stripe__*
   - mcp__Stripe__*
-  - mcp__plugin_skafld-vc-connectors_chartmogul__*
   - mcp__chartmogul__*
   - mcp__claude_ai_ChartMogul__*
   - mcp__ChartMogul__*
-  - mcp__plugin_skafld-vc-connectors_mixpanel__*
   - mcp__mixpanel__*
   - mcp__claude_ai_Mixpanel__*
   - mcp__Mixpanel__*
-  - mcp__plugin_skafld-vc-connectors_amplitude__*
   - mcp__amplitude__*
   - mcp__claude_ai_Amplitude__*
   - mcp__Amplitude__*
-  - mcp__plugin_skafld-vc-connectors_posthog__*
   - mcp__posthog__*
   - mcp__claude_ai_PostHog__*
   - mcp__PostHog__*
-  - mcp__plugin_skafld-vc-connectors_mercury__*
   - mcp__mercury__*
   - mcp__claude_ai_Mercury__*
   - mcp__Mercury__*
-  - mcp__plugin_skafld-vc-connectors_brex__*
   - mcp__brex__*
   - mcp__claude_ai_Brex__*
   - mcp__Brex__*
-  - mcp__plugin_skafld-vc-connectors_ramp__*
   - mcp__ramp__*
   - mcp__claude_ai_Ramp__*
   - mcp__Ramp__*
-  - mcp__plugin_skafld-vc-connectors_sp-global__*
   - mcp__sp-global__*
   - mcp__claude_ai_S_P_Global__*
   - mcp__S_P_Global__*
-  - mcp__plugin_skafld-vc-connectors_morningstar__*
   - mcp__morningstar__*
   - mcp__claude_ai_Morningstar__*
   - mcp__Morningstar__*
-  - mcp__plugin_skafld-vc-connectors_daloopa__*
   - mcp__daloopa__*
   - mcp__claude_ai_Daloopa__*
   - mcp__Daloopa__*
-  - mcp__plugin_skafld-vc-connectors_alpha-vantage__*
   - mcp__alpha-vantage__*
   - mcp__claude_ai_Alpha_Vantage__*
   - mcp__Alpha_Vantage__*
-  - mcp__plugin_skafld-vc-connectors_fmp__*
   - mcp__fmp__*
   - mcp__claude_ai_Financial_Modeling_Prep__*
   - mcp__Financial_Modeling_Prep__*
@@ -195,7 +174,7 @@ Your skills load on demand: one is preloaded, and you load any other skill a ste
 8. Write the bear case as the strongest sceptic in the network would, then the mitigants or the open status.
 9. Build the memo as a deliverable in the `skafld-vc:deliverable-html` format (its `references/format.md`), in the `skafld-vc:memo-format` sections, including `thesisFit`, the price verdict as `valuation` (the four lines and the counter), `useOfFunds`, the risks with their `class`, `type` and bookends (`low`, `high`), the bear case, the monitoring hand-off as `planBaseline` (metric, today, target, by: what the Portfolio agent will later compare against) and the open items, and the memo as `body.document`. For a committee, put the committee pre-read from `skafld-vc:memo-format` first: members score each criterion privately before discussion, the scores are combined mechanically, and each member notes any shared school, employer or network with the founders. Every source you cite goes in `sources`, cited in Markdown as `[^id]`; an inline link alone does not count.
 10. **A deal on the platform:** save it with `skafld-vc:save_deliverable` (`deal_id`, `type: "ic_memo"`, `deliverable`). Then offer the HTML: where this environment has the `deliverables:render_deliverable` tool, render the same deliverable and give the file path; otherwise give the `html_url` that `skafld-vc:save_deliverable` returned. **Outside company, or documents only:** never call `skafld-vc:save_deliverable` or any other save tool. Give the report only, following `skafld-vc:deliverable-html`: the HTML from `deliverables:render_deliverable` where this environment has it (give the file path); without it, in a platform run your final message is the deliverable JSON and nothing else, and anywhere else you write the Markdown report that skill describes.
-11. **Files.** When the request asked for Word, PDF or a committee deck, export the memo following `skafld-vc:document-export` (`deliverables:export_document` with the Files add-on, Claude's own document tools without it) (a deck for the committee is `pptx`, or `deck_pdf` to share), and give each path.
+11. **Files.** When the request asked for Word, PDF or a committee deck, export the memo following `skafld-vc:document-export` (`deliverables:export_document` when the deliverables server is running, Claude's own document tools without it) (a deck for the committee is `pptx`, or `deck_pdf` to share), and give each path.
 
 ## Follow-on variant
 

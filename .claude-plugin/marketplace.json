@@ -4,15 +4,15 @@
     "name": "SkaFld Studio"
   },
   "metadata": {
-    "description": "SkaFld VC: venture capital agents and skills for Claude. Start with SkaFld VC, which needs nothing installed. Add SkaFld VC Files for designed files (in your brand once you set one up) and exact scoring on your computer (needs Node.js), SkaFld VC Connectors for more data and work tools, and SkaFld VC Platform only if your firm runs a SkaFld VC platform.",
-    "version": "1.8.0"
+    "description": "SkaFld VC: venture capital agents and skills for Claude. Install SkaFld VC: it runs only its two local servers, uses the research and data connectors you add (Exa and Apollo recommended) and writes designed files on a computer with Node.js. Add SkaFld VC Platform only if your firm runs a SkaFld VC platform.",
+    "version": "2.2.0"
   },
   "plugins": [
     {
       "name": "skafld-vc",
       "displayName": "SkaFld VC",
       "source": "./skafld-vc",
-      "description": "Start here. Sourcing, screening, diligence plans, IC memos and portfolio reviews, with returns, valuation, term sheets, unit economics and cap tables, from your own documents. Exa and Apollo research, and files made with Claude's own Word, PowerPoint, Excel and PDF tools. Needs nothing installed and works with no platform.",
+      "description": "Start here. Sourcing, screening, diligence plans, IC memos and portfolio reviews, with returns, valuation, term sheets, unit economics and cap tables, from your own documents. Research with the connectors you add (Exa and Apollo recommended; data, CRM and notes connectors used once you add them), and designed HTML, Word, PDF, deck and Excel files (needs Node.js 18 or later; without it, Claude's own document tools). Works with no platform.",
       "category": "productivity",
       "tags": [
         "venture capital",
@@ -20,18 +20,6 @@
         "due diligence",
         "investment memo",
         "startups"
-      ]
-    },
-    {
-      "name": "skafld-vc-files",
-      "displayName": "SkaFld VC Files (optional, needs Node.js)",
-      "source": "./skafld-vc-files",
-      "description": "Optional, for Claude Code and computers with Node.js 18 or later: SkaFld VC's own HTML, Word, PDF, deck and Excel files (unbranded unless you set up a brand), brand setup from your website, a firm profile saved across projects, and the rubric scorer as a tool. Installs SkaFld VC with it.",
-      "category": "productivity",
-      "tags": [
-        "venture capital",
-        "documents",
-        "branding"
       ]
     },
     {
@@ -45,18 +33,10 @@
         "skafld platform",
         "connector"
       ]
-    },
-    {
-      "name": "skafld-vc-connectors",
-      "displayName": "SkaFld VC Connectors (optional)",
-      "source": "./skafld-vc-connectors",
-      "description": "Optional: more connectors the SkaFld VC agents can read, for people who use them. Paid company data (Crunchbase, PitchBook, CB Insights, Tracxn), more CRMs and note-takers, data rooms, portfolio and finance metrics, public comparables and contracts. Each signs in with your own account.",
-      "category": "productivity",
-      "tags": [
-        "venture capital",
-        "connectors",
-        "data"
-      ]
     }
-  ]
+  ],
+  "renames": {
+    "skafld-vc-files": "skafld-vc",
+    "skafld-vc-connectors": "skafld-vc"
+  }
 }

@@ -42,40 +42,32 @@ tools:
   - mcp__SkaFld_VC__search_documents
   - mcp__SkaFld_VC__query_deals
   - mcp__SkaFld_VC__get_deliverables
-  - mcp__plugin_skafld-vc-files_deliverables__render_deliverable
-  - mcp__plugin_skafld-vc-files_deliverables__export_document
-  - mcp__plugin_skafld-vc-files_setup__get_profile
+  - mcp__plugin_skafld-vc_deliverables__render_deliverable
+  - mcp__plugin_skafld-vc_deliverables__export_document
+  - mcp__plugin_skafld-vc_setup__get_profile
   - mcp__exa__*
-  - mcp__plugin_skafld-vc_exa__*
   - mcp__plugin_exa_exa__*
   - mcp__claude_ai_Exa__*
   - mcp__Exa__*
-  - mcp__plugin_skafld-vc-connectors_attio__*
   - mcp__attio__*
   - mcp__claude_ai_Attio__*
   - mcp__Attio__*
-  - mcp__plugin_skafld-vc-connectors_affinity__*
   - mcp__affinity__*
   - mcp__claude_ai_Affinity__*
   - mcp__Affinity__*
-  - mcp__plugin_skafld-vc-connectors_pipedrive__*
   - mcp__pipedrive__*
   - mcp__claude_ai_Pipedrive__*
   - mcp__Pipedrive__*
-  - mcp__plugin_skafld-vc-connectors_4degrees__*
   - mcp__4degrees__*
-  - mcp__plugin_skafld-vc-connectors_airtable__*
   - mcp__airtable__*
   - mcp__claude_ai_Airtable__*
   - mcp__Airtable__*
   - mcp__google_drive__*
   - mcp__claude_ai_Google_Drive__*
   - mcp__Google_Drive__*
-  - mcp__plugin_skafld-vc-connectors_dropbox__*
   - mcp__dropbox__*
   - mcp__claude_ai_Dropbox__*
   - mcp__Dropbox__*
-  - mcp__plugin_skafld-vc-connectors_docsend__*
   - mcp__docsend__*
   - mcp__gmail__search_threads
   - mcp__gmail__get_thread
@@ -89,71 +81,59 @@ tools:
   - mcp__Gmail__get_thread
   - mcp__Gmail__get_message
   - mcp__Gmail__list_labels
-  - mcp__plugin_skafld-vc-connectors_notion__*
   - mcp__notion__*
   - mcp__claude_ai_Notion__*
   - mcp__Notion__*
-  - mcp__plugin_skafld-vc-connectors_granola__*
   - mcp__granola__*
   - mcp__claude_ai_Granola__*
   - mcp__Granola__*
-  - mcp__plugin_skafld-vc-connectors_fireflies__*
   - mcp__fireflies__*
   - mcp__claude_ai_Fireflies__*
   - mcp__Fireflies__*
-  - mcp__plugin_skafld-vc-connectors_otter__*
   - mcp__otter__*
   - mcp__claude_ai_Otter_ai__*
   - mcp__Otter_ai__*
-  - mcp__plugin_skafld-vc-connectors_fathom__*
   - mcp__fathom__*
   - mcp__claude_ai_Fathom__*
   - mcp__Fathom__*
   - mcp__gong__*
   - mcp__claude_ai_Gong__*
   - mcp__Gong__*
-  - mcp__plugin_skafld-vc-connectors_carta__*
   - mcp__carta__*
   - mcp__claude_ai_Carta__*
   - mcp__Carta__*
-  - mcp__plugin_skafld-vc-connectors_standard-metrics__*
   - mcp__standard-metrics__*
-  - mcp__plugin_skafld-vc-connectors_angellist__*
   - mcp__angellist__*
   - mcp__claude_ai_AngelList__*
   - mcp__AngelList__*
-  - mcp__plugin_skafld-vc-connectors_stripe__*
   - mcp__stripe__*
   - mcp__claude_ai_Stripe__*
   - mcp__Stripe__*
-  - mcp__plugin_skafld-vc-connectors_chartmogul__*
   - mcp__chartmogul__*
   - mcp__claude_ai_ChartMogul__*
   - mcp__ChartMogul__*
-  - mcp__plugin_skafld-vc-connectors_mixpanel__*
   - mcp__mixpanel__*
   - mcp__claude_ai_Mixpanel__*
   - mcp__Mixpanel__*
-  - mcp__plugin_skafld-vc-connectors_amplitude__*
   - mcp__amplitude__*
   - mcp__claude_ai_Amplitude__*
   - mcp__Amplitude__*
-  - mcp__plugin_skafld-vc-connectors_posthog__*
   - mcp__posthog__*
   - mcp__claude_ai_PostHog__*
   - mcp__PostHog__*
-  - mcp__plugin_skafld-vc-connectors_mercury__*
   - mcp__mercury__*
   - mcp__claude_ai_Mercury__*
   - mcp__Mercury__*
-  - mcp__plugin_skafld-vc-connectors_brex__*
   - mcp__brex__*
   - mcp__claude_ai_Brex__*
   - mcp__Brex__*
-  - mcp__plugin_skafld-vc-connectors_ramp__*
   - mcp__ramp__*
   - mcp__claude_ai_Ramp__*
   - mcp__Ramp__*
+  - mcp__firecrawl__firecrawl_scrape
+  - mcp__plugin_firecrawl_firecrawl__firecrawl_scrape
+  - mcp__claude_ai_Firecrawl__firecrawl_scrape
+  - mcp__Firecrawl__firecrawl_scrape
 skills:
   - skafld-vc:founder-update
 uses_skills:
@@ -167,6 +147,7 @@ uses_skills:
 research_connectors:
   - exa
 plugin_connectors:
+  - web_research
   - portfolio_metrics
   - mail
   - documents
@@ -193,12 +174,13 @@ Your skills load on demand: one is preloaded, and you load any other skill a ste
 7. **Give the position** where you have it: invested, ownership, the mark (labelled as implied by the last round), the outcome class, and whether a follow-on is being asked for. Judge a follow-on as a new investment, with `skafld-vc:cap-table` and `skafld-vc:returns-analysis` on the new terms.
 8. **The portfolio view**, when asked for more than one company or for "the portfolio": follow `skafld-vc:portfolio-construction` for position count, concentration, outcome spread against base rates, reserves and multiples with time beside any IRR. With a platform, `skafld-vc:query_deals` for the funded deals at this member's scope.
 9. Build the Portfolio review as a deliverable in the `skafld-vc:deliverable-html` format (its `references/format.md`, `type: "portfolio_review"`), one per company, or one for the portfolio with `portfolioView`. Fill `header` (the next stage's bar and the IC memo version you compared against), `capTableEvents` (issuances, conversions, option pool changes in the period) and `position.realisationYear` where known. Put the unresolved concerns and consent items where the format says, your full review as `body.document`, and every document and outside source in `sources`.
-10. Write the report following `skafld-vc:deliverable-html`: the HTML from `deliverables:render_deliverable` where this environment has it (give the file path), otherwise the Markdown report that skill describes. The platform does not store portfolio reviews: never call `skafld-vc:save_deliverable` or any other save tool. Export Word, PDF or a deck for investors only when asked, following `skafld-vc:document-export` (`deliverables:export_document` with the Files add-on, Claude's own document tools without it).
+10. Write the report following `skafld-vc:deliverable-html`: the HTML from `deliverables:render_deliverable` where this environment has it (give the file path), otherwise the Markdown report that skill describes. The platform does not store portfolio reviews: never call `skafld-vc:save_deliverable` or any other save tool. Export Word, PDF or a deck for investors only when asked, following `skafld-vc:document-export` (`deliverables:export_document` when the deliverables server is running, Claude's own document tools without it).
 
 ## Research rules
 
 - **Connected sources.** Where the person has signed in to them: the firm's portfolio tools (Carta, Standard Metrics, AngelList) for holdings, marks and the KPIs founders report; metrics a founder has shared access to (Stripe, ChartMogul, Mixpanel, Amplitude, PostHog; Mercury, Brex or Ramp for cash and spend); Gmail and Google Drive for updates and board packs; call notes (Notion, Granola, Fireflies); and the CRM (Attio, Affinity). A figure from a connected source is `stated` by that source; say which. Read only: never send, create or change anything.
-- Outside research is optional here: the update is the evidence. With Exa connected (`mcp__exa__*`, `mcp__plugin_skafld-vc_exa__*`, `mcp__plugin_exa_exa__*` or the Claude connector `Exa`), check public news about the company or a benchmark you cite, and read the pages you rely on. At most 10 research calls per review.
+- Outside research is optional here: the update is the evidence. With Exa connected (`mcp__exa__*`, `mcp__plugin_exa_exa__*` or the Claude connector `Exa`), check public news about the company or a benchmark you cite, and read the pages you rely on. At most 10 research calls per review.
+- **Firecrawl only for a page Exa could not read.** Exa is the default for every search and every page read. Where the person has added Firecrawl (`mcp__firecrawl__firecrawl_scrape`, `mcp__plugin_firecrawl_firecrawl__firecrawl_scrape` or the Claude connector `Firecrawl`), use `firecrawl:firecrawl_scrape` only for a page you already tried with `exa:web_fetch_exa`, with the same URL, when that read failed or came back nearly empty (a JavaScript-rendered site, a blocked page, a PDF). Never use Firecrawl to search, map, crawl or extract, and never as the first read. Add ", read with Firecrawl" to that source's `title` in `sources`. Firecrawl scrapes spend the person's Firecrawl credits and count within the 10 research calls.
 - Register every outside source in `sources` and cite it; a benchmark without a dated source is not used.
 
 ## Rules

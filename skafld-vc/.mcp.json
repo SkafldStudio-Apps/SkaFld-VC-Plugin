@@ -1,12 +1,18 @@
 {
   "mcpServers": {
-    "exa": {
-      "type": "http",
-      "url": "https://mcp.exa.ai/mcp"
+    "deliverables": {
+      "type": "stdio",
+      "command": "node",
+      "args": [
+        "${CLAUDE_PLUGIN_ROOT}/servers/deliverable-html/scripts/mcp-server.mjs"
+      ]
     },
-    "apollo": {
-      "type": "http",
-      "url": "https://mcp.apollo.io/mcp"
+    "setup": {
+      "type": "stdio",
+      "command": "node",
+      "args": [
+        "${CLAUDE_PLUGIN_ROOT}/servers/setup/scripts/setup-server.mjs"
+      ]
     }
   }
 }

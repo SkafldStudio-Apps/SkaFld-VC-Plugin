@@ -11,7 +11,7 @@ Facts about professional history, each with a source and a verification mark. Th
 
 1. The application and the deck (what the founders claim).
 2. A people or company data connector if the user has one connected (for example Apollo): roles, tenure, company size, funding history. With Apollo connected, one lookup of the company's job postings (Apollo organization job postings) gives open roles as a proxy for headcount growth and hiring plan; name the lookup and ask before it, since Apollo lookups can spend the person's credits, and say that postings show intent to hire, not hires.
-3. The company website, product and pricing pages, changelog or release notes.
+3. The company website, product and pricing pages, changelog or release notes, read with Exa; where a page will not read there (a JavaScript-rendered site, a blocked page) and Firecrawl is connected, its scrape of that one page, never a Firecrawl search.
 4. Press, podcasts, talks, publications, patents, and code repositories where relevant.
 5. Prior ventures: outcome, role, duration, co-founders, and whether revenue or an exit is on the public record.
 6. With a platform connected: the deal record through `skafld-vc:get_deal_details` and the deal's documents through `skafld-vc:search_documents`.

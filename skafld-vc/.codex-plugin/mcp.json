@@ -1,11 +1,18 @@
 {
   "mcpServers": {
-    "exa": {
-      "url": "https://mcp.exa.ai/mcp"
+    "deliverables": {
+      "command": "node",
+      "args": [
+        "./servers/deliverable-html/scripts/mcp-server.mjs"
+      ],
+      "cwd": "."
     },
-    "apollo": {
-      "url": "https://mcp.apollo.io/mcp",
-      "enabled": false
+    "setup": {
+      "command": "node",
+      "args": [
+        "./servers/setup/scripts/setup-server.mjs"
+      ],
+      "cwd": "."
     }
   }
 }

@@ -2,7 +2,7 @@
 
 **Only for firms that run a SkaFld VC platform.** This add-on connects the SkaFld VC agents to your firm's platform: its deal pipeline, applications, documents, rubric, house profile and saved deliverables, at the access your login has. It installs SkaFld VC with it.
 
-**No platform? You do not need this.** Install SkaFld VC on its own: every agent and skill works from your documents, scores against the default rubric or your own `rubric.json`, and exports files (in your brand with the optional SkaFld VC Files add-on).
+**No platform? You do not need this.** Install SkaFld VC on its own: every agent and skill works from your documents, scores against the default rubric or your own `rubric.json`, and exports files (in your brand once you set one up, where Node.js 18 or later is installed).
 
 ## Install
 
@@ -20,7 +20,7 @@ To change the address later: `/plugin configure skafld-vc-platform`.
 
 With the platform connected, the agents read your firm's house profile (who you are, your thesis, your cheque range, what "fit" means to you), score against your firm's current rubric with the platform doing the arithmetic, check a company against your pipeline, and save Screening reports, Diligence plans and IC memos on the deal, where your team downloads them. Everything is scoped to your login: you never see more than you would in the platform itself.
 
-The add-on also carries the two platform skills the agents load when the platform is connected: `platform-access` (how to use the platform's tools at your access) and `member-insights` (questions about your network's members and activity). With SkaFld VC Files installed, exported files come out in your firm's brand, which the platform serves and your computer caches; no brand ships in any plugin.
+The add-on also carries the two platform skills the agents load when the platform is connected: `platform-access` (how to use the platform's tools at your access) and `member-insights` (questions about your network's members and activity). Where SkaFld VC's local servers run (they need Node.js 18 or later), exported files come out in your firm's brand, which the platform serves and your computer caches; no brand ships in any plugin.
 
 What each agent does differently with a platform, and what the platform terms in the agent and skill files mean, is in SkaFld VC's `PLATFORM.md`.
 

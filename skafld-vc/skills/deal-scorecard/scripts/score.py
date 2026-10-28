@@ -2,8 +2,8 @@
 """Documents-only rubric scoring, with no dependencies beyond Python 3.8.
 
 A line-for-line port of the platform's arithmetic (scoring-core.mjs)
-and of the Files add-on's score_with_rubric tool (score.mjs), for where Node
-and the add-on are not installed: Claude's code execution in Chat and Cowork,
+and of the deliverables server's score_with_rubric tool (score.mjs), for where
+Node is not installed: Claude's code execution in Chat and Cowork,
 or any tool that runs Python. Same arguments, same reply, same numbers; a CI
 test runs both on the same fixtures and fails if they ever differ.
 

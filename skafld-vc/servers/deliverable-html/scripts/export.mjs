@@ -7,9 +7,16 @@
 // the server starts fast. No network, except to download a platform's brand
 // when `brand` is its URL (platform-brand.mjs). htmlBrandFor resolves the
 // same brand for the HTML deliverables.
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs"
+import {
+  cpSync,
+  existsSync,
+  mkdirSync,
+  readdirSync,
+  readFileSync,
+  writeFileSync,
+} from "node:fs"
 import { homedir } from "node:os"
-import { dirname, join, relative, resolve } from "node:path"
+import { basename, dirname, join, relative, resolve } from "node:path"
 import { fileURLToPath, pathToFileURL } from "node:url"
 
 import {
@@ -35,10 +42,9 @@ export const EXPORT_FORMATS = ["docx", "pdf", "pptx", "deck_pdf", "xlsx"]
  */
 export function setupHome(env = process.env) {
   if (env.CLAUDE_PLUGIN_DATA) {
-    return {
-      dir: resolve(env.CLAUDE_PLUGIN_DATA),
-      where: "the plugin's data folder",
-    }
+    const dir = resolve(env.CLAUDE_PLUGIN_DATA)
+    adoptLegacySetup(dir)
+    return { dir, where: "the plugin's data folder" }
   }
   if (env.SKAFLD_VC_HOME) {
     return { dir: resolve(env.SKAFLD_VC_HOME), where: env.SKAFLD_VC_HOME }
@@ -50,6 +56,36 @@ export function setupHome(env = process.env) {
     home = ""
   }
   return home ? { dir: join(home, ".skafld-vc"), where: "~/.skafld-vc" } : null
+}
+
+/**
+ * Before 2.0 these servers were the separate plugin skafld-vc-files, whose
+ * data folder sits beside this one as `skafld-vc-files-<marketplace>` (Claude
+ * Code names a data folder `<plugin>-<marketplace>`). The first time this
+ * plugin's folder is empty and that one is not, its contents are copied
+ * over, so a saved brand, brand choice and firm profile carry across the
+ * move. The old folder is left as it is.
+ */
+const adopted = new Set()
+export function adoptLegacySetup(dir) {
+  if (adopted.has(dir)) return
+  adopted.add(dir)
+  const name = basename(dir)
+  if (!name.startsWith("skafld-vc-") || name.startsWith("skafld-vc-files-")) {
+    return
+  }
+  const legacy = join(
+    dirname(dir),
+    `skafld-vc-files-${name.slice("skafld-vc-".length)}`
+  )
+  try {
+    if (existsSync(dir) && readdirSync(dir).length > 0) return
+    if (!existsSync(legacy) || readdirSync(legacy).length === 0) return
+    mkdirSync(dir, { recursive: true })
+    cpSync(legacy, dir, { recursive: true, errorOnExist: false, force: false })
+  } catch {
+    // Best effort: without the copy, setup simply starts fresh.
+  }
 }
 
 /**

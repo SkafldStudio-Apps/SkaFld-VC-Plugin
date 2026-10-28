@@ -5,7 +5,7 @@ The house profile is the firm or network an agent or skill works for: its name, 
 ## Resolution order
 
 1. **The platform.** Where `skafld-vc:whoami` answers (the person's firm runs a SkaFld VC platform and has connected it with the SkaFld VC Platform add-on), or where you are the platform's own chat and your instructions give you the house profile, use that `house`. Load `skafld-vc-platform:platform-access` before the first platform call; it comes with the platform add-on. The saved firm profile is not read.
-2. **The saved firm profile.** Without a platform, call `setup:get_profile` (the Files add-on). Where you have no such tool, read `skafld-vc/firm-profile.md` in the working folder, or a "SkaFld VC firm profile" block in your instructions or project files. The person saved it with `/skafld-vc:setup`. Name it as the source of every house value you use.
+2. **The saved firm profile.** Without a platform, call `setup:get_profile` (the plugin's local `setup` server, where Node.js is installed). Where you have no such tool, read `skafld-vc/firm-profile.md` in the working folder, or a "SkaFld VC firm profile" block in your instructions or project files. The person saved it with `/skafld-vc:setup`. Name it as the source of every house value you use.
 3. **The person.** Use what the person states in the conversation. If a firm detail would change the answer and none of the above gives it, ask for that detail, and mention once per conversation that `/skafld-vc:setup` saves it so they are not asked again.
 
 A thesis file overrides only the saved profile: a `thesis.json` or `thesis.md` in the working folder is the thesis for that project, ahead of the saved profile's `thesis` and `thesis_detail`, but never ahead of the platform's `house.thesis`. So the full order for a thesis is platform, thesis file, saved profile, the person.
@@ -29,7 +29,7 @@ Where the person names a value for the deal in hand (the cheque for this round, 
 
 - Do not mention the platform unless the person asks about it, and skip every platform call.
 - The company is an outside company: nothing is saved to a platform, and there is no pipeline, portfolio or member data to read.
-- No platform does not mean no research: use the research connectors the person has connected (Exa, Apollo and the rest) exactly as with a platform. Only a person's explicit request for no outside research turns research off.
+- No platform does not mean no research: use the research connectors the person has connected (Exa, Apollo, the Firecrawl fallback and the rest) exactly as with a platform. Only a person's explicit request for no outside research turns research off.
 
 ## Rules
 

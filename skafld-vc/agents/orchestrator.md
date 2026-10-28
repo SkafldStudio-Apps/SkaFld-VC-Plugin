@@ -89,55 +89,43 @@ tools:
   - mcp__SkaFld_VC__get_member_details
   - mcp__SkaFld_VC__my_tasks
   - mcp__SkaFld_VC__my_notifications
-  - mcp__plugin_skafld-vc-files_deliverables__render_deliverable
-  - mcp__plugin_skafld-vc-files_deliverables__render_package
-  - mcp__plugin_skafld-vc-files_deliverables__score_with_rubric
-  - mcp__plugin_skafld-vc-files_deliverables__export_document
-  - mcp__plugin_skafld-vc-files_setup__*
-  - mcp__plugin_skafld-vc-connectors_attio__*
+  - mcp__plugin_skafld-vc_deliverables__render_deliverable
+  - mcp__plugin_skafld-vc_deliverables__render_package
+  - mcp__plugin_skafld-vc_deliverables__score_with_rubric
+  - mcp__plugin_skafld-vc_deliverables__export_document
+  - mcp__plugin_skafld-vc_setup__*
   - mcp__attio__*
   - mcp__claude_ai_Attio__*
   - mcp__Attio__*
-  - mcp__plugin_skafld-vc-connectors_affinity__*
   - mcp__affinity__*
   - mcp__claude_ai_Affinity__*
   - mcp__Affinity__*
-  - mcp__plugin_skafld-vc-connectors_pipedrive__*
   - mcp__pipedrive__*
   - mcp__claude_ai_Pipedrive__*
   - mcp__Pipedrive__*
-  - mcp__plugin_skafld-vc-connectors_4degrees__*
   - mcp__4degrees__*
-  - mcp__plugin_skafld-vc-connectors_airtable__*
   - mcp__airtable__*
   - mcp__claude_ai_Airtable__*
   - mcp__Airtable__*
   - mcp__google_drive__*
   - mcp__claude_ai_Google_Drive__*
   - mcp__Google_Drive__*
-  - mcp__plugin_skafld-vc-connectors_dropbox__*
   - mcp__dropbox__*
   - mcp__claude_ai_Dropbox__*
   - mcp__Dropbox__*
-  - mcp__plugin_skafld-vc-connectors_docsend__*
   - mcp__docsend__*
-  - mcp__plugin_skafld-vc-connectors_notion__*
   - mcp__notion__*
   - mcp__claude_ai_Notion__*
   - mcp__Notion__*
-  - mcp__plugin_skafld-vc-connectors_granola__*
   - mcp__granola__*
   - mcp__claude_ai_Granola__*
   - mcp__Granola__*
-  - mcp__plugin_skafld-vc-connectors_fireflies__*
   - mcp__fireflies__*
   - mcp__claude_ai_Fireflies__*
   - mcp__Fireflies__*
-  - mcp__plugin_skafld-vc-connectors_otter__*
   - mcp__otter__*
   - mcp__claude_ai_Otter_ai__*
   - mcp__Otter_ai__*
-  - mcp__plugin_skafld-vc-connectors_fathom__*
   - mcp__fathom__*
   - mcp__claude_ai_Fathom__*
   - mcp__Fathom__*
@@ -212,10 +200,10 @@ Hand it to the one agent whose job it is:
 - Confirm before any run. Each hand-off starts a multi-step run, and a screening can save a draft and a scorecard to the platform. Say which agent you will start, on which company, and what it will produce, and start it only after the person agrees. Where the environment asks the person to approve the run itself, that approval is the confirmation; do not ask twice.
 - Hand the agent the deal id (or, for a company that is not on the platform, the company name and website, where your hand-off takes them; in the platform chat hand-offs take a deal id only, so say an outside company can be run from Claude Code or Cowork) and one or two sentences of what the person asked for. Start one agent per request unless the person asks for more.
 - On a platform, agents run for the admin team only. If the person is not on it, or you cannot start the agent they need, say that the admin team runs it, then answer what you can from platform data.
-- When the agent returns, summarise what it produced in a few lines, say where the full output is, and say that it is a draft for staff review. If it returned its report and deliverable JSON in its message because it could not write files, save them as `skafld-vc:deliverable-html` says where you can. If its composite is labelled "arithmetic not tool-verified", verify it rather than compute it: where you have `deliverables:score_with_rubric`, call it on the agent's criteria and knock-outs as `skafld-vc:deal-scorecard` (step 6) says, and give its composite and band, correcting the report where they differ; without that tool, say the composite is unverified and that the Files add-on (or the scorer script in `skafld-vc:deal-scorecard`, run by the person) would check it. Never redo the arithmetic yourself. If the person declined, say so briefly and carry on without it.
-- When more than one agent ran on the same company for one request, combine their deliverables into one Package (a cover, a contents list, each agent's deliverable and one combined open-items list) following `skafld-vc:deliverable-html`: with the Files add-on, its `deliverables:render_package` tool given the files the agents wrote; without it, one Markdown document as that skill says. Say where the Package is.
-- When someone asks for a file (Word, PDF, a deck, Excel), follow `skafld-vc:document-export`: with the Files add-on, `deliverables:export_document` (a deliverable or package by its file, any other answer as Markdown); without it, Claude's own document tools as that skill says. A Diligence plan's founder request list is Excel for the founder, from `body.requests` only.
-- When someone asks to change how the files look (their logo, colours, fonts) or their firm's details (thesis, mandate, cheque range, decision format), follow `skafld-vc:setup` here in the conversation (the same as `/skafld-vc:setup`), changing only the parts they name; without the Files add-on only the firm profile can be set, and files look however this Claude makes them.
+- When the agent returns, summarise what it produced in a few lines, say where the full output is, and say that it is a draft for staff review. If it returned its report and deliverable JSON in its message because it could not write files, save them as `skafld-vc:deliverable-html` says where you can. If its composite is labelled "arithmetic not tool-verified", verify it rather than compute it: where you have `deliverables:score_with_rubric`, call it on the agent's criteria and knock-outs as `skafld-vc:deal-scorecard` (step 6) says, and give its composite and band, correcting the report where they differ; without that tool, say the composite is unverified and that the deliverables server (it needs Node.js) or the scorer script in `skafld-vc:deal-scorecard`, run by the person, would check it. Never redo the arithmetic yourself. If the person declined, say so briefly and carry on without it.
+- When more than one agent ran on the same company for one request, combine their deliverables into one Package (a cover, a contents list, each agent's deliverable and one combined open-items list) following `skafld-vc:deliverable-html`: when the deliverables server is running, its `deliverables:render_package` tool given the files the agents wrote; without it, one Markdown document as that skill says. Say where the Package is.
+- When someone asks for a file (Word, PDF, a deck, Excel), follow `skafld-vc:document-export`: when the deliverables server is running, `deliverables:export_document` (a deliverable or package by its file, any other answer as Markdown); without it, Claude's own document tools as that skill says. A Diligence plan's founder request list is Excel for the founder, from `body.requests` only.
+- When someone asks to change how the files look (their logo, colours, fonts) or their firm's details (thesis, mandate, cheque range, decision format), follow `skafld-vc:setup` here in the conversation (the same as `/skafld-vc:setup`), changing only the parts they name; without the setup server (it needs Node.js) only the firm profile can be set, and files look however this Claude makes them.
 
 ## 3. A quick analysis you can do yourself
 

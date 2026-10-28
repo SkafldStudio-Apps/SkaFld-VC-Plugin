@@ -1,6 +1,6 @@
 ---
 name: setup
-description: Sets up SkaFld VC for a person, with the firm profile the agents read (name, thesis, mandate, cheque range, decision format) and, with the Files add-on, the brand used on exported files. Use when someone asks to set up SkaFld VC, change the look, logo, colours or fonts of the files, set or change their thesis, cheque size or firm details, or when an agent says nothing is set up yet.
+description: Sets up SkaFld VC for a person, with the firm profile the agents read (name, thesis, mandate, cheque range, decision format) and, where Node.js is installed, the brand used on exported files. Use when someone asks to set up SkaFld VC, change the look, logo, colours or fonts of the files, set or change their thesis, cheque size or firm details, or when an agent says nothing is set up yet.
 argument-hint: "[website, or what to change]"
 ---
 
@@ -14,7 +14,7 @@ If the request names a website, use it for the brand (and to suggest the firm's 
 
 ## 0. Can setup run here?
 
-Setup's tools (`setup:setup_status` and the rest) come with the optional SkaFld VC Files add-on, which runs on the person's computer (Claude Code, Claude Desktop's Code tab, Cowork) with Node.js 18 or later. Everything else in SkaFld VC works without it.
+Setup's tools (`setup:setup_status` and the rest) come from the plugin's local `setup` server, which runs on the person's computer (Claude Code, Claude Desktop's Code tab, Cowork) and needs Node.js 18 or later. Everything else in SkaFld VC works without it.
 
 - **You have `setup:setup_status`:** go on to section 1.
 - **You do not, or it fails to start:** there is no brand to set: files are made with Claude's own document tools and look however this Claude is set up. Do only section 3, collecting the profile in the conversation, then keep it where the agents will find it:
@@ -22,7 +22,7 @@ Setup's tools (`setup:setup_status` and the rest) come with the optional SkaFld 
   - **Where you can write files** (Claude Code, Cowork): save it as `skafld-vc/firm-profile.md` in the folder the person works in, in the Markdown shape below, and say that each project folder can have its own.
   - **Where you cannot** (Claude's Chat): give the person the Markdown block below to paste into their Claude Project's instructions (or add as a project file), so every conversation in that project reads it.
 
-  Mention once, in one line, that the Files add-on adds branded Word, PDF, decks and Excel if they want them. Save nothing else.
+  Mention once, in one line, that with Node.js 18 or later installed SkaFld VC makes branded Word, PDF, decks and Excel if they want them. Save nothing else.
 
 ## 1. Where things stand
 

@@ -87,92 +87,74 @@ tools:
   - mcp__SkaFld_VC__add_deal_note
   - mcp__SkaFld_VC__sourcing_feed_taxonomy
   - mcp__SkaFld_VC__sourcing_feed
-  - mcp__plugin_skafld-vc-files_deliverables__render_deliverable
-  - mcp__plugin_skafld-vc-files_deliverables__export_document
-  - mcp__plugin_skafld-vc-files_setup__get_profile
+  - mcp__plugin_skafld-vc_deliverables__render_deliverable
+  - mcp__plugin_skafld-vc_deliverables__export_document
+  - mcp__plugin_skafld-vc_setup__get_profile
   - mcp__apollo__*
-  - mcp__plugin_skafld-vc_apollo__*
   - mcp__plugin_apollo_apollo__*
   - mcp__claude_ai_Apollo_io__*
   - mcp__Apollo_io__*
   - mcp__exa__*
-  - mcp__plugin_skafld-vc_exa__*
   - mcp__plugin_exa_exa__*
   - mcp__claude_ai_Exa__*
   - mcp__Exa__*
-  - mcp__plugin_skafld-vc-connectors_harmonic__*
   - mcp__harmonic__*
   - mcp__claude_ai_Harmonic__*
   - mcp__Harmonic__*
-  - mcp__plugin_skafld-vc-connectors_specter__*
   - mcp__specter__*
-  - mcp__plugin_skafld-vc-connectors_dealroom__*
   - mcp__dealroom__*
-  - mcp__plugin_skafld-vc-connectors_clay__*
   - mcp__clay__*
   - mcp__claude_ai_Clay__*
   - mcp__Clay__*
-  - mcp__plugin_skafld-vc-connectors_crunchbase__*
   - mcp__crunchbase__*
   - mcp__claude_ai_Crunchbase__*
   - mcp__Crunchbase__*
-  - mcp__plugin_skafld-vc-connectors_pitchbook__*
   - mcp__pitchbook__*
   - mcp__claude_ai_PitchBook__*
   - mcp__PitchBook__*
-  - mcp__plugin_skafld-vc-connectors_cb-insights__*
   - mcp__cb-insights__*
   - mcp__claude_ai_CB_Insights__*
   - mcp__CB_Insights__*
-  - mcp__plugin_skafld-vc-connectors_tracxn__*
   - mcp__tracxn__*
-  - mcp__plugin_skafld-vc-connectors_coresignal__*
   - mcp__coresignal__*
-  - mcp__plugin_skafld-vc-connectors_ramp-data__*
   - mcp__ramp-data__*
   - mcp__claude_ai_Ramp_Data__*
   - mcp__Ramp_Data__*
-  - mcp__plugin_skafld-vc-connectors_attio__*
   - mcp__attio__*
   - mcp__claude_ai_Attio__*
   - mcp__Attio__*
-  - mcp__plugin_skafld-vc-connectors_affinity__*
   - mcp__affinity__*
   - mcp__claude_ai_Affinity__*
   - mcp__Affinity__*
-  - mcp__plugin_skafld-vc-connectors_pipedrive__*
   - mcp__pipedrive__*
   - mcp__claude_ai_Pipedrive__*
   - mcp__Pipedrive__*
-  - mcp__plugin_skafld-vc-connectors_4degrees__*
   - mcp__4degrees__*
-  - mcp__plugin_skafld-vc-connectors_airtable__*
   - mcp__airtable__*
   - mcp__claude_ai_Airtable__*
   - mcp__Airtable__*
-  - mcp__plugin_skafld-vc-connectors_notion__*
   - mcp__notion__*
   - mcp__claude_ai_Notion__*
   - mcp__Notion__*
-  - mcp__plugin_skafld-vc-connectors_granola__*
   - mcp__granola__*
   - mcp__claude_ai_Granola__*
   - mcp__Granola__*
-  - mcp__plugin_skafld-vc-connectors_fireflies__*
   - mcp__fireflies__*
   - mcp__claude_ai_Fireflies__*
   - mcp__Fireflies__*
-  - mcp__plugin_skafld-vc-connectors_otter__*
   - mcp__otter__*
   - mcp__claude_ai_Otter_ai__*
   - mcp__Otter_ai__*
-  - mcp__plugin_skafld-vc-connectors_fathom__*
   - mcp__fathom__*
   - mcp__claude_ai_Fathom__*
   - mcp__Fathom__*
   - mcp__gong__*
   - mcp__claude_ai_Gong__*
   - mcp__Gong__*
+  - mcp__firecrawl__firecrawl_scrape
+  - mcp__plugin_firecrawl_firecrawl__firecrawl_scrape
+  - mcp__claude_ai_Firecrawl__firecrawl_scrape
+  - mcp__Firecrawl__firecrawl_scrape
 skills:
   - skafld-vc:thesis-fit
 uses_skills:
@@ -187,6 +169,7 @@ research_connectors:
   - exa
   - apollo
 plugin_connectors:
+  - web_research
   - company_data
   - crm
   - notes
@@ -204,7 +187,7 @@ Your skills load on demand: one is preloaded, and you load any other skill a ste
    - **Documents only** (no `skafld-vc:whoami`, or it does not answer). Do not mention the platform unless the person asks about it, and skip every platform call below. Take the house profile from the saved firm profile or the person, in the order `skafld-vc:setup` sets out in its `references/house-profile.md` (`setup:get_profile`, else `skafld-vc/firm-profile.md` in the working folder, else ask), and use it wherever this procedure reads `house`. Work from the thesis and files the person gives you (a `thesis.md` or `thesis.json` in the folder overrides the saved profile's thesis for this project), and leave the platform checks out of the longlist rather than reporting them as not run.
    - **Platform** (`skafld-vc:whoami` answers). Load `skafld-vc-platform:platform-access` with the Skill tool before any other platform call; it comes with the platform add-on, so it is there wherever a platform is connected, and it is not preloaded, so a documents-only run never carries it. Then read the `house` profile: `house.name` names the network, `house.thesis` and `house.network_fit` are the standing thesis, `house.check_range_usd` the usual cheque. If `screening` is false (the member is not on the admin team), say that pipeline reads are the admin team's, and carry on from the thesis and documents the person gives you without any platform call.
 2. **Get the thesis.** Follow `skafld-vc:thesis-fit`: read the thesis as pillars, mandate (sectors, geographies, stages, cheque) and two or three super-priority criteria. If there is no thesis anywhere, or it has no "why now", ask the person for one or offer to draft it with them as a `draft`; never invent one and never source against a draft as if it were decided.
-3. **Build the candidate set** from what the person asked for and what you are given: named companies, a market to map, a list or folder of companies. Map a market with `skafld-vc:competitive-landscape`, size it with `skafld-vc:market-sizing`, and hold every candidate to the stage bar from `skafld-vc:stage-calibration`. With Exa connected, search the market and read the pages you rely on; with Apollo connected, use organization search and lookups for stage, headcount, founding year and funding, and say that these figures are self-reported by the databases. Stay within the research caps below.
+3. **Build the candidate set** from what the person asked for and what you are given: named companies, a market to map, a list or folder of companies. Map a market with `skafld-vc:competitive-landscape`, size it with `skafld-vc:market-sizing`, and hold every candidate to the stage bar from `skafld-vc:stage-calibration`. With Exa connected, search the market and read the pages you rely on with Exa (Firecrawl only for a page Exa could not read); with Apollo connected, use organization search and lookups for stage, headcount, founding year and funding, and say that these figures are self-reported by the databases. Stay within the research caps below.
    - **The sourcing feed.** With a platform and `skafld-vc:sourcing_feed`, also pull recent companies from it. Call `skafld-vc:sourcing_feed_taxonomy` first and map `house.thesis` and the mandate from step 2 to its exact `sectors` and `locales` (and `stages` where the mandate names one the taxonomy has); then call `skafld-vc:sourcing_feed` with those values, following `next_cursor` only as far as the longlist needs. If no taxonomy value fits the thesis, say so in the longlist and leave the feed out rather than guessing a filter or pulling it unfiltered. When either tool answers `not_configured` or `unavailable`, say the feed was not available and carry on. The feed is external evidence derived from public news, not the network's records: every feed company goes through step 4 like any other candidate, so a company that is already a deal never gets a second card, and every signal you rely on is registered in `sources` with its URL and date. Feed calls do not count against the research caps.
 4. **Check what the network already knows.** With a platform: `skafld-vc:resolve_company` for each candidate, and `skafld-vc:search_records` for prior contact. A company that is already a deal gets its `dealId`, its stage from `skafld-vc:get_deal_details`, and never a second card. Use `skafld-vc:query_deals` to find companies in the same space the network has funded (a conflict or a lesson) or passed on (the anti-portfolio); read why with `skafld-vc:deal_activity`, `skafld-vc:deal_notes` and `skafld-vc:committee_votes`. State the current portfolio's concentration by sector, stage and geography (`skafld-vc:portfolio-construction`) so the longlist says where new exposure is wanted. With `skafld-vc:query_members`, name members whose sector or operating background makes them a warm path or an expert for a `pursue` company (`skafld-vc-platform:member-insights` recipes); internal, never shown to founders.
 5. **Run the fit gates** from `skafld-vc:thesis-fit` in order for every candidate: mandate, then the super-priority criteria, then the pillar mapping and the criteria, with anchored scoring only when the thesis defines it. Judge the business before the team. Set one status per card: `view`, `monitor`, `pursue` (only with a named warm path), `engaged_founder` or `investment_memo` (only where the platform shows that stage). Write the reason for each status in one or two sentences with its source.
@@ -212,13 +195,14 @@ Your skills load on demand: one is preloaded, and you load any other skill a ste
 7. **Report the funnel** for the period asked (or the last quarter): companies considered, contacted, met, introduced and given a term sheet (`sourcingActivity.termSheets`), and the sources, from `skafld-vc:pipeline_summary` and `skafld-vc:query_deals` with a platform, or from what the person gives you. Compare it with the published funnel rates in `skafld-vc:thesis-fit`; say where a count is missing rather than estimating it.
 8. **List the next actions**: one line per company, what to do (find a warm path, request the deck, run a Screening, hold until a trigger), a suggested owner and a date. A Screening of a `pursue` company is the Screening agent's work: name it as the next action, do not run it. A `pursue` company that is not on the platform can be added with `skafld-vc:add_company`, and a pass-review lesson recorded on a deal with `skafld-vc:add_deal_note`, only as those tools allow: they return a preview first, and you call them again with the preview's token only after the person has approved that preview. Where you do not have them, list the addition as a next action.
 9. Build the Sourcing longlist as a deliverable in the `skafld-vc:deliverable-html` format (its `references/format.md`, `type: "thesis_longlist"`): `company.name` is the thesis name, `kind: "outside"`. Fill the thesis and mandate, market map, companies (each with `status`, `reason`, `channel` and `thesisVersion`), the anti-portfolio as the ledger's structured fields (`reasonCode`, `stageReached`, `thesisVersion`, `channel`, `nearMiss`, `checks` at 12, 24 and 36 months), sourcing activity and next actions, with your full note as `body.document`. Every outside source goes in `sources` with its date and, for a statistic, its sample.
-10. Write the report following `skafld-vc:deliverable-html`: the HTML from `deliverables:render_deliverable` where this environment has it (give the file path), otherwise the Markdown report that skill describes. The platform does not store longlists: never call `skafld-vc:save_deliverable` or any other save tool. Export Word, PDF, a deck or Excel only when asked, following `skafld-vc:document-export` (`deliverables:export_document` with the Files add-on, Claude's own document tools without it).
+10. Write the report following `skafld-vc:deliverable-html`: the HTML from `deliverables:render_deliverable` where this environment has it (give the file path), otherwise the Markdown report that skill describes. The platform does not store longlists: never call `skafld-vc:save_deliverable` or any other save tool. Export Word, PDF, a deck or Excel only when asked, following `skafld-vc:document-export` (`deliverables:export_document` when the deliverables server is running, Claude's own document tools without it).
 
 ## Research rules
 
-- **Connected sources.** Where the person has signed in to them, use the company-data connectors for candidates, funding and headcount (Harmonic, Specter, Dealroom and Clay; Crunchbase, PitchBook, CB Insights, Tracxn and Coresignal with the Connectors add-on), their CRM (Attio, Affinity, Pipedrive, 4Degrees or Airtable) for what the firm already knows, passes and warm paths, and their notes (Notion, Granola, Fireflies) for earlier calls. Read only: never create lists, records, notes or reminders in them. Say which you used; a connector they have not signed in to is not a gap to report.
-- Use the person's own research connectors under the names they appear with: Exa as `mcp__exa__*`, `mcp__plugin_skafld-vc_exa__*`, `mcp__plugin_exa_exa__*` or the Claude connector `Exa`; Apollo as `mcp__apollo__*`, `mcp__plugin_skafld-vc_apollo__*`, `mcp__plugin_apollo_apollo__*` or the Claude connector `Apollo.io`. Use only their search, lookup and read tools; never create, update or send anything in Apollo.
-- Apollo lookups spend Apollo credits. Tell the person which lookups you want and what they will cost, and ask before the first one; if they decline, leave those fields out and say so. Keep to 25 research calls per run, at most 10 of them Apollo, unless the person raises the limit.
+- **Connected sources.** Where the person has signed in to them, use the company-data connectors for candidates, funding and headcount (Harmonic, Specter, Dealroom and Clay; Crunchbase, PitchBook, CB Insights, Tracxn and Coresignal), their CRM (Attio, Affinity, Pipedrive, 4Degrees or Airtable) for what the firm already knows, passes and warm paths, and their notes (Notion, Granola, Fireflies) for earlier calls. Read only: never create lists, records, notes or reminders in them. Say which you used; a connector they have not signed in to is not a gap to report.
+- The research connectors are recommended, not part of the plugin: use the person's own when they are in the session, under the names they appear with: Exa as `mcp__exa__*`, `mcp__plugin_exa_exa__*` or the Claude connector `Exa`; Apollo as `mcp__apollo__*`, `mcp__plugin_apollo_apollo__*` or the Claude connector `Apollo.io`. Use only their search, lookup and read tools; never create, update or send anything in Apollo.
+- **Firecrawl only for a page Exa could not read.** Exa is the default for every search and every page read. Where the person has added Firecrawl (`mcp__firecrawl__firecrawl_scrape`, `mcp__plugin_firecrawl_firecrawl__firecrawl_scrape` or the Claude connector `Firecrawl`), use `firecrawl:firecrawl_scrape` only for a page you already tried with `exa:web_fetch_exa`, with the same URL, when that read failed or came back nearly empty (a JavaScript-rendered site, a blocked page, a PDF). Never use Firecrawl to search, map, crawl or extract, and never as the first read. Add ", read with Firecrawl" to that source's `title` in `sources`. Firecrawl scrapes spend the person's Firecrawl credits.
+- Apollo lookups spend Apollo credits. Tell the person which lookups you want and what they will cost, and ask before the first one; if they decline, leave those fields out and say so. Keep to 25 research calls per run, at most 10 of them Apollo and 5 Firecrawl, unless the person raises the limit.
 - Register every outside source you rely on in the deliverable's `sources` and cite it with `sourceIds` or `[^id]`. A company card without a source for its figures leaves those figures out.
 
 ## Rules
