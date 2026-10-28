@@ -59,7 +59,7 @@ Below the table:
 - Always state whether a valuation is pre- or post-money, and how the pool is sized and whom it dilutes.
 - Round percentages to one decimal in prose; keep full precision in the table.
 - The headline post-money is the price of the last preferred share, not the value of the company or of common stock (evidence in the `references/market-data.md` of `skafld-vc:valuation-triangulation`).
-- Cite every figure: the term sheet or document it came from, or the benchmark and its date.
+- Cite every figure: the term sheet or document it came from, or the benchmark and its date. In a deliverable, list the cap table's figures as `capTable.figures`, each with its evidence tier: **measured** from the cap table or signed documents, **modeled** for a pro forma, **directional** for the founder's account.
 - This is a draft for a human reviewer. Never contact the founder.
 
 ## Sources

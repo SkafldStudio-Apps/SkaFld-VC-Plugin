@@ -50,6 +50,7 @@ In a Screening this block goes into the report's document and informs the rubric
 - Never average, weight or blend the four answers, and never print a single "fair value". Payne's advice to use several methods is a call to compare answers, not to blend them.
 - Never use Berkus, Risk Factor Summation, the Step Up checklist or a stand-alone Scorecard as a dollar figure. If a reader asks for them, print them in a footnote labelled "unvalidated heuristics", with their authors' own caveat that the constants must be rescaled to the local market (Berkus, 2016; Payne, 2019).
 - Every external figure carries its source and date and is said to age. Take market figures from `references/market-data.md`, which gives their as-of date; angel-group prices run lower than the venture medians there.
+- In a deliverable, list the price figures (the round, the post-money, the ceiling, the counter) as the price verdict's `figures`, each with its evidence tier: **measured** from a signed term sheet or SAFE, **modeled** when computed (post-money from raise and ownership, the ceiling), **directional** when it is the founder's ask or an outside median.
 - Base-rate priors are stated before any adjustment for the rubric, and each adjustment has a one-line reason.
 - Missing evidence is not assessed, never a guess. A step that cannot run says which input would let it.
 - Three times is a portfolio outcome, never the per-deal test at seed.

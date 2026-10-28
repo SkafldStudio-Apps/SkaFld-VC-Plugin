@@ -475,6 +475,32 @@ td ul:last-child {
   border-color: var(--tone-info-edge);
 }
 
+/* Evidence tiers: a small neutral label; the edge style tells them apart in
+   print and without colour (solid measured, dashed modeled, dotted directional) */
+
+.tier {
+  display: inline-block;
+  padding: 0 0.3125rem;
+  border: 1px solid var(--tone-neutral-edge);
+  border-radius: var(--radius);
+  color: var(--tone-neutral-strong);
+  font-size: var(--text-caption);
+  line-height: 1.5;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  vertical-align: baseline;
+}
+.tier-measured {
+  background: var(--tone-neutral-soft);
+}
+.tier-modeled {
+  border-style: dashed;
+}
+.tier-directional {
+  border-style: dotted;
+}
+
 /* The verdict: the one accent element on the page */
 
 .verdict {

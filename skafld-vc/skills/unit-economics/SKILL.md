@@ -83,6 +83,7 @@ Gaps: <what would resolve them>
 ## Rules
 
 - Never present a derived number without the formula and the inputs beside it.
+- In a deliverable, give each of the company's figures its evidence tier as well (the `figures` of `unitEconomics`, each with `tier`): **measured** when it is stated and read from a primary record (billing export, bank statement, accounts), **modeled** when it is derived, **directional** when it is stated by the founder or the deck and not checked against a record. Benchmarks are comparators, not the company's figures; they stay in the benchmark table.
 - Never annualise fewer than three months of data without saying so.
 - A run-rate is never trailing revenue. Label every annualised figure "run-rate", name the months it was annualised from, and keep trailing twelve-month revenue separate. Paying on run-rate means "paying for earnings that have not materialized" (Stanford Search Fund Primer, 2021). ARR excludes services and one-off revenue (a16z, 2015).
 - Where the company reports an adjusted figure (adjusted EBITDA, "excluding one-offs"), list each add-back and recompute without it.

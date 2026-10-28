@@ -68,6 +68,7 @@ Range: <low> to <high>; drivers: 1. ... 2. ...
 ## Rules
 
 - Cite every figure with source and date, and sample size where the source gives one.
+- Tag every figure with its evidence tier: **measured** (a count from a dated public dataset or the company's own records), **modeled** (your bottom-up TAM, SAM, SOM and derived bar, computed from stated inputs) or **directional** (the deck's figure, a research-firm estimate or a proxy). In a deliverable these are the `figures` of the market research entry, each with its `tier`.
 - A market that is large only because of an unproven price point is flagged as such.
 - Never quote a research-firm TAM without the definition it uses; state the analyst's leader-share assumption when the deck relies on one.
 - Missing inputs (no customer count, no exit comparables) are reported as not assessed with what would resolve them, never guessed and never scored down for being absent.

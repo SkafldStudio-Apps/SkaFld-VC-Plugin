@@ -196,6 +196,21 @@ const RISK_CLASSES = ["deal_killer", "price", "terms", "operating_risk"]
 const GAP_PRIORITIES = ["deal_killer", "elephant", "ant"]
 // The proof ladder that closes a gap, strongest first.
 const EVIDENCE_CLASSES = ["paid", "behavioural", "product", "discovery", "none"]
+/**
+ * How a figure is known: read from a primary record, computed from stated
+ * inputs, or asserted and unchecked. Optional on every figure so earlier
+ * deliverables still validate; agents tag every figure.
+ */
+export const EVIDENCE_TIERS = Object.freeze([
+  "measured",
+  "modeled",
+  "directional",
+])
+const TIER_LABELS = {
+  measured: "Measured",
+  modeled: "Modeled",
+  directional: "Directional",
+}
 // technical-diligence's verdicts.
 const TECH_VERDICTS = [
   "technically_sound",
@@ -771,6 +786,7 @@ function checkDeckAudit(c, audit, path, cites) {
     c.str(claim, "claim", p)
     c.oneOf(claim, "status", CLAIM_STATUSES, p)
     c.optStr(claim, "basis", p)
+    c.optOneOf(claim, "tier", EVIDENCE_TIERS, p)
     c.optStr(claim, "note", p)
     cites(claim, p)
   })
@@ -788,6 +804,31 @@ function checkDeckAudit(c, audit, path, cites) {
 /** A present section must be the right shape; an absent one is fine. */
 function present(v) {
   return v !== undefined && v !== null
+}
+
+/**
+ * An optional `figures` list on obj: each { label, value, tier?, asOf?,
+ * note?, sourceIds? }, the tier one of EVIDENCE_TIERS when set.
+ */
+function checkFigures(c, obj, path, cites) {
+  c.arr(
+    obj,
+    "figures",
+    path,
+    (f, p) => {
+      c.str(f, "label", p)
+      c.req(
+        nonEmpty(f.value) || isNumber(f.value),
+        `${p}.value`,
+        "must be a non-empty string or a number"
+      )
+      c.optOneOf(f, "tier", EVIDENCE_TIERS, p)
+      c.optStr(f, "asOf", p)
+      c.optStr(f, "note", p)
+      cites(f, p)
+    },
+    { optional: true }
+  )
 }
 
 /** true, false or null (not checked), when set. */
@@ -818,6 +859,7 @@ function checkPrice(c, v, path, cites) {
   for (const k of ["ask", "terms", "counter"]) c.optStr(v, k, path)
   c.optOneOf(v, "askVsCeiling", CEILING_RESULTS, path)
   optTriState(c, v, "termsStandard", path)
+  checkFigures(c, v, path, cites)
   cites(v, path)
 }
 
@@ -852,6 +894,7 @@ function checkScreening(c, b, path, cites) {
     }
   }
   if (present(b.stageBar)) c.str(b, "stageBar", path)
+  checkFigures(c, b, path, cites)
   if (present(b.price)) checkPrice(c, b.price, `${path}.price`, cites)
   const s = b.scorecard
   const sp = `${path}.scorecard`
@@ -968,6 +1011,7 @@ function checkScreening(c, b, path, cites) {
       c.str(r, "topic", p)
       c.oneOf(r, "status", RESEARCH_STATUSES, p)
       c.optStr(r, "findings", p)
+      checkFigures(c, r, p, cites)
       c.optStr(r, "connector", p)
       cites(r, p)
     },
@@ -991,6 +1035,7 @@ const SECTION_KEYS = {
   screening: [
     "verdict",
     "stageBar",
+    "figures",
     "scorecard",
     "price",
     "founders",
@@ -1001,6 +1046,7 @@ const SECTION_KEYS = {
   ],
   diligence: [
     "stageBar",
+    "figures",
     "workstreams",
     "dataRoom",
     "unitEconomics",
@@ -1065,16 +1111,18 @@ function hasContent(v) {
   return true
 }
 
-function checkAnalysis(c, v, path) {
+function checkAnalysis(c, v, path, cites) {
   if (v === undefined || v === null) return
   if (!c.req(isObject(v), path, "must be an object when set")) return
   c.req(typeof v.analysis === "string", `${path}.analysis`, "must be a string")
   c.arr(v, "missing", path, "string", { optional: true })
+  checkFigures(c, v, path, cites)
 }
 
 function checkDiligence(c, b, path, cites) {
   const opt = { optional: true }
   if (present(b.stageBar)) c.str(b, "stageBar", path)
+  checkFigures(c, b, path, cites)
   const seen = new Set()
   c.arr(
     b,
@@ -1112,8 +1160,8 @@ function checkDiligence(c, b, path, cites) {
     },
     opt
   )
-  checkAnalysis(c, b.unitEconomics, `${path}.unitEconomics`)
-  checkAnalysis(c, b.capTable, `${path}.capTable`)
+  checkAnalysis(c, b.unitEconomics, `${path}.unitEconomics`, cites)
+  checkAnalysis(c, b.capTable, `${path}.capTable`, cites)
   const tp = `${path}.techDetermination`
   if (
     present(b.techDetermination) &&
@@ -1135,6 +1183,7 @@ function checkDiligence(c, b, path, cites) {
       c.oneOf(f, "class", FINDING_CLASSES, p)
       optFigure(c, f, "low", p)
       optFigure(c, f, "high", p)
+      c.optOneOf(f, "tier", EVIDENCE_TIERS, p)
       c.optStr(f, "lever", p)
       c.optOneOf(f, "workstream", WORKSTREAMS, p)
       cites(f, p)
@@ -1713,6 +1762,48 @@ export function validateDeliverable(input) {
 }
 
 /**
+ * Every figure in a deliverable (or in anything built from deliverable
+ * parts) with its evidence tier, null when
+ * untagged. A figure is each entry of a `figures` list, each deck-audit
+ * claim with a digit in it, and each Diligence finding with a `low` or
+ * `high` bookend. Paths are dotted, as validation errors print them.
+ */
+export function figureTiers(value) {
+  const out = []
+  const tierOf = (o) => (EVIDENCE_TIERS.includes(o.tier) ? o.tier : null)
+  const walk = (v, path, depth) => {
+    if (depth > 64 || v === null || typeof v !== "object") return
+    if (Array.isArray(v)) {
+      v.forEach((x, i) => walk(x, `${path}[${i}]`, depth + 1))
+      return
+    }
+    if (typeof v.claim === "string" && /\d/.test(v.claim)) {
+      out.push({ path, kind: "claim", tier: tierOf(v) })
+    }
+    if (
+      typeof v.finding === "string" &&
+      (hasContent(v.low) || hasContent(v.high))
+    ) {
+      out.push({ path, kind: "finding", tier: tierOf(v) })
+    }
+    for (const [k, child] of Object.entries(v)) {
+      const p = path ? `${path}.${k}` : k
+      if (k === "figures" && Array.isArray(child)) {
+        child.forEach((f, i) => {
+          if (isObject(f)) {
+            out.push({ path: `${p}[${i}]`, kind: "figure", tier: tierOf(f) })
+          }
+        })
+        continue
+      }
+      walk(child, p, depth + 1)
+    }
+  }
+  walk(value, "", 0)
+  return out
+}
+
+/**
  * Warnings that do not make a deliverable invalid. Today one: `sources`
  * lists only the deck while the Markdown links to other pages, so the cover
  * and the Sources section undercount what the agent read. Agents should
@@ -2156,10 +2247,46 @@ function statusBadgeOf(map, status) {
   return badge(own(map, status, "neutral"), label(status))
 }
 
+/** The evidence tier as a small label; nothing for an untagged figure. */
+function tierLabel(tier) {
+  if (!EVIDENCE_TIERS.includes(tier)) return ""
+  return `<span class="tier tier-${tier}" title="Evidence tier">${escapeHtml(TIER_LABELS[tier])}</span>`
+}
+
+/** A list of figures as a table, each with its tier label. */
+function figuresTable(ctx, figures) {
+  if (!hasContent(figures)) return ""
+  const dated = figures.some((f) => hasContent(f.asOf))
+  return table(
+    ["Figure", "Value", "Tier", ...(dated ? ["As of"] : []), "Basis"],
+    figures.map((f) => [
+      escapeHtml(f.label),
+      `<span class="mono">${figure(f.value)}</span>`,
+      tierLabel(f.tier),
+      ...(dated ? [escapeHtml(f.asOf ?? "")] : []),
+      `${inline(ctx, f.note ?? "")}${ctx.cites(f.sourceIds)}`,
+    ]),
+    "figures"
+  )
+}
+
+const TIER_LEGEND =
+  '<p class="muted">Measured: read from a primary record. Modeled: computed from stated inputs. Directional: asserted or estimated, not checked against a record.</p>'
+
+function keyFiguresSection(ctx, figures) {
+  return section(
+    ctx,
+    "key-figures",
+    "Key figures",
+    `${figuresTable(ctx, figures)}${TIER_LEGEND}`
+  )
+}
+
 /** Diligence findings grouped by class, with their bookends. */
 function findingsSection(ctx, findings) {
   const levers = findings.some((f) => f.lever)
   const streams = findings.some((f) => f.workstream)
+  const tiers = findings.some((f) => EVIDENCE_TIERS.includes(f.tier))
   const counts = FINDING_CLASSES.map((k) => [
     k,
     findings.filter((f) => f.class === k).length,
@@ -2172,6 +2299,7 @@ function findingsSection(ctx, findings) {
           `${inline(ctx, f.finding)}${ctx.cites(f.sourceIds)}`,
           figure(f.low),
           figure(f.high),
+          ...(tiers ? [tierLabel(f.tier)] : []),
           ...(levers ? [inline(ctx, f.lever ?? "")] : []),
           ...(streams
             ? [
@@ -2192,6 +2320,7 @@ function findingsSection(ctx, findings) {
           "Finding",
           "Low",
           "High",
+          ...(tiers ? ["Tier"] : []),
           ...(levers ? ["Lever"] : []),
           ...(streams ? ["Workstream"] : []),
         ],
@@ -2285,7 +2414,7 @@ function deckAuditSection(ctx, audit, id = "deck-audit") {
       : ""
   const rows = audit.claims.map((c) => [
     c.slide === undefined || c.slide === null ? "" : mono(c.slide),
-    `<q>${inline(ctx, c.claim)}</q>`,
+    `<q>${inline(ctx, c.claim)}</q>${c.tier ? ` ${tierLabel(c.tier)}` : ""}`,
     statusBadge(TONES.claim, c.status),
     escapeHtml(c.basis ?? ""),
     `${inline(ctx, c.note ?? "")}${ctx.cites(c.sourceIds)}`,
@@ -2453,7 +2582,7 @@ function priceBody(ctx, v) {
   ]
     .filter(([, t]) => hasContent(t))
     .map(([k, t]) => [escapeHtml(k), md(ctx, t)])
-  return `${facts.length ? `<p class="facts">${facts.join(" · ")}</p>` : ""}${table(["Test", "Answer"], rows)}${
+  return `${facts.length ? `<p class="facts">${facts.join(" · ")}</p>` : ""}${table(["Test", "Answer"], rows)}${figuresTable(ctx, v.figures)}${
     hasContent(v.counter)
       ? `<p class="label">Counter</p>${md(ctx, v.counter)}`
       : ""
@@ -2510,6 +2639,7 @@ function renderScreening(d, ctx) {
   if (hasContent(b.stageBar)) {
     out.push(section(ctx, "stage-bar", "Stage bar", md(ctx, b.stageBar)))
   }
+  if (hasContent(b.figures)) out.push(keyFiguresSection(ctx, b.figures))
   if (b.scorecard) out.push(screeningScorecard(ctx, b.scorecard))
   if (b.price) out.push(section(ctx, "price", "Price", priceBody(ctx, b.price)))
   if (hasContent(b.founders) || hasContent(b.foundersNote)) {
@@ -2547,7 +2677,7 @@ function renderScreening(d, ctx) {
             r.status === "not_checked"
               ? `<p class="muted">Not checked${r.findings ? `: ${inline(ctx, r.findings)}` : "."}</p>`
               : md(ctx, r.findings ?? "")
-          }${ctx.cites(r.sourceIds)}</li>`
+          }${figuresTable(ctx, r.figures)}${ctx.cites(r.sourceIds)}</li>`
       )
       .join("")
     out.push(
@@ -2587,6 +2717,7 @@ function renderDiligence(d, ctx) {
   if (hasContent(b.stageBar)) {
     out.push(section(ctx, "stage-bar", "Stage bar", md(ctx, b.stageBar)))
   }
+  if (hasContent(b.figures)) out.push(keyFiguresSection(ctx, b.figures))
   if (b.workstreams) {
     const byKey = new Map(b.workstreams.map((w) => [w.key, w]))
     const streams = WORKSTREAMS.filter((k) => byKey.has(k))
@@ -2673,7 +2804,7 @@ function renderDiligence(d, ctx) {
       ctx,
       id,
       title,
-      `${md(ctx, v.analysis)}${
+      `${md(ctx, v.analysis)}${figuresTable(ctx, v.figures)}${
         v.missing?.length
           ? `<p class="label">Missing</p><ul>${v.missing.map((m) => `<li>${inline(ctx, m)}</li>`).join("")}</ul>`
           : ""

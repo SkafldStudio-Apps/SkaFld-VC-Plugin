@@ -30,7 +30,7 @@ A reading aid for a human reviewer, not a verdict. Every finding quotes the slid
    | 13  | Product or service roadmap, and the future | G, S | Next 12-24 months of product; the 5- and 10-year vision                                                                                                                    |
    | 14  | Financials, the ask and milestones         | G, S | Proforma or projected financials with assumptions; how much is being raised; how the funds will be used; what the round achieves in one and two years and what it de-risks |
 
-3. **Record every quantitative claim**: the figure verbatim, its slide, and whether a source or method is given. Mark each **sourced** (a named source or a method you can recompute), **asserted** (a number with no source) or **marketing** (superlatives, "the leading", "10x better" with no measure).
+3. **Record every quantitative claim**: the figure verbatim, its slide, and whether a source or method is given. Mark each **sourced** (a named source or a method you can recompute), **asserted** (a number with no source) or **marketing** (superlatives, "the leading", "10x better" with no measure). Give every claim with a number its evidence tier (`tier` in the deliverable): **measured** when a primary record confirms it (a billing export, bank statement, signed contract, cap table), **modeled** when you recomputed it from stated inputs, **directional** when it is the deck's assertion and nothing checked it. A sourced claim is not measured until the record itself is read.
 
 4. **Run the precision test.** For each claim that matters to the decision (market, traction, retention, growth, pricing, team outcomes), record whether it is quantified or not. "Our NRR is 146%. 60% of our accounts expand by 70% six months after they start" is precise; "customers love us" is not (Pear VC, 2026). Count quantified against unquantified claims and list the unquantified ones that most need a number.
 
@@ -86,7 +86,7 @@ Hypotheticals: 1. customer negative experience 2. bug after ship 3. competitor <
 - Keep the tone neutral; the audit is a reading aid, not a verdict, and a draft for a human decision.
 - Every benchmark or threshold you cite carries its source and date. Never invent a benchmark to judge a claim; where none exists, say so.
 - An item the stage does not produce yet is `not_assessed`, never a low score.
-- Cite every figure to its slide or to the tool result it came from.
+- Cite every figure to its slide or to the tool result it came from, and tag it measured, modeled or directional; those are the only three tiers.
 - Never contact the company or its founders; the question list is for the human team.
 
 ## Sources
