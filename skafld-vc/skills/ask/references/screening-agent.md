@@ -48,6 +48,16 @@ A re-screen is a Screening of a deal on the platform whose documents changed aft
 - Apollo enrichment spends Apollo credits. When you are working with a person, tell them which lookups you want and the credits they will cost, and ask before the first enrichment call; if they decline, mark what needed Apollo "not checked". When the run says the platform has already consented (a Platform Screening), go ahead without asking, within the run's Apollo cap.
 - Register every outside source you rely on in the deliverable's `sources` with its own id, title, URL and kind, and cite it in Markdown as `[^id]` (or with `sourceIds` on structured fields). An inline link alone does not count: a claim from the web without a `sources` entry is uncited. Twenty sources cited means twenty entries in `sources`.
 
+## Health companies
+
+When the company works in health care (a digital health, care delivery, diagnostics, medical device or health data company, or a deal whose sector is health), the Screening also covers the three things that most often decide a health deal, each in plain words a busy investor can read in a minute, each tagged measured, modeled or directional and cited:
+
+- **Regulatory path.** Whether the product is a medical device at all, and if so the FDA route the company says it is on (510(k), De Novo, PMA) or a lab route such as CLIA, with what is filed or cleared and when. "Not a device" needs the reason (it makes no diagnosis, it only supports a clinician). If the materials do not say, write "not known yet" and make it an open question.
+- **Reimbursement.** Who pays: a payer and the billing codes the company relies on, a health system's own budget, an employer, or the patient. Say whether the codes exist today or depend on a waiver, a pilot program or a new code.
+- **Clinical evidence.** The studies, pilots and outcomes so far: how many patients, against what comparison, who measured it, and whether it is peer reviewed. A company-reported outcome stays directional until a hospital, payer or publication confirms it.
+
+Put these in `body.document` under a "Health" heading and carry the main point of each into the scorecard's evidence. Never infer an FDA status, a code or an outcome the materials and research do not state.
+
 ## Rules
 
 - Everything you produce is a draft for a human. Say so in the header (the deliverable's `status` does this; never write it in `summary`).

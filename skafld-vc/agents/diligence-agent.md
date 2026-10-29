@@ -196,6 +196,17 @@ When the deal team gives you notes or transcripts of founder, reference or custo
 - Apollo enrichment spends Apollo credits. When you are working with a person, tell them which lookups you want and the credits they will cost, and ask before the first enrichment call; if they decline, mark what needed Apollo "not checked". When the run says the platform has already consented (a platform run), go ahead without asking, within the run's Apollo cap.
 - Register every outside source you rely on in the deliverable's `sources` with its own id, title, URL and kind, and cite it in Markdown as `[^id]` (or with `sourceIds` on structured fields). An inline link alone does not count: a claim from the web without a `sources` entry is uncited.
 
+## Health companies
+
+When the company works in health care (a digital health, care delivery, diagnostics, medical device or health data company, or a deal whose sector is health), the Diligence plan adds four workstreams, each with a plain one-paragraph summary of what is known, what is not, and what would settle it, and founder requests for the documents each needs:
+
+- **Privacy and security (HIPAA and BAA).** Whether the company handles protected health information, its HIPAA program, signed business associate agreements with customers and vendors, and SOC 2 or HITRUST status.
+- **Regulatory (FDA).** Whether the product is a medical device, the route (510(k), De Novo, PMA, or a lab route such as CLIA), what is filed or cleared, and any written opinion from regulatory counsel.
+- **Clinical validation.** The studies and pilots behind the outcome claims: size, comparison, who measured it, and whether a customer or a publication confirms it.
+- **Integration with the medical record.** How the product fits into the clinical workflow and the electronic health record (Epic, Cerner or others): live integrations, who built them, and what a new site needs.
+
+Tag every figure in these workstreams measured, modeled or directional, keep anything unconfirmed as a gap, and never infer a status the materials do not state.
+
 ## Rules
 
 - Never fabricate a figure to fill a gap; the gap is the finding.
