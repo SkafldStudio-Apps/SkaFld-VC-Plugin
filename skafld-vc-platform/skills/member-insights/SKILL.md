@@ -1,6 +1,6 @@
 ---
 name: member-insights
-description: Answers the questions members and staff of a SkaFld VC platform ask about the network, such as what is new, how the pipeline looks, which deals fit a member, or who should champion a founder, at the member's access. Use only where a SkaFld VC platform is connected (whoami answers) and the question is about the network in general terms.
+description: Answers the questions members and staff of a SkaFld VC platform ask about the network, such as what is new, how the pipeline looks, which deals fit a member, where an investor's own interest and commitments stand, or who should champion a founder, at the member's access. Use only where a SkaFld VC platform is connected (whoami answers) and the question is about the network in general terms.
 user-invocable: false
 ---
 
@@ -11,8 +11,9 @@ Load `skafld-vc-platform:platform-access` first and call `skafld-vc:whoami`: eve
 ## What's new
 
 1. `skafld-vc:my_notifications` (limit 20) and, for the admin tier, `skafld-vc:my_tasks`.
-2. `skafld-vc:pipeline_summary`, then `skafld-vc:query_deals` with `sort_by: "created_at"` and a small `limit` for the newest deals.
-3. Answer in three short sections: needs your attention, new in the pipeline, upcoming. Link deals.
+2. `skafld-vc:pipeline_summary`, then `skafld-vc:query_deals` with `sort_by: "created_at"` and a small `limit` for the newest deals. For investors and committee, also `skafld-vc:list_investor_deep_dives` for newly approved Investor views.
+3. `skafld-vc:list_events` for what is coming up, with the member's own RSVP.
+4. Answer in three short sections: needs your attention, new in the pipeline, upcoming. Link deals.
 
 ## How is the pipeline
 
@@ -31,7 +32,14 @@ Load `skafld-vc-platform:platform-access` first and call `skafld-vc:whoami`: eve
 
 1. Ask the member for two or three interests if not stated (sector, stage, check size, geography).
 2. `skafld-vc:query_deals` with those filters; `skafld-vc:compare_deals` on the shortlist.
-3. Explain the fit in one line per deal and what to read next.
+3. For an investor, mark which shortlisted deals have an approved Investor view (`skafld-vc:list_investor_deep_dives`) and which they already hold interest or a commitment in (`skafld-vc:my_investments`).
+4. Explain the fit in one line per deal and what to read next: the Investor view (`skafld-vc:get_investor_deep_dive`), the pitch deck (`skafld-vc:get_pitch_deck_link`) or, when the data room is open to them, `skafld-vc:list_data_room_documents`.
+
+## My investments (investors)
+
+1. `skafld-vc:my_investments`: each deal, its stage, the amount, interest or committed, type and date.
+2. Link each deal and say where it stands. Their records only; never guess at other investors' amounts.
+3. If they want to act, `skafld-vc:express_interest` (interest, not a commitment) or `skafld-vc:record_commitment` (a commitment at or above the platform's minimum, which the admin team follows up on; no money moves). Both preview first: show the preview and confirm only after they approve it, as `skafld-vc-platform:platform-access` sets out. A deal where they already have interest or a commitment refuses a new commitment; the admin team converts interest.
 
 ## Who in the network should champion this deal (admin tier)
 
@@ -63,7 +71,7 @@ Judge fit against `house.network_fit` from `skafld-vc:whoami`. The outcome-linke
 
 - State the scope once when it affects what is shown.
 - Keep answers short; link to the record as `[Company](/deals/{id})` rather than reproducing it, and cite deal ids and document names.
-- Internal notes, committee information and member records never leave the team.
+- Internal notes, committee information and member records never leave the team. Founder contact details are for the admin tier and committee only.
 - Anything addressed to a founder or a member is a draft for a human to send.
 
 ## Sources
