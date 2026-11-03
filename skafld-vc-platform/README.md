@@ -1,6 +1,6 @@
 # SkaFld VC Platform
 
-**Only for firms that run a SkaFld VC platform.** This add-on connects the SkaFld VC agents to your firm's platform: its deal pipeline, applications, documents, rubric, house profile and saved deliverables, at the access your login has. It installs SkaFld VC with it.
+**Only for firms that run a SkaFld VC platform**, the hosted deal-flow system SkaFld Studio builds for venture firms and angel networks (SkaFld VC is SkaFld Studio's app for backing companies, designed to run on SkaFldOS). This add-on connects the SkaFld VC agents to your firm's platform: its deal pipeline, applications, documents, rubric, house profile and saved deliverables, at the access your login has. It installs SkaFld VC with it.
 
 **No platform? You do not need this.** Install SkaFld VC on its own: every agent and skill works from your documents, scores against the default rubric or your own `rubric.json`, and exports files (in your brand once you set one up, where Node.js 18 or later is installed).
 

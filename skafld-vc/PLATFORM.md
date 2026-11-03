@@ -2,7 +2,7 @@
 
 **SkaFld VC works on its own.** You do not need a SkaFld VC platform, an account or anything but the plugin. Every agent and skill works from your documents, scores against the default rubric or your own `rubric.json`, and writes its deliverables as files.
 
-The agent and skill files are written for two kinds of reader: people using the plugin on its own, and people at firms that run a SkaFld VC platform (a hosted deal-flow system SkaFld Studio sets up for venture firms and angel networks) and have connected it with the optional **SkaFld VC Platform** add-on (`skafld-vc-platform`). This page explains the platform references you will see in those files, so you can tell what applies to you.
+The agent and skill files are written for two kinds of reader: people using the plugin on its own, and people at firms that run a SkaFld VC platform (a hosted deal-flow system SkaFld Studio sets up for venture firms and angel networks; SkaFld VC is SkaFld Studio's app for backing companies, designed to run on SkaFldOS) and have connected it with the optional **SkaFld VC Platform** add-on (`skafld-vc-platform`). This page explains the platform references you will see in those files, so you can tell what applies to you.
 
 ## On its own, and what a platform adds
 

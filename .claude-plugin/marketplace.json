@@ -4,8 +4,8 @@
     "name": "SkaFld Studio"
   },
   "metadata": {
-    "description": "SkaFld VC: venture capital agents and skills for Claude. Install SkaFld VC: it runs only its two local servers, uses the research and data connectors you add (Exa and Apollo recommended) and writes designed files on a computer with Node.js. Add SkaFld VC Platform only if your firm runs a SkaFld VC platform.",
-    "version": "2.5.0"
+    "description": "SkaFld VC: venture capital agents and skills for Claude, from SkaFld Studio (SkaFld VC is SkaFld Studio's app for backing companies, designed to run on SkaFldOS). Install SkaFld VC: it runs only its two local servers, uses the research and data connectors you add (Exa and Apollo recommended) and writes designed files on a computer with Node.js. Add SkaFld VC Platform only if your firm runs a SkaFld VC platform.",
+    "version": "2.5.1"
   },
   "plugins": [
     {

@@ -11,12 +11,12 @@
     {
       "name": "skafld-vc",
       "source": "./skafld-vc",
-      "description": "Venture capital agents and skills across the deal lifecycle: sourcing against your thesis, screening, diligence, investment committee memos and portfolio reviews of founder updates, with returns, market sizing, unit economics, cap tables, valuation and term sheets, working from your documents. Scores against a research-based default rubric or your own, researches with Exa and Apollo when you add them, reads the data, CRM and notes tools you have connected, and writes HTML, Word, PDF, slide decks and Excel (with Node.js 18 or later), unbranded unless you set up your brand. No platform needed; firms with a SkaFld VC platform add SkaFld VC Platform."
+      "description": "Venture capital agents and skills across the deal lifecycle: sourcing against your thesis, screening, diligence, investment committee memos and portfolio reviews of founder updates, with returns, market sizing, unit economics, cap tables, valuation and term sheets, working from your documents. Scores against a research-based default rubric or your own, researches with Exa and Apollo when you add them, reads the data, CRM and notes tools you have connected, and writes HTML, Word, PDF, slide decks and Excel (with Node.js 18 or later), unbranded unless you set up your brand. No platform needed; firms with a SkaFld VC platform add SkaFld VC Platform. SkaFld VC is SkaFld Studio's app for backing companies, designed to run on SkaFldOS."
     },
     {
       "name": "skafld-vc-platform",
       "source": "./skafld-vc-platform",
-      "description": "Only for firms that run a SkaFld VC platform: connects the SkaFld VC agents to your firm's pipeline, documents, rubric and house profile. Asks for your platform's address when installed and installs SkaFld VC with it. No platform? Install SkaFld VC on its own; to get a platform, contact hello@skafldstudio.com."
+      "description": "Only for firms that run a SkaFld VC platform, the hosted deal-flow system SkaFld Studio builds: connects the SkaFld VC agents to your firm's pipeline, documents, rubric and house profile. Asks for your platform's address when installed and installs SkaFld VC with it. No platform? Install SkaFld VC on its own; to get a platform, contact hello@skafldstudio.com."
     }
   ]
 }
