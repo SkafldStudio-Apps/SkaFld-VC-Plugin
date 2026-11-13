@@ -1,0 +1,49 @@
+# Mergify is the only way into main (SkafldStudio-Apps rollout, 2026-11-13). A GitHub ruleset lets only the Mergify
+# app update main, so the merge button and direct pushes are off. Same shape as the SkafldStudio-Clients repos
+# (b-combinator-platform, docs/architecture/merge-flow.md). Validated against docs.mergify.com/mergify-configuration-schema.json.
+#
+# One PR at a time, checked in place: with one parallel check, batch_size 1, no retries and merge_conditions identical
+# to queue_conditions, Mergify merges main into the PR branch and waits for the checks below there. It opens no
+# merge-queue draft PR, so Vercel and Railway build nothing extra.
+#
+# Labels: `hold` keeps a PR out (adding it to a queued PR dequeues it), `urgent` goes first, `needs-human` waits for
+# one approving review. Mergify adds `dequeued` and a status comment with the reason when it drops a PR.
+#
+# Ready (non-draft) PRs from the branch prefixes in "queue PRs when green" queue themselves once green. Any other
+# branch queues with a `@mergifyio queue` comment or the "Queue this pull request" checkbox Mergify posts.
+
+merge_queue:
+  max_parallel_checks: 1
+
+queue_rules:
+  - name: default
+    merge_method: merge
+    batch_size: 1
+    max_checks_retries: 0
+    queue_conditions: &required
+      - base = main
+      - label != hold
+      - or:
+          - label != needs-human
+          - "#approved-reviews-by >= 1"
+      # validate.yml
+      - check-success = validate
+    merge_conditions: *required
+
+priority_rules:
+  - name: urgent PRs go first
+    conditions:
+      - label = urgent
+    priority: high
+
+pull_request_rules:
+  # The only auto-queue path.
+  - name: queue PRs when green
+    conditions:
+      - base = main
+      - -draft
+      - -conflict
+      - head ~= ^(v0|cc|feat|fix|fixes|chore|docs|refactor|perf|test|ci|build|qa|research|design|phase-[0-9]+|avery|claude|copilot|nova|novus|rowan|wf)/
+      - and: *required
+    actions:
+      queue:
